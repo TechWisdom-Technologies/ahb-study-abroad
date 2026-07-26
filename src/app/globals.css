@@ -1,26 +1,312 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: var(--font-inter), sans-serif;
+  --font-heading: var(--font-poppins), sans-serif;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Custom tokens */
+  --color-surface-dark: hsl(var(--surface-dark));
+  --color-surface-dark-foreground: hsl(var(--surface-dark-foreground));
+  --color-highlight: hsl(var(--highlight));
+  --color-highlight-foreground: hsl(var(--highlight-foreground));
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Brand: Navy #283492 / #3B4CAA / Accent #FFD40E */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    --primary: 231 48% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 231 30% 95%;
+    --secondary-foreground: 231 48% 35%;
+
+    --muted: 231 10% 95%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 49 100% 53%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 231 10% 90%;
+    --input: 231 10% 88%;
+    --ring: 231 48% 45%;
+
+    --radius: 0.25rem;
+
+    --surface-dark: 231 60% 18%;
+    --surface-dark-foreground: 0 0% 100%;
+    --highlight: 49 100% 53%;
+    --highlight-foreground: 0 0% 7%;
+  }
+
+  .dark {
+    --background: 231 60% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 231 50% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 231 50% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 49 100% 53%;
+    --primary-foreground: 0 0% 7%;
+
+    --secondary: 231 40% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 231 30% 15%;
+    --muted-foreground: 231 10% 60%;
+
+    --accent: 49 100% 53%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 231 30% 18%;
+    --input: 231 30% 18%;
+    --ring: 49 100% 53%;
+
+    --surface-dark: 231 60% 4%;
+    --surface-dark-foreground: 0 0% 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container {
+      max-width: 640px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 768px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 1024px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1280px;
+    }
+  }
+  @media (min-width: 1536px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.4);
+  border-radius: 3px;
+}
+
+/* Announcement ticker animation */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker {
+  animation: ticker 15s linear infinite;
+}
+
+@keyframes ticker-slow {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker-slow {
+  animation: ticker-slow 35s linear infinite;
+}
+
+@keyframes ticker-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.animate-ticker-reverse {
+  animation: ticker-reverse 20s linear infinite;
+}
+
+/* ── Visa Approval Ticker ── */
+.visa-ticker-bar {
+  background: linear-gradient(90deg, hsl(231 60% 18%), hsl(231 48% 30%), hsl(231 60% 18%));
+  background-size: 200% 100%;
+  animation: visa-bg-shift 8s ease infinite;
+  color: white;
+  box-shadow: 0 2px 16px rgba(40, 52, 146, 0.5);
+}
+
+@keyframes visa-bg-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.visa-ticker-shimmer {
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 212, 14, 0.04) 40%,
+    rgba(255, 212, 14, 0.1) 50%,
+    rgba(255, 212, 14, 0.04) 60%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: visa-shimmer 3s linear infinite;
+}
+
+@keyframes visa-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.visa-ticker-badge {
+  background: rgba(255, 212, 14, 0.15);
+  border-right: 1px solid rgba(255, 212, 14, 0.3);
+}
+
+.visa-ticker-icon {
+  color: hsl(49 100% 53%);
+  animation: visa-plane 2s ease-in-out infinite;
+}
+
+@keyframes visa-plane {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px) translateY(-1px); }
+}
+
+.visa-ticker-item {
+  transition: opacity 0.2s;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0 20px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+.visa-ticker-item:hover {
+  opacity: 0.8;
+}
+
+.visa-ticker-name {
+  color: hsl(49 100% 65%);
+}
+
+.visa-ticker-tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(255, 212, 14, 0.2);
+  border: 1px solid rgba(255, 212, 14, 0.3);
+  color: hsl(49 100% 70%);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+@keyframes visa-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-visa-scroll {
+  animation: visa-scroll 15s linear infinite;
+}
+
+/* Section alternating pattern */
+.section-dark {
+  background: linear-gradient(135deg, hsl(231 60% 18%), hsl(231 50% 28%));
+  color: white;
+}
+
+.section-light {
+  background: hsl(var(--background));
+}
+
+.section-muted {
+  background: hsl(var(--muted));
 }
