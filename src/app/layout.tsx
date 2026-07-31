@@ -19,11 +19,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Cambry - International Admission Center | Study Abroad from Bangladesh",
-  description: "Cambry International Admission Center helps Bangladeshi students study abroad in UK, Canada, Australia, New Zealand, Malaysia and more. Free consultation, IELTS registration, visa support.",
-  authors: [{ name: "Cambry International Admission Center" }],
+  title: "AHB Study Abroad | Education & Visa Consultancy in Bangladesh",
+  description: "AHB Study Abroad helps Bangladeshi students study abroad in Canada, UK, USA, Australia, France, Germany, Malaysia, and more. Expert admission & visa guidance.",
+  authors: [{ name: "AHB Study Abroad" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.jpg", type: "image/jpeg" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   alternates: {
-    canonical: "https://cambry.com",
+    canonical: "https://ahbstudyabroad.com",
   },
 };
 

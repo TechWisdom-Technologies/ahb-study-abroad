@@ -291,15 +291,15 @@ const SpecialLeadModal = ({ open, onOpenChange }: Props) => {
           {STEPS.slice(0, -1).map((title, i) => {
             const stepFields = Object.entries(form).filter(([_, v]) => v.trim()).filter(([k]) => {
               const ranges: Record<number, string[]> = {
-                0: ["name","email","phone","dob","nationality","address"],
-                1: ["destination","intake","program_level","program_name","study_reason"],
-                2: ["last_degree","institution","gpa","graduation_year","major"],
-                3: ["english_test","english_score","test_date","target_score"],
-                4: ["funding_source","budget","scholarship_interest","sponsor"],
-                5: ["passport","visa_history","visa_refusal","travel_countries"],
-                6: ["work_experience","current_job","work_years","relevant_skills"],
-                7: ["preferred_uni","accommodation","start_timeline","special_needs"],
-                8: ["urgency","contact_method","best_time","additional_info"],
+                0: ["name", "email", "phone", "dob", "nationality", "address"],
+                1: ["destination", "intake", "program_level", "program_name", "study_reason"],
+                2: ["last_degree", "institution", "gpa", "graduation_year", "major"],
+                3: ["english_test", "english_score", "test_date", "target_score"],
+                4: ["funding_source", "budget", "scholarship_interest", "sponsor"],
+                5: ["passport", "visa_history", "visa_refusal", "travel_countries"],
+                6: ["work_experience", "current_job", "work_years", "relevant_skills"],
+                7: ["preferred_uni", "accommodation", "start_timeline", "special_needs"],
+                8: ["urgency", "contact_method", "best_time", "additional_info"],
               };
               return ranges[i]?.includes(k);
             });
@@ -362,7 +362,7 @@ const SpecialLeadModal = ({ open, onOpenChange }: Props) => {
           {/* Header with logo and progress */}
           <div className="bg-[#072a38] px-6 pt-5 pb-4 rounded-t-lg">
             <div className="flex items-center gap-3 mb-3">
-              <img src="/cambry-logo-white.png" alt="Cambry Logo" className="h-8 w-auto" />
+              <img src="/assets/ahb-logo-white.png" alt="AHB Study Abroad" className="h-8 w-auto rounded" />
               <div>
                 <h2 className="font-heading font-bold text-lg text-white">Free Consultation</h2>
                 <p className="text-white/70 text-xs">Start your study abroad journey</p>

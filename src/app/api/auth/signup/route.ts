@@ -15,14 +15,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser) {
+    const adminCount = await prisma.user.count();
+    if (adminCount > 0) {
       return NextResponse.json(
-        { error: "A user with this email already exists." },
-        { status: 400 }
+        { error: "Public admin registration is disabled for security reasons." },
+        { status: 403 }
       );
     }
 

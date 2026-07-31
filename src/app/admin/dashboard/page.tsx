@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-heading font-bold text-2xl text-foreground">Dashboard</h2>
-          <p className="text-sm text-muted-foreground mt-0.5">Welcome back to Cambry Admin</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Welcome back to AHB Study Abroad Admin</p>
         </div>
         <div className="text-xs text-muted-foreground">{format(new Date(), "EEEE, dd MMMM yyyy")}</div>
       </div>

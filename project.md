@@ -1,13 +1,13 @@
-# Cambry Global Pathways — Project Documentation & Architecture Guide
+# AHB Study Abroad — Project Documentation & Architecture Guide
 
-Welcome to the migrated Next.js edition of the Cambry International Admission Center platform. This document outlines the system architecture, directory layouts, database models, security implementations, and core features to help future developers (human or AI agents) understand the codebase context immediately.
+Welcome to the Next.js edition of the AHB Study Abroad platform. This document outlines the system architecture, directory layouts, database models, security implementations, and core features to help future developers (human or AI agents) understand the codebase context immediately.
 
 ---
 
 ## 1. Project Overview & Migration Context
 *   **Original Structure:** React + Vite Single Page Application (SPA) using Supabase Client for client-side authentication and database queries.
 *   **Migrated Structure:** Next.js App Router (React 19, Turbopack, Tailwind CSS v4) using **Prisma ORM** connecting to a local/production **PostgreSQL** database. 
-*   **Key Migration Accomplishments:**
+*   **Brand & Content:** Fully updated for **AHB Study Abroad** (CEO & Founder: Arif Hossain Bhuiyan) based in Mirpur-11, Dhaka, with 360+ universities imported across 17 countries.
     1.  Eliminated client-side direct database queries by creating a secure API routing layer.
     2.  Ported the custom Supabase auth flow to a secure HTTP-Only JWT session model.
     3.  Implemented a unified dynamic CRUD API handler to avoid duplicate endpoint files.

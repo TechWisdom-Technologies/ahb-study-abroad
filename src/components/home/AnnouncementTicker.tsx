@@ -5,11 +5,11 @@ import { Megaphone } from "lucide-react";
 import { useDragScroll } from "@/hooks/useDragScroll";
 
 const staticAnnouncements = [
-  { text: "🎓 UK January 2027 intake applications now open - Apply early for scholarships!", link: "" },
-  { text: "📢 Free IELTS preparation workshop this Saturday - Register now!", link: "" },
-  { text: "🇨🇦 Canada Study Permit processing time reduced to 6 weeks", link: "" },
-  { text: "🏆 Cambry awarded Best Education Consultancy 2025", link: "" },
-  { text: "🇦🇺 Australia post-study work visa extended to 4 years for Masters graduates", link: "" },
+  { text: "🎓 UK & Canada upcoming intake applications open - Apply early with AHB Study Abroad!", link: "" },
+  { text: "📢 Free IELTS consultation & guidance available - Register now!", link: "" },
+  { text: "🇨🇦 Canada Study Permit processing guidance - Contact AHB Study Abroad", link: "" },
+  { text: "🏆 AHB Study Abroad - Trusted Overseas Education & Visa Consultancy", link: "" },
+  { text: "🇦🇺 Australia, USA, Europe & Malaysia admissions open!", link: "" },
 ];
 
 type Announcement = { text: string; link: string };

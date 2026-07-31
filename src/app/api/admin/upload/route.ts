@@ -26,6 +26,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
     }
 
+    const allowedExts = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".ico", ".svg"];
+    const ext = path.extname(file.name).toLowerCase();
+    if (!allowedExts.includes(ext)) {
+      return NextResponse.json({ error: "Invalid file type. Only images are allowed." }, { status: 400 });
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -34,7 +40,6 @@ export async function POST(request: Request) {
     await mkdir(uploadsDir, { recursive: true });
 
     // Generate unique name
-    const ext = path.extname(file.name);
     const base = path.basename(file.name, ext).replace(/[^a-zA-Z0-9]/g, "_");
     const filename = `${base}-${Date.now()}${ext}`;
     const filePath = path.join(uploadsDir, filename);

@@ -16,25 +16,25 @@ const contactCards = [
   {
     icon: Phone,
     title: "Call Us",
-    text: "+880 1730589112",
-    sub: "Sat-Thu: 10AM - 7PM",
-    href: "tel:+8801730589112",
+    text: "+880 1621999965",
+    sub: "Sat-Thu: 10AM - 7PM (WhatsApp)",
+    href: "tel:+8801621999965",
     color: "from-blue-500/20 to-blue-600/10",
   },
   {
     icon: Mail,
     title: "Email Us",
-    text: "cambry.bd@gmail.com",
+    text: "ahbstudyabroad@gmail.com",
     sub: "We reply within 24 hours",
-    href: "mailto:cambry.bd@gmail.com",
+    href: "mailto:ahbstudyabroad@gmail.com",
     color: "from-green-500/20 to-green-600/10",
   },
   {
     icon: MapPin,
     title: "Visit Us",
-    text: "H# 398 (1st Floor), R# 29",
-    sub: "Mohakhali DOHS, Dhaka-1212",
-    href: "https://maps.google.com/?q=23.7734,90.3942",
+    text: "House-06, Lane-04, Block-C",
+    sub: "Avenue-05, Mirpur-11, Dhaka-1216",
+    href: "https://maps.google.com/?q=Mirpur-11,Dhaka",
     color: "from-purple-500/20 to-purple-600/10",
   },
   {
@@ -47,10 +47,10 @@ const contactCards = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/cambryeducation/", label: "Facebook", hoverBg: "hover:bg-[#1877F2]" },
-  { icon: Instagram, href: "https://www.instagram.com/cambryeducation", label: "Instagram", hoverBg: "hover:bg-gradient-to-br hover:from-[#F58529] hover:via-[#DD2A7B] hover:to-[#8134AF]" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/cambrybd/", label: "LinkedIn", hoverBg: "hover:bg-[#0A66C2]" },
-  { icon: Youtube, href: "https://www.youtube.com/@cambry1320", label: "YouTube", hoverBg: "hover:bg-[#FF0000]" },
+  { icon: Facebook, href: "https://www.facebook.com/", label: "Facebook", hoverBg: "hover:bg-[#1877F2]" },
+  { icon: Instagram, href: "https://www.instagram.com/", label: "Instagram", hoverBg: "hover:bg-gradient-to-br hover:from-[#F58529] hover:via-[#DD2A7B] hover:to-[#8134AF]" },
+  { icon: Linkedin, href: "https://www.linkedin.com/", label: "LinkedIn", hoverBg: "hover:bg-[#0A66C2]" },
+  { icon: Youtube, href: "https://www.youtube.com/", label: "YouTube", hoverBg: "hover:bg-[#FF0000]" },
 ];
 
 export default function ContactPage() {
@@ -224,7 +224,7 @@ export default function ContactPage() {
               <div className="bg-card border border-border rounded p-6">
                 <h3 className="font-heading font-bold text-lg text-foreground mb-4 flex items-center gap-2">
                   <Globe2 className="w-5 h-5 text-primary" />
-                  Why Contact Cambry?
+                  Why Contact AHB Study Abroad?
                 </h3>
                 <ul className="space-y-3">
                   {[

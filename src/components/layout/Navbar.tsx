@@ -11,8 +11,8 @@ import { useCountries } from "@/hooks/useCountries";
 import CountryFlag from "@/components/shared/CountryFlag";
 import SpecialLeadModal from "@/components/SpecialLeadModal";
 
-const cambryLogo = "/assets/cambry-logo.png";
-const cambryLogoWhite = "/assets/cambry-logo-white.png";
+const ahbLogoDark = "/assets/ahb-logo.png";
+const ahbLogoWhite = "/assets/ahb-logo-white.png";
 
 const navIcons: Record<string, React.ElementType> = {
   "/": Home,
@@ -53,15 +53,14 @@ const Navbar = () => {
   const dark = scrolled || open;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-300 ${
-      dark
-        ? "bg-[#1E2870]/95 border-white/10"
-        : "bg-white/95 border-border"
-    }`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-300 ${dark
+      ? "bg-[#1E2870]/95 border-white/10"
+      : "bg-white/95 border-border"
+      }`}>
       <div className="container flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <img src={dark ? cambryLogoWhite : cambryLogo} alt="Cambry International Admission Center" className="h-10 w-auto transition-all duration-300" />
+          <img src={dark ? ahbLogoWhite : ahbLogoDark} alt="AHB Study Abroad" className="h-10 w-auto rounded transition-all duration-300" />
         </Link>
 
         {/* Desktop nav */}
@@ -81,11 +80,10 @@ const Navbar = () => {
                   <Link
                     href={link.to}
                     onClick={() => setDesktopDestOpen(false)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium transition-colors duration-300 rounded ${
-                      isActive(link.to)
-                        ? dark ? "text-accent bg-white/10" : "text-primary bg-primary/5"
-                        : dark ? "text-white/70 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    }`}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium transition-colors duration-300 rounded ${isActive(link.to)
+                      ? dark ? "text-accent bg-white/10" : "text-primary bg-primary/5"
+                      : dark ? "text-white/70 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
                     {link.label}
@@ -116,11 +114,10 @@ const Navbar = () => {
               <Link
                 key={link.to}
                 href={link.to}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium transition-colors duration-300 rounded ${
-                  isActive(link.to)
-                    ? dark ? "text-accent bg-white/10" : "text-primary bg-primary/5"
-                    : dark ? "text-white/70 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium transition-colors duration-300 rounded ${isActive(link.to)
+                  ? dark ? "text-accent bg-white/10" : "text-primary bg-primary/5"
+                  : dark ? "text-white/70 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
               >
                 <Icon className="w-3.5 h-3.5" />
                 {link.label}
@@ -133,9 +130,8 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-2">
           <button
             onClick={toggleLanguage}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs transition-colors duration-300 ${
-              dark ? "text-white/60 hover:text-white" : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs transition-colors duration-300 ${dark ? "text-white/60 hover:text-white" : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             <Globe className="w-3.5 h-3.5" />
             {t.langSwitch}
@@ -165,11 +161,10 @@ const Navbar = () => {
                     <Link
                       href={link.to}
                       onClick={() => { if (!isDest) { setOpen(false); setDestOpen(false); } }}
-                      className={`flex-1 flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium rounded transition-colors ${
-                        isActive(link.to)
-                          ? "text-accent bg-white/5"
-                          : "text-white/80 hover:text-white hover:bg-white/5"
-                      }`}
+                      className={`flex-1 flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium rounded transition-colors ${isActive(link.to)
+                        ? "text-accent bg-white/5"
+                        : "text-white/80 hover:text-white hover:bg-white/5"
+                        }`}
                     >
                       <Icon className="w-4 h-4 shrink-0" />
                       {link.label}

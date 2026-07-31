@@ -22,53 +22,91 @@ const serviceScholarship = "/assets/service-scholarship.jpg";
 const services = [
   {
     icon: GraduationCap,
+    image: serviceUniversity,
+    title: "University & College Admission",
+    desc: "Direct application and admission support for top colleges and universities across Canada, UK, USA, Australia, and Europe.",
+    features: ["Direct university applications", "Fast offer turnaround", "Scholarship matching", "Offer letter acceptance"],
+  },
+  {
+    icon: Users,
     image: serviceCounseling,
-    title: "Study Abroad Counseling",
-    desc: "Personalized one-on-one sessions with certified education consultants who understand your goals, budget, and aspirations.",
-    features: ["Academic profile assessment", "Country & university shortlisting", "Course selection guidance", "Budget planning"],
+    title: "Career Counseling",
+    desc: "In-depth counseling to align your academic goals with global career opportunities and employment prospects.",
+    features: ["1-on-1 counselor advice", "Global career mapping", "Industry demand analysis", "Personalized study plan"],
   },
   {
     icon: BookOpen,
     image: serviceUniversity,
-    title: "University Selection & Application",
-    desc: "Expert assistance in selecting the right universities and preparing strong applications that stand out.",
-    features: ["University research & matching", "SOP & essay writing support", "Document preparation", "Application tracking"],
-  },
-  {
-    icon: Languages,
-    image: serviceExam,
-    title: "English Language Exam Support",
-    desc: "Complete support for IELTS, TOEFL, PTE Academic, and Linguaskill - from preparation to registration.",
-    features: ["IELTS/TOEFL/PTE preparation", "Mock tests & practice sessions", "Exam registration assistance", "Score improvement strategies"],
-  },
-  {
-    icon: FileText,
-    image: serviceVisa,
-    title: "Visa File Optimization",
-    desc: "Thorough visa file preparation with high success rates. We ensure your application is complete and compelling.",
-    features: ["Document checklist preparation", "Financial document review", "Visa interview coaching", "Application submission guidance"],
-  },
-  {
-    icon: Users,
-    image: serviceParent,
-    title: "Parent Support Desk",
-    desc: "Dedicated support for parents with concerns about their child's education journey abroad.",
-    features: ["Parent counseling sessions", "Safety & accommodation briefing", "Financial planning guidance", "Regular progress updates"],
-  },
-  {
-    icon: Plane,
-    image: serviceDeparture,
-    title: "Pre-Departure & Arrival Support",
-    desc: "Complete assistance from booking flights to settling into your new city and university.",
-    features: ["Pre-departure orientation", "Accommodation assistance", "Airport pickup coordination", "Local SIM & bank setup"],
+    title: "Course Selection",
+    desc: "Professional guidance to choose the right subject, degree level, and major tailored to your academic background.",
+    features: ["Subject credit evaluation", "Future-proof course choice", "Prerequisite matching", "Flexible intake selection"],
   },
   {
     icon: Wallet,
     image: serviceScholarship,
-    title: "Scholarship Assistance",
-    desc: "We actively search, match, and help you apply for scholarships to reduce your financial burden.",
-    features: ["Scholarship database access", "Eligibility assessment", "Application support", "Interview preparation"],
+    title: "Scholarship Guidance",
+    desc: "Expert assistance in identifying and applying for merit-based and financial aid scholarships.",
+    features: ["Scholarship search & match", "Fee waiver support", "Grant application guidance", "High success rate"],
   },
+  {
+    icon: Languages,
+    image: serviceExam,
+    title: "IELTS & English Language Consultation",
+    desc: "Comprehensive guidance for IELTS, TOEFL, PTE Academic, and Duolingo score requirements and preparation.",
+    features: ["Score requirement review", "MOI & exam waiver advice", "Prep strategy consultation", "Exam booking assistance"],
+  },
+  {
+    icon: FileText,
+    image: serviceVisa,
+    title: "Student Visa Processing",
+    desc: "Meticulous student visa file preparation with one of the highest approval rates in Bangladesh.",
+    features: ["Visa file creation", "Embassy interview prep", "Visa rules compliance", "High approval record"],
+  },
+  {
+    icon: ClipboardCheck,
+    image: serviceVisa,
+    title: "Statement of Purpose (SOP) Assistance",
+    desc: "Professional guidance to craft a compelling, authentic Statement of Purpose (SOP) and Study Plan.",
+    features: ["SOP structure advice", "Authenticity review", "Personal essay guidance", "Visa SOP optimization"],
+  },
+  {
+    icon: CheckCircle2,
+    image: serviceVisa,
+    title: "Visa Documentation Support",
+    desc: "Detailed review and organization of financial, academic, and legal documents for visa submission.",
+    features: ["Financial proof review", "Sponsor document check", "Notary & translation advice", "Error-free documentation"],
+  },
+  {
+    icon: Plane,
+    image: serviceDeparture,
+    title: "Accommodation Guidance",
+    desc: "Assistance in finding safe, affordable student housing, on-campus dorms, or shared apartments abroad.",
+    features: ["On-campus housing booking", "Off-campus apartment guidance", "Verified student rooms", "Safety & budget review"],
+  },
+  {
+    icon: Wallet,
+    image: serviceScholarship,
+    title: "Education Loan & Financial Advice",
+    desc: "Clear financial planning advice to meet tuition, living costs, and bank solvency requirements.",
+    features: ["Bank statement advice", "Loan sponsor guidance", "Fund requirement breakdown", "Financial planning"],
+  },
+  {
+    icon: HeadphonesIcon,
+    image: serviceDeparture,
+    title: "Pre-Departure Briefing",
+    desc: "Comprehensive briefing before you travel to ensure a smooth transition to your study destination.",
+    features: ["Travel & airport tips", "Customs & luggage rules", "Local SIM & bank account", "Orientation guidance"],
+  },
+];
+
+const whyChooseItems = [
+  "Experienced Education Consultants",
+  "Honest & Transparent Guidance",
+  "Personalized Student Support",
+  "High Visa Success Rate",
+  "End-to-End Admission Assistance",
+  "Fast & Reliable Service",
+  "Support Before and After Arrival",
 ];
 
 const processSteps = [
@@ -257,6 +295,26 @@ export default function ServicesPage() {
                     </svg>
                   </div>
                 )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose AHB Study Abroad? */}
+      <section className="py-14 bg-background">
+        <div className="container max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="font-heading font-bold text-3xl text-foreground">Why Choose AHB Study Abroad?</h2>
+            <p className="text-muted-foreground mt-2">Your trusted partner for international education and student visa success</p>
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {whyChooseItems.map((item, i) => (
+              <div key={i} className="bg-card border border-border rounded p-4 flex items-center gap-3 hover:border-primary/40 transition-all shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                </div>
+                <span className="font-heading font-medium text-sm text-foreground">{item}</span>
               </div>
             ))}
           </div>

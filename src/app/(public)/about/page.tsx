@@ -38,20 +38,18 @@ const useCountUp = (target: number, duration = 2000, start = false) => {
 };
 
 const timeline = [
-  { year: "2009", title: "Founded", desc: "Cambry was established in Dhaka with a mission to make global education accessible." },
-  { year: "2011", title: "UK Partnership", desc: "Partnered with leading UK universities, became official IELTS registration center." },
-  { year: "2014", title: "Growing Network", desc: "Expanded to 50+ university partnerships across the UK and Europe." },
-  { year: "2017", title: "Canada & Australia", desc: "Expanded partnerships to Canadian and Australian institutions." },
-  { year: "2019", title: "1,000 Students", desc: "Milestone of placing 1,000+ students in top universities worldwide." },
-  { year: "2021", title: "Digital Expansion", desc: "Launched online counseling services, expanded to 11 countries." },
-  { year: "2023", title: "Award Winning", desc: "Recognized as Best Education Consultancy in Bangladesh." },
-  { year: "2025", title: "2,500+ Students", desc: "Continuing to grow with 300+ university partners across 11 countries." },
+  { year: "2015", title: "Founded AHB Study Abroad", desc: "AHB Study Abroad was established in Dhaka with a student-first approach to global education." },
+  { year: "2017", title: "UK & Canada Admissions", desc: "Expanded direct counseling & admission support for UK and Canadian universities." },
+  { year: "2019", title: "Global Expansion", desc: "Added Australia, USA, and European study destinations to our offerings." },
+  { year: "2021", title: "High Visa Success", desc: "Achieved one of the highest visa approval rates for Bangladeshi students." },
+  { year: "2023", title: "Trusted Consultancy", desc: "Expanded partner network to 300+ universities across 17+ countries." },
+  { year: "2025", title: "End-to-End Support", desc: "Continuing to guide thousands of students with transparent and reliable services." },
 ];
 
 const values = [
-  { icon: Target, title: "Our Mission", desc: "To empower Bangladeshi students to access world-class education through expert guidance, transparency, and unwavering support." },
-  { icon: Eye, title: "Our Vision", desc: "To be Bangladesh's most trusted education consultancy, enabling every aspiring student to study at their dream university abroad." },
-  { icon: Heart, title: "Our Values", desc: "Integrity, student-first approach, transparency in services, and commitment to making quality education accessible to all." },
+  { icon: Target, title: "Our Mission", desc: "To empower students with quality education opportunities across the globe while ensuring a hassle-free admission and visa process." },
+  { icon: Eye, title: "Our Vision", desc: "To be Bangladesh's most trusted education consultancy, guiding every student toward academic excellence and global career success." },
+  { icon: Heart, title: "Our Values", desc: "Honest & transparent guidance, student-first approach, personalized counseling, and end-to-end support before and after arrival." },
 ];
 
 const certifications = [
@@ -79,10 +77,10 @@ const partners = [
 ];
 
 const whyDifferent = [
-  { icon: Handshake, title: "100% Free Consultation", desc: "We are funded by our partner institutions - students never pay a single taka for our services." },
-  { icon: ShieldCheck, title: "98.3% Visa Success", desc: "Our meticulous visa file preparation and expert guidance ensure near-perfect success rates." },
-  { icon: Globe2, title: "11 Countries, 300+ Universities", desc: "One of the widest university networks among Bangladeshi education consultancies." },
-  { icon: BookOpen, title: "End-to-End Support", desc: "From first consultation to airport pickup abroad - we're with you at every step of your journey." },
+  { icon: Handshake, title: "Honest & Transparent", desc: "No hidden rules. Honest, transparent guidance at every step of your application." },
+  { icon: ShieldCheck, title: "High Visa Success", desc: "Our meticulous visa file preparation and expert guidance ensure high approval rates." },
+  { icon: Globe2, title: "17+ Destinations", desc: "Comprehensive university admission options in Canada, UK, USA, Australia, Europe & Asia." },
+  { icon: BookOpen, title: "End-to-End Support", desc: "From university selection to visa processing and arrival support - we're with you always." },
 ];
 
 export default function AboutPage() {
@@ -100,9 +98,9 @@ export default function AboutPage() {
   }, []);
 
   const s1 = useCountUp(2500, 2000, visible);
-  const s2 = useCountUp(200, 2000, visible);
-  const s3 = useCountUp(11, 1500, visible);
-  const s4 = useCountUp(97, 2000, visible);
+  const s2 = useCountUp(300, 2000, visible);
+  const s3 = useCountUp(17, 1500, visible);
+  const s4 = useCountUp(98, 2000, visible);
 
   return (
     <>
@@ -113,8 +111,8 @@ export default function AboutPage() {
         <div className="container relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
             <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-widest uppercase bg-accent/20 text-accent rounded font-heading">About Us</span>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">Shaping Futures Through Global Education</h1>
-            <p className="text-white/70 text-lg leading-relaxed">Since our founding, Cambry International Admission Center has helped thousands of Bangladeshi students realize their dreams of studying at world-renowned universities.</p>
+            <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">About AHB Study Abroad</h1>
+            <p className="text-white/70 text-lg leading-relaxed">AHB Study Abroad is a trusted international education consultancy based in Dhaka, Bangladesh, dedicated to helping students achieve their dream of studying abroad.</p>
           </motion.div>
         </div>
       </section>
@@ -164,13 +162,13 @@ export default function AboutPage() {
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className="font-heading font-bold text-3xl text-foreground mb-4">Our Story</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Founded in 2009 in Dhaka, Bangladesh, Cambry International Admission Center started with a simple belief: every student deserves access to quality global education regardless of their background.
+                AHB Study Abroad is a trusted international education consultancy based in Dhaka, Bangladesh, dedicated to helping students achieve their dream of studying abroad. We provide professional guidance throughout every stage of the overseas admission process—from university selection to visa application and pre-departure support.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                What began as a small team of passionate education consultants has grown into one of Bangladesh's most trusted agencies, with partnerships spanning 300+ universities across 11 countries.
+                With a student-first approach and personalized counseling, we assist students in choosing the right university and program according to their academic background, career goals, and financial capacity. Our experienced team is committed to making the study abroad journey smooth, transparent, and successful.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Our 100% free consultation model ensures that financial barriers never stand between a student and their dream university. We are funded by our partner institutions, allowing us to provide unbiased, student-first guidance.
+                We proudly offer admission and visa support for Canada, United Kingdom (UK), United States (USA), Australia, Ireland, New Zealand, France, Germany, Netherlands, Sweden, Finland, Denmark, Hungary, Malta, Malaysia, China, and European Study & Student Visa Assistance.
               </p>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid grid-cols-2 gap-3">
@@ -183,42 +181,24 @@ export default function AboutPage() {
 
       {/* Words from Leadership */}
       <section className="py-14 section-muted">
-        <div className="container">
+        <div className="container max-w-3xl mx-auto">
           <h2 className="font-heading font-bold text-3xl text-foreground text-center mb-10">Words from Our Leadership</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Founder */}
+          <div className="grid grid-cols-1 gap-6">
+            {/* CEO & Founder */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="bg-card border border-border rounded p-6 relative">
-              <Quote className="w-8 h-8 text-accent/30 absolute top-4 right-4" />
-              <div className="flex items-center gap-4 mb-4">
+              className="bg-card border border-border rounded p-8 relative shadow-sm">
+              <Quote className="w-10 h-10 text-accent/30 absolute top-6 right-6" />
+              <div className="flex items-center gap-4 mb-5">
                 <div className="w-16 h-16 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center shrink-0">
                   <User className="w-8 h-8 text-primary/60" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-foreground">Shamim Hossain</h3>
-                  <span className="text-xs text-accent font-heading font-semibold">Owner</span>
+                  <h3 className="font-heading font-bold text-xl text-foreground">Arif Hossain Bhuiyan</h3>
+                  <span className="text-xs text-accent font-heading font-semibold uppercase tracking-wider">CEO & Founder</span>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed italic">
-                "When I started Cambry in 2009, I had one dream - to ensure that no talented Bangladeshi student is held back from accessing global education due to lack of guidance or resources. Today, seeing over 2,500 students thriving in universities across 11 countries fills me with immense pride. Every student's success story is a testament to our team's dedication and the trust families place in us."
-              </p>
-            </motion.div>
-
-            {/* CEO */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              className="bg-card border border-border rounded p-6 relative">
-              <Quote className="w-8 h-8 text-accent/30 absolute top-4 right-4" />
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center shrink-0">
-                  <User className="w-8 h-8 text-primary/60" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-foreground">KF Hassan</h3>
-                  <span className="text-xs text-accent font-heading font-semibold">CEO</span>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed italic">
-                "At Cambry, we don't just process applications - we build futures. Our 97% visa success rate isn't just a number; it represents thousands of dreams realized. We continuously expand our university partnerships and invest in our team's expertise to ensure every student receives world-class guidance. Our commitment to keeping services 100% free is what truly sets us apart."
+              <p className="text-base text-muted-foreground leading-relaxed italic">
+                "At AHB Study Abroad, we believe every student deserves honest, transparent, and expert guidance to reach their dream university. From university selection to visa processing and arrival support, we walk with you every step of the way to turn your global aspirations into reality."
               </p>
             </motion.div>
           </div>

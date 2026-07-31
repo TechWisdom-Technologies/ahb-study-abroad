@@ -7,8 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight } from "lucide-react";
 
-const cambryLogo = "/assets/cambry-logo.png";
-const cambryLogoWhite = "/assets/cambry-logo-white.png";
+const ahbLogo = "/assets/ahb-logo-white.png";
 const heroImage = "/assets/hero-students.jpg";
 
 export default function AdminLoginPage() {
@@ -57,9 +56,9 @@ export default function AdminLoginPage() {
       <div className="hidden lg:flex w-1/2 relative bg-[#151b4d] items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          <img 
-            src={heroImage} 
-            alt="Students" 
+          <img
+            src={heroImage}
+            alt="Students"
             className="w-full h-full object-cover opacity-40 mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e1233] via-[#1a2266]/80 to-[#283492]/60 mix-blend-multiply" />
@@ -69,27 +68,27 @@ export default function AdminLoginPage() {
         {/* Content */}
         <div className="relative z-10 p-12 max-w-xl w-full flex flex-col h-full justify-between">
           <div className="mb-12">
-            <img src={cambryLogoWhite} alt="Cambry Logo" className="h-16 lg:h-20 w-auto object-contain" />
+            <img src={ahbLogo} alt="AHB Study Abroad Logo" className="h-16 lg:h-20 w-auto object-contain rounded" />
           </div>
 
           <div className="my-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-sm mb-6">
               <ShieldCheck className="w-4 h-4 text-[#FFD40E]" />
-              <span className="text-white text-xs font-semibold tracking-wider uppercase">Secure System</span>
+              <span className="text-white text-xs font-semibold tracking-wider uppercase">AHB Study Abroad System</span>
             </div>
-            
+
             <h1 className="text-4xl lg:text-5xl font-bold text-white font-heading mb-6 tracking-tight leading-tight">
               Administrative <br />
               <span className="text-[#FFD40E]">Workspace</span>
             </h1>
-            
+
             <p className="text-blue-100/80 text-lg leading-relaxed max-w-md border-l-2 border-[#FFD40E]/50 pl-4">
               Centralized control for managing student applications, university partnerships, and global pathways.
             </p>
           </div>
 
           <div className="text-white/40 text-xs">
-            © {new Date().getFullYear()} Cambry International Admission Center. All rights reserved.
+            © {new Date().getFullYear()} AHB Study Abroad. All rights reserved.
           </div>
         </div>
       </div>
@@ -99,7 +98,7 @@ export default function AdminLoginPage() {
         <div className="w-full max-w-[400px]">
           {/* Mobile Logo */}
           <div className="lg:hidden mb-10 text-center">
-            <img src={cambryLogo} alt="Cambry" className="h-12 w-auto mx-auto object-contain mb-4" />
+            <img src={ahbLogo} alt="AHB Study Abroad" className="h-12 w-auto mx-auto object-contain mb-4 rounded" />
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#283492]/5 border border-[#283492]/10 rounded-sm">
               <ShieldCheck className="w-4 h-4 text-[#283492]" />
               <span className="text-[#283492] text-xs font-semibold tracking-wider uppercase">Admin Portal</span>
@@ -111,8 +110,8 @@ export default function AdminLoginPage() {
               {isSignup ? "Create Account" : "Sign In"}
             </h2>
             <p className="text-gray-500 text-sm">
-              {isSignup 
-                ? "Set up your administrative credentials." 
+              {isSignup
+                ? "Set up your administrative credentials."
                 : "Enter your credentials to access the workspace."}
             </p>
           </div>
@@ -129,7 +128,7 @@ export default function AdminLoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@cambry.com"
+                  placeholder="admin@ahbstudy.com"
                   required
                   className="pl-11 rounded-sm border-gray-300 bg-white h-12 text-base text-gray-900 placeholder:text-gray-400 shadow-sm transition-all focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-300 outline-none"
                 />

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const cambryLogoWhite = "/assets/cambry-logo-white.png";
+const ahbLogo = "/assets/ahb-logo-white.png";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
@@ -78,7 +78,7 @@ export default function AdminLayoutWrapper({
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a2266] via-[#283492] to-[#3B4CAA]">
         <div className="flex flex-col items-center gap-4">
-          <img src={cambryLogoWhite} alt="Cambry" className="h-12 w-auto opacity-80" />
+          <img src={ahbLogo} alt="AHB Study Abroad" className="h-12 w-auto rounded opacity-80" />
           <div className="flex items-center gap-2 text-white/60">
             <div className="w-5 h-5 border-2 border-white/20 border-t-[#FFD40E] rounded-full animate-spin" />
             <span className="text-sm">Loading...</span>
@@ -112,7 +112,7 @@ export default function AdminLayoutWrapper({
         <div className="relative px-5 h-[81px] flex items-center border-b border-white/[0.06] shrink-0">
           <div className="flex items-center justify-between w-full">
             <Link href="/admin/dashboard" className="flex items-center" onClick={() => setSidebarOpen(false)}>
-              <img src={cambryLogoWhite} alt="Cambry" className="h-10 w-auto" />
+              <img src={ahbLogo} alt="AHB Study Abroad" className="h-10 w-auto rounded" />
             </Link>
             <button
               className="md:hidden w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors"
@@ -202,7 +202,7 @@ export default function AdminLayoutWrapper({
         <footer className="border-t border-gray-200/60 bg-white/50 px-4 sm:px-6 h-[50px] flex items-center shrink-0 mt-auto w-full">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 w-full">
             <p className="text-[11px] text-gray-400">
-              © {new Date().getFullYear()} Cambry International Admission Center
+              © {new Date().getFullYear()} AHB Study Abroad
             </p>
             <p className="text-[11px] text-gray-300">
               Admin Panel v1.0

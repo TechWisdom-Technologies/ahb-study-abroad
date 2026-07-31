@@ -46,6 +46,7 @@ type CrudPageProps = {
     sampleColumns: string[];
   };
   extraActions?: (row: any) => React.ReactNode;
+  filterControls?: (onCountryFilter: (countryId: string) => void) => React.ReactNode;
 };
 
 const ImageUploadInput = ({ value, onChange, placeholder }: { value: string; onChange: (url: string) => void; placeholder?: string }) => {
@@ -108,7 +109,7 @@ const ImageUploadInput = ({ value, onChange, placeholder }: { value: string; onC
   );
 };
 
-const CrudPage = ({ title, table, fields, columns, excelImport, extraActions }: CrudPageProps) => {
+const CrudPage = ({ title, table, fields, columns, excelImport, extraActions, filterControls }: CrudPageProps) => {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -121,7 +122,32 @@ const CrudPage = ({ title, table, fields, columns, excelImport, extraActions }: 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const allSelected = data.length > 0 && selectedIds.size === data.length;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCountryFilter, setSelectedCountryFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 25;
+
+  const filteredData = data.filter((item) => {
+    const matchesSearch = searchQuery === "" || 
+      Object.values(item).some(val => String(val || "").toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesCountry = selectedCountryFilter === "" || item.country_id === selectedCountryFilter;
+    return matchesSearch && matchesCountry;
+  });
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
+  const paginatedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handleCountryFilterChange = (val: string) => {
+    setSelectedCountryFilter(val);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchQuery(val);
+    setCurrentPage(1);
+  };
+
+  const allSelected = filteredData.length > 0 && selectedIds.size === filteredData.length;
   const someSelected = selectedIds.size > 0;
 
   const toggleSelect = (id: string) => {
@@ -319,6 +345,19 @@ const CrudPage = ({ title, table, fields, columns, excelImport, extraActions }: 
         </div>
       </div>
 
+      {/* Search & Custom Filter Bar */}
+      <div className="flex flex-col sm:flex-row items-center gap-3">
+        <div className="w-full sm:w-72">
+          <Input
+            placeholder={`Search ${title.toLowerCase()}s...`}
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            className="h-9 text-sm"
+          />
+        </div>
+        {filterControls && filterControls(handleCountryFilterChange)}
+      </div>
+
       {/* Bulk actions */}
       {someSelected && (
         <div className="bg-primary/5 border border-primary/20 rounded p-3 flex items-center justify-between">
@@ -333,47 +372,81 @@ const CrudPage = ({ title, table, fields, columns, excelImport, extraActions }: 
       <div className="bg-card border border-border rounded overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-muted-foreground text-sm">Loading records...</div>
-        ) : data.length === 0 ? (
-          <div className="p-8 text-center text-muted-foreground text-sm">No {title.toLowerCase()}s found.</div>
+        ) : filteredData.length === 0 ? (
+          <div className="p-8 text-center text-muted-foreground text-sm">No {title.toLowerCase()}s found matching your search.</div>
         ) : (
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-12 text-center">
-                    <Checkbox checked={allSelected} onCheckedChange={toggleSelectAll} className="rounded-sm border-gray-300" />
-                  </TableHead>
-                  {columns.map((c) => <TableHead key={c.key} className="text-foreground font-semibold">{c.label}</TableHead>)}
-                  <TableHead className="w-24 text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.map((row) => (
-                  <TableRow key={row.id} className="hover:bg-muted/30">
-                    <TableCell className="text-center">
-                      <Checkbox checked={selectedIds.has(row.id)} onCheckedChange={() => toggleSelect(row.id)} className="rounded-sm border-gray-300" />
-                    </TableCell>
-                    {columns.map((c) => (
-                      <TableCell key={c.key} className="text-sm font-medium text-foreground max-w-[240px] truncate">
-                        {c.render ? c.render(row[c.key], row) : row[c.key]?.toString()}
-                      </TableCell>
-                    ))}
-                    <TableCell className="text-right whitespace-nowrap">
-                      <div className="flex items-center justify-end gap-1.5">
-                        {extraActions && extraActions(row)}
-                        <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => openEdit(row)}>
-                          <Pencil className="w-3.5 h-3.5" />
-                        </Button>
-                        <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-red-500/10 text-muted-foreground hover:text-red-600" onClick={() => setDeleteId(row.id)}>
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </Button>
-                      </div>
-                    </TableCell>
+          <>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-12 text-center">
+                      <Checkbox checked={allSelected} onCheckedChange={toggleSelectAll} className="rounded-sm border-gray-300" />
+                    </TableHead>
+                    {columns.map((c) => <TableHead key={c.key} className="text-foreground font-semibold">{c.label}</TableHead>)}
+                    <TableHead className="w-24 text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {paginatedData.map((row) => (
+                    <TableRow key={row.id} className="hover:bg-muted/30">
+                      <TableCell className="text-center">
+                        <Checkbox checked={selectedIds.has(row.id)} onCheckedChange={() => toggleSelect(row.id)} className="rounded-sm border-gray-300" />
+                      </TableCell>
+                      {columns.map((c) => (
+                        <TableCell key={c.key} className="text-sm font-medium text-foreground max-w-[240px] truncate">
+                          {c.render ? c.render(row[c.key], row) : row[c.key]?.toString()}
+                        </TableCell>
+                      ))}
+                      <TableCell className="text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1.5">
+                          {extraActions && extraActions(row)}
+                          <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => openEdit(row)}>
+                            <Pencil className="w-3.5 h-3.5" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-red-500/10 text-muted-foreground hover:text-red-600" onClick={() => setDeleteId(row.id)}>
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="p-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 bg-muted/20">
+              <div className="text-xs text-muted-foreground">
+                Showing <strong className="text-foreground">{(currentPage - 1) * itemsPerPage + 1}</strong> to{" "}
+                <strong className="text-foreground">{Math.min(currentPage * itemsPerPage, filteredData.length)}</strong> of{" "}
+                <strong className="text-foreground">{filteredData.length}</strong> entries
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  className="h-8 text-xs rounded px-2.5"
+                >
+                  Previous
+                </Button>
+                <span className="text-xs font-semibold px-2 text-foreground">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  className="h-8 text-xs rounded px-2.5"
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
+          </>
         )}
       </div>
 

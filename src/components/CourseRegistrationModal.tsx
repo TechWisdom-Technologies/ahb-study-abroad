@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send, GraduationCap, User, Phone, Mail, MessageSquare } from "lucide-react";
 
-const cambryLogoWhite = "/assets/cambry-logo-white.png";
+const ahbLogo = "/assets/ahb-logo-white.png";
 
 interface CourseRegistrationModalProps {
   open: boolean;
@@ -71,7 +71,7 @@ const CourseRegistrationModal = ({ open, onOpenChange, courseName, courseFee, co
           <div className="absolute bottom-0 left-0 w-20 h-20 bg-accent/5 rounded-full translate-y-1/2 -translate-x-1/2" />
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-3">
-              <img src={cambryLogoWhite} alt="Cambry" className="h-8 w-auto" />
+              <img src={ahbLogo} alt="AHB Study Abroad" className="h-8 w-auto rounded" />
             </div>
             <DialogHeader>
               <DialogTitle className="text-white font-heading text-xl">

@@ -7,28 +7,28 @@ const faqIllustration = "/assets/faq-illustration.jpg";
 
 const faqs = [
   {
-    q: "Is Cambry's service really free?",
-    a: "Yes! Our counseling, application support, and university placement services are completely free. We are funded by our partner institutions.",
+    q: "Is AHB Study Abroad's counseling guidance free?",
+    a: "Yes! Our counseling, application support, and guidance services are completely free and transparent with no hidden costs.",
   },
   {
     q: "What English proficiency tests do you support?",
-    a: "We provide support and registration for IELTS, TOEFL, PTE Academic, and Linguaskill. We also offer preparation courses for all these exams.",
+    a: "We provide support and guidance for IELTS, TOEFL, PTE Academic, and Duolingo English Test.",
   },
   {
     q: "How long does the entire process take?",
     a: "From initial counseling to departure, the process typically takes 3-6 months depending on the country, intake, and visa processing times.",
   },
   {
-    q: "Can I get a scholarship through Cambry?",
-    a: "Absolutely! We actively help students find and apply for scholarships. Many of our partner universities offer exclusive scholarships for our students.",
+    q: "Can I get a scholarship through AHB Study Abroad?",
+    a: "Pardonably yes! We actively help students find and apply for scholarships based on academic results and financial requirements.",
   },
   {
     q: "Do you help with visa applications?",
-    a: "We provide complete visa file optimization and preparation support. While we don't process visas directly, we ensure your application is thorough and well-prepared.",
+    a: "We provide complete visa file optimization, documentation guidance, and pre-departure preparation support.",
   },
   {
-    q: "Which countries can I study in through Cambry?",
-    a: "Our primary destinations are UK, Canada, Australia, New Zealand, and Malaysia. We also work with South Korea, Japan, Italy, Malta, Cyprus, and Finland.",
+    q: "Which countries can I study in through AHB Study Abroad?",
+    a: "We offer admission & visa support for Canada, UK, USA, Australia, Ireland, New Zealand, France, Germany, Netherlands, Sweden, Finland, Denmark, Hungary, Malta, Malaysia, China, and Belgium.",
   },
 ];
 

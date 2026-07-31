@@ -4,6 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import bcrypt from 'bcryptjs';
 import { destinationData } from '../src/data/destinationDetails';
+import universityListData from '../src/data/universityListData.json';
 
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString });
@@ -11,31 +12,40 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log("Seeding database...");
+  console.log("Seeding database for AHB Study Abroad...");
 
-  // 1. Create Default Admin User
-  const adminEmail = "admin@cambry.com";
+  // 1. Create Default Admin Users
   const hashedPassword = await bcrypt.hash("AdminPassword123!", 10);
 
-  const adminUser = await prisma.user.upsert({
-    where: { email: adminEmail },
-    update: {},
-    create: {
-      email: adminEmail,
-      password: hashedPassword,
-      roles: {
-        create: {
-          role: AppRole.ADMIN
+  const adminEmails = ["admin@ahbstudy.com", "admin@cambry.com"];
+  for (const adminEmail of adminEmails) {
+    const adminUser = await prisma.user.upsert({
+      where: { email: adminEmail },
+      update: { password: hashedPassword },
+      create: {
+        email: adminEmail,
+        password: hashedPassword,
+        roles: {
+          create: {
+            role: AppRole.ADMIN
+          }
         }
       }
-    }
-  });
-  console.log(`Admin user registered: ${adminUser.email}`);
+    });
+    console.log(`Admin user registered: ${adminUser.email}`);
+  }
 
-  // 2. Import Destinations Data
+  // 2. Clear existing Universities in Database as requested
+  console.log("Clearing existing university records from database...");
+  await prisma.university.deleteMany({});
+  console.log("Cleared all existing university entries.");
+
+  // 3. Sync Countries from destinationDetails & universityListData
   let sortOrder = 0;
+  
+  // First, process all destinations in destinationData
   for (const [slug, info] of Object.entries(destinationData)) {
-    const country = await prisma.country.upsert({
+    await prisma.country.upsert({
       where: { name: info.name },
       update: {
         flagCode: info.flagCode,
@@ -55,7 +65,6 @@ async function main() {
         tuitionDetails: info.tuitionDetails as any,
         documentChecklist: info.documentChecklist as any,
         specialNotes: info.specialNotes as any,
-        universityCount: (info.universities?.length || 0) + (info.partnerInstitutions?.length || 0),
       },
       create: {
         name: info.name,
@@ -76,56 +85,56 @@ async function main() {
         tuitionDetails: info.tuitionDetails as any,
         documentChecklist: info.documentChecklist as any,
         specialNotes: info.specialNotes as any,
-        universityCount: (info.universities?.length || 0) + (info.partnerInstitutions?.length || 0),
       }
     });
-    console.log(`Synced country: ${country.name}`);
-
-    // Process Universities
-    if (info.universities) {
-      for (const uni of info.universities) {
-        // Avoid duplicate university insert in seed
-        const existingUni = await prisma.university.findFirst({
-          where: { name: uni.name, countryId: country.id }
-        });
-        if (!existingUni) {
-          await prisma.university.create({
-            data: {
-              countryId: country.id,
-              name: uni.name,
-              websiteUrl: uni.url,
-              isPartner: false,
-              isActive: true,
-              scholarshipAvailable: false,
-            }
-          });
-        }
-      }
-    }
-
-    if (info.partnerInstitutions) {
-      for (const partner of info.partnerInstitutions) {
-        const existingUni = await prisma.university.findFirst({
-          where: { name: partner.name, countryId: country.id }
-        });
-        if (!existingUni) {
-          await prisma.university.create({
-            data: {
-              countryId: country.id,
-              name: partner.name,
-              websiteUrl: partner.url,
-              tuitionFeeRange: partner.offerTime,
-              isPartner: true,
-              isActive: true,
-              scholarshipAvailable: !!partner.scholarship,
-            }
-          });
-        }
-      }
-    }
   }
-  
-  console.log("Seeding complete!");
+
+  // Next, process countries and universities from universityListData.json (docX file)
+  const docData = universityListData as Record<string, { name: string; flagCode: string; slug: string; universities: string[] }>;
+
+  for (const [slug, item] of Object.entries(docData)) {
+    const country = await prisma.country.upsert({
+      where: { name: item.name },
+      update: {
+        flagCode: item.flagCode,
+        isActive: true,
+      },
+      create: {
+        name: item.name,
+        flagCode: item.flagCode,
+        description: `Study in ${item.name} with AHB Study Abroad. Full admission and visa guidance available.`,
+        sortOrder: sortOrder++,
+        isActive: true,
+        tagline: `Top study destination: ${item.name}`,
+      }
+    });
+
+    console.log(`Syncing ${item.universities.length} universities for ${country.name}...`);
+
+    for (const uniName of item.universities) {
+      await prisma.university.create({
+        data: {
+          countryId: country.id,
+          name: uniName,
+          isPartner: true,
+          isActive: true,
+          scholarshipAvailable: false,
+        }
+      });
+    }
+
+    // Update universityCount on country
+    const totalCount = await prisma.university.count({
+      where: { countryId: country.id }
+    });
+
+    await prisma.country.update({
+      where: { id: country.id },
+      data: { universityCount: totalCount }
+    });
+  }
+
+  console.log("Seeding complete! All universities from docx successfully inserted.");
 }
 
 main()

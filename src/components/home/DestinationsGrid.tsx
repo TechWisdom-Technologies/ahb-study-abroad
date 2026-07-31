@@ -10,19 +10,28 @@ import { useCountries } from "@/hooks/useCountries";
 const imageMap: Record<string, string> = {
   "uk": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
   "canada": "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&q=80",
+  "usa": "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80",
   "australia": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80",
+  "ireland": "https://images.unsplash.com/photo-1590089415225-401ed6b9db8e?w=600&q=80",
   "new-zealand": "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=600&q=80",
+  "france": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
+  "germany": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&q=80",
+  "netherlands": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=600&q=80",
+  "sweden": "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=600&q=80",
+  "finland": "https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?w=600&q=80",
+  "denmark": "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=600&q=80",
+  "hungary": "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",
+  "malta": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80",
   "malaysia": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80",
+  "china": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=600&q=80",
+  "belgium": "https://images.unsplash.com/photo-1566836645607-e85448378393?w=600&q=80",
   "south-korea": "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80",
   "japan": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80",
   "italy": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=600&q=80",
-  "malta": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80",
   "cyprus": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&q=80",
-  "finland": "https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?w=600&q=80",
 };
 
-const autoImage = (name: string) =>
-  `https://source.unsplash.com/600x800/?${encodeURIComponent(name + " landmark")}`;
+const fallbackImage = "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80";
 
 const DestinationsGrid = () => {
   const { t } = useLanguage();
@@ -31,7 +40,7 @@ const DestinationsGrid = () => {
   const primary = countries.slice(0, 5);
   const secondary = countries.slice(5);
 
-  const getImage = (d: typeof countries[0]) => d.card_image_url || imageMap[d.slug] || autoImage(d.name);
+  const getImage = (d: typeof countries[0]) => d.card_image_url || imageMap[d.slug] || fallbackImage;
 
   return (
     <section className="py-16">

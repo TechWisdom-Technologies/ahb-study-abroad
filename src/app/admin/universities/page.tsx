@@ -60,5 +60,26 @@ export default function UniversitiesAdminPage() {
     sampleColumns: ["University Name", "Country", "Tuition Fee Range", "Requirements", "Website URL", "Logo URL", "Partner", "Scholarship"],
   };
 
-  return <CrudPage title="University" table="universities" fields={fields} columns={columns} excelImport={excelImport} />;
+  return (
+    <CrudPage
+      title="University"
+      table="universities"
+      fields={fields}
+      columns={columns}
+      excelImport={excelImport}
+      filterControls={(onFilterChange) => (
+        <select
+          onChange={(e) => onFilterChange(e.target.value)}
+          className="h-9 rounded border border-input bg-background px-3 py-1 text-sm text-foreground focus:outline-none"
+        >
+          <option value="">All Countries</option>
+          {countryOptions.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      )}
+    />
+  );
 }
