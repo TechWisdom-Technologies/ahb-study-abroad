@@ -19,19 +19,21 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="section-dark">
+    <footer className="bg-gradient-to-b from-[#141C3A] via-[#1A254D] to-[#2B3C7A] border-t border-white/5">
       <div className="container py-12 lg:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
           {/* Column 1: Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div>
             <div className="mb-4">
-              <img src={ahbLogo} alt="AHB Study Abroad" className="h-12 w-auto rounded" />
+              <Link href="/">
+                <img src={ahbLogo} alt="AHB Study Abroad" className="h-[72px] w-auto rounded transition-opacity hover:opacity-90" />
+              </Link>
             </div>
-            <p className="text-sm text-white/70 leading-relaxed mb-4">{t.footer.about}</p>
+            <p className="text-[13px] text-white/70 leading-relaxed mb-4">{t.footer.about}</p>
             <div className="flex gap-2">
               <a
                 href="https://www.facebook.com/"
-                className="w-8 h-8 rounded bg-[#1877F2] flex items-center justify-center hover:bg-[#3b93ff] transition-colors text-white"
+                className="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-[#1877F2] transition-all duration-300 text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -39,7 +41,7 @@ const Footer = () => {
               </a>
               <a
                 href="https://www.instagram.com/"
-                className="w-8 h-8 rounded bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center hover:brightness-125 transition-all text-white"
+                className="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#F58529] hover:via-[#DD2A7B] hover:to-[#8134AF] transition-all duration-300 text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -47,7 +49,7 @@ const Footer = () => {
               </a>
               <a
                 href="https://www.linkedin.com/"
-                className="w-8 h-8 rounded bg-[#0A66C2] flex items-center justify-center hover:bg-[#2d88e0] transition-colors text-white"
+                className="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-[#0A66C2] transition-all duration-300 text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -55,7 +57,7 @@ const Footer = () => {
               </a>
               <a
                 href="https://www.youtube.com/"
-                className="w-8 h-8 rounded bg-[#FF0000] flex items-center justify-center hover:bg-[#ff3333] transition-colors text-white"
+                className="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-[#FF0000] transition-all duration-300 text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -64,93 +66,74 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 2: Discover */}
-          <div>
-            <h4 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${dotColors[0]}`} />
-              {t.footer.discover}
-            </h4>
-            <ul className="space-y-2.5">
-              {t.footer.discoverLinks.map((item, i) => {
-                const Icon = discoverIcons[i];
-                return (
+          {/* Discover & Destinations wrapper for mobile row */}
+          <div className="flex justify-between w-full sm:contents">
+            {/* Column 2: Discover */}
+            <div className="lg:mx-auto">
+              <h4 className="font-heading font-semibold text-[14px] text-white mb-4">
+                {t.footer.discover}
+              </h4>
+              <ul className="space-y-2.5">
+                {t.footer.discoverLinks.map((item, i) => {
+                  const Icon = discoverIcons[i];
+                  return (
+                    <li key={i}>
+                      <Link href={discoverRoutes[i]} className="group text-[13px] text-white/70 hover:text-accent transition-colors flex items-center gap-2">
+                        <Icon className="w-3.5 h-3.5 text-white/60 group-hover:text-accent transition-colors" />
+                        <span>{item}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            {/* Column 3: Top Destinations */}
+            <div className="lg:mx-auto">
+              <h4 className="font-heading font-semibold text-[14px] text-white mb-4">
+                Top Destinations
+              </h4>
+              <ul className="space-y-2.5">
+                {[
+                  { name: "Canada", flag: "/flags/ca.svg", slug: "canada" },
+                  { name: "United Kingdom (UK)", flag: "/flags/gb.svg", slug: "uk" },
+                  { name: "United States (USA)", flag: "/flags/us.svg", slug: "usa" },
+                  { name: "Australia", flag: "/flags/au.svg", slug: "australia" },
+                  { name: "Ireland", flag: "/flags/ie.svg", slug: "ireland" },
+                ].map((dest, i) => (
                   <li key={i}>
-                    <Link href={discoverRoutes[i]} className="text-sm text-white/70 hover:text-accent transition-colors flex items-center gap-2">
-                      <Icon className="w-3.5 h-3.5 text-accent" />
-                      <span>{item}</span>
+                    <Link href={`/destinations/${dest.slug}`} className="group text-[13px] text-white/70 hover:text-accent transition-colors flex items-center gap-2">
+                      <img src={dest.flag} alt={`${dest.name} flag`} className="w-4 h-3 rounded-[2px] object-cover shrink-0 opacity-80 group-hover:opacity-100 transition-opacity" />
+                      <span>{dest.name}</span>
                     </Link>
                   </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          {/* Column 3: Top Regions */}
-          <div>
-            <h4 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${dotColors[1]}`} />
-              {t.footer.topRegions}
-            </h4>
-            <ul className="space-y-2.5">
-              {t.footer.regionsList.map((item, i) => (
-                <li key={i}>
-                  <Link href={`/destinations/${regionSlugs[i]}`} className="text-sm text-white/70 hover:text-accent transition-colors flex items-center gap-2">
-                    <img src={regionFlags[i]} alt="" className="w-4 h-3 rounded-[2px] object-cover shrink-0" />
-                    <span>{item}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4: Services */}
-          <div>
-            <h4 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${dotColors[2]}`} />
-              {t.footer.services}
-            </h4>
-            <ul className="space-y-2.5">
-              {t.footer.servicesList.map((item, i) => {
-                const Icon = serviceIcons[i] || BookOpen;
-                return (
-                  <li key={i}>
-                    <Link href="/services" className="text-sm text-white/70 hover:text-accent transition-colors flex items-center gap-2">
-                      <Icon className="w-3.5 h-3.5 text-accent shrink-0" />
-                      <span>{item}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Column 5: Contact */}
           <div>
-            <h4 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${dotColors[3]}`} />
+            <h4 className="font-heading font-semibold text-[14px] text-white mb-4">
               {t.footer.contact}
             </h4>
-            <div className="space-y-3 mb-4">
-              <a href="https://maps.google.com/?q=Mirpur-11,Dhaka" target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 text-sm text-white/70 hover:text-accent transition-colors">
-                <MapPin className="w-4 h-4 shrink-0 text-accent mt-0.5" />
+            <div className="space-y-3">
+              <a href="https://maps.google.com/?q=Mirpur-11,Dhaka" target="_blank" rel="noopener noreferrer" className="group flex items-start gap-2 text-[13px] text-white/70 hover:text-accent transition-colors">
+                <MapPin className="w-4 h-4 shrink-0 text-white/60 group-hover:text-accent transition-colors mt-0.5" />
                 <span>{t.footer.address}</span>
               </a>
-              <a href="tel:+8801621999965" className="flex items-center gap-2 text-sm text-white/70 hover:text-accent transition-colors">
-                <Phone className="w-4 h-4 shrink-0 text-accent" />
+              <a href="tel:+8801621999965" className="group flex items-center gap-2 text-[13px] text-white/70 hover:text-accent transition-colors">
+                <Phone className="w-4 h-4 shrink-0 text-white/60 group-hover:text-accent transition-colors" />
                 <span>{t.footer.phone}</span>
               </a>
-              <a href="mailto:ahbstudyabroad@gmail.com" className="flex items-center gap-2 text-sm text-white/70 hover:text-accent transition-colors">
-                <Mail className="w-4 h-4 shrink-0 text-accent" />
+              <a href="mailto:ahbstudyabroad@gmail.com" className="group flex items-center gap-2 text-[13px] text-white/70 hover:text-accent transition-colors">
+                <Mail className="w-4 h-4 shrink-0 text-white/60 group-hover:text-accent transition-colors" />
                 <span>{t.footer.email}</span>
               </a>
-            </div>
-            <h4 className="font-heading font-semibold text-white mb-2 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${dotColors[4]}`} />
-              {t.footer.officeHours}
-            </h4>
-            <div className="flex items-center gap-2 text-sm text-white/70">
-              <Clock className="w-4 h-4 shrink-0 text-accent" />
-              <span>{t.footer.officeHoursDetail}</span>
+              <div className="flex items-start gap-2 text-[13px] text-white/70">
+                <Clock className="w-4 h-4 shrink-0 text-white/60 mt-0.5" />
+                <span>{t.footer.officeHoursDetail}</span>
+              </div>
             </div>
           </div>
         </div>

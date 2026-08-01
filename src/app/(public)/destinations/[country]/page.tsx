@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import CountryFlag from "@/components/shared/CountryFlag";
 import { destinationData, DestinationInfo } from "@/data/destinationDetails";
 import { countrySlug } from "@/hooks/useCountries";
@@ -21,20 +21,15 @@ const destCanada = "/assets/dest-canada.jpg";
 const destAustralia = "/assets/dest-australia.jpg";
 const destNz = "/assets/dest-nz.jpg";
 const destMalaysia = "/assets/dest-malaysia.jpg";
-const destKorea = "/assets/dest-korea.jpg";
-const destJapan = "/assets/dest-japan.jpg";
-const destItaly = "/assets/dest-italy.jpg";
 const destMalta = "/assets/dest-malta.jpg";
-const destCyprus = "/assets/dest-cyprus.jpg";
 const destFinland = "/assets/dest-finland.jpg";
 const campusPartners = "/assets/campus-partners.jpg";
 const notesGuidance = "/assets/notes-guidance.jpg";
 
 const imageMap: Record<string, string> = {
   uk: destUk, canada: destCanada, australia: destAustralia,
-  "new-zealand": destNz, malaysia: destMalaysia, "south-korea": destKorea,
-  japan: destJapan, italy: destItaly, malta: destMalta,
-  cyprus: destCyprus, finland: destFinland,
+  "new-zealand": destNz, malaysia: destMalaysia,
+  malta: destMalta, finland: destFinland,
 };
 
 const ctaBgMap: Record<string, string> = {
@@ -43,11 +38,7 @@ const ctaBgMap: Record<string, string> = {
   australia: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1920&q=80",
   "new-zealand": "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
   malaysia: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&q=80",
-  "south-korea": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1920&q=80",
-  japan: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1920&q=80",
-  italy: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80",
   malta: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=1920&q=80",
-  cyprus: "https://images.unsplash.com/photo-1600016033405-a81c1a742f8c?w=1920&q=80",
   finland: "https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?w=1920&q=80",
 };
 
@@ -191,7 +182,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <h1 className="font-heading text-2xl font-bold text-foreground">Destination not found</h1>
-        <Link href="/destinations"><Button variant="outline">← Back to Destinations</Button></Link>
+        <Link href="/destinations"><InteractiveHoverButton className="bg-card text-foreground border-border px-5 py-2">← Back to Destinations</InteractiveHoverButton></Link>
       </div>
     );
   }
@@ -199,19 +190,39 @@ export default function DestinationDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#283492] via-[#3B4CAA] to-[#5B6BC0]" />
-        {heroImg && <img src={heroImg} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />}
-        <div className="container relative z-10">
-          <Link href="/destinations" className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm mb-4 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> All Destinations
+      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+        {/* Base background colors & image overlay */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
+        {heroImg && (
+          <img
+            src={heroImg}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-lighten brightness-90 z-[1]"
+          />
+        )}
+        <div className="absolute inset-0 z-[2] bg-[url('/assets/grid-pattern.svg')] opacity-10" />
+
+        {/* Decorative glows */}
+        <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
+        <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
+
+        <div className="container relative z-10 py-20 lg:py-0 text-center">
+          <Link href="/destinations" className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-xs uppercase tracking-widest font-heading mb-6 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Back to All Destinations
           </Link>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-3">
-              <CountryFlag code={info.flagCode} size="lg" />
-              <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white">Study in {info.name}</h1>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto">
+            <div className="flex items-center justify-center gap-3.5 mb-4">
+              <CountryFlag code={info.flagCode} size="xl" className="shadow-md rounded border border-white/20" />
+              <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15]">Study in {info.name}</h1>
             </div>
-            <p className="text-white/70 text-lg">{info.tagline}</p>
+            <p className="text-base md:text-lg text-white leading-relaxed max-w-xl mx-auto">{info.tagline}</p>
+            <div className="mt-8 flex justify-center">
+              <Link href="/contact">
+                <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] font-heading font-normal px-8 py-2.5 text-xs shadow-none">
+                  Contact Us
+                </InteractiveHoverButton>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -414,7 +425,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
             <div className="container">
               <div className="relative rounded overflow-hidden mb-8">
                 <img src={campusPartners} alt="University campus" className="w-full h-40 object-cover" loading="lazy" width={1280} height={512} />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#3B4CAA]/90 via-[#3B4CAA]/70 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#141C3A]/90 via-[#141C3A]/70 to-transparent" />
                 <div className="absolute inset-0 flex items-center">
                   <div className="container">
                     <h2 className="font-heading font-bold text-2xl text-white">
@@ -567,14 +578,14 @@ export default function DestinationDetailPage({ params }: PageProps) {
       {/* CTA */}
       <section className="py-20 relative overflow-hidden">
         <img src={ctaBgMap[country || ""] || heroImg || "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=80"} alt="" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[#283492]/85" />
+        <div className="absolute inset-0 bg-[#141C3A]/85" />
         <div className="container relative z-10 text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-3">Ready to Study in {info.name}?</h2>
           <p className="text-white/60 mb-8 max-w-lg mx-auto text-lg">Get expert guidance on applications, scholarships, and visa processing - completely free.</p>
           <Link href="/contact">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold px-8 rounded">
-              Get Free Consultation <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
+              Get Free Consultation
+            </InteractiveHoverButton>
           </Link>
         </div>
       </section>

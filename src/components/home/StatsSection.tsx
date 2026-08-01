@@ -36,7 +36,7 @@ const StatsSection = () => {
 
   const students = useCountUp(2500, 2000, visible);
   const partners = useCountUp(300, 2000, visible);
-  const countries = useCountUp(11, 1500, visible);
+  const countries = useCountUp(16, 1500, visible);
   const success = useCountUp(98.3, 2000, visible);
 
   const stats = [
@@ -47,14 +47,14 @@ const StatsSection = () => {
   ];
 
   return (
-    <section ref={ref} className="py-12 section-dark">
+    <section ref={ref} className="py-10 bg-gradient-to-r from-[#141C3A] via-[#1d2b5c] to-[#141C3A] border-b border-white/10">
       <div className="container">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6">
           {stats.map((stat, i) => (
             <div key={i} className="text-center">
-              <stat.icon className="w-8 h-8 text-accent mx-auto mb-2" />
-              <div className="font-heading font-extrabold text-3xl md:text-4xl text-white">{stat.value}</div>
-              <div className="text-sm text-white/70 mt-1">{stat.label}</div>
+              <stat.icon className="w-5 h-5 md:w-8 md:h-8 text-accent mx-auto mb-1.5 md:mb-2" />
+              <div className="font-heading font-medium sm:font-extrabold text-base sm:text-2xl md:text-4xl text-white leading-none">{stat.value}</div>
+              <div className="text-[8px] sm:text-xs md:text-sm text-white/70 mt-1 md:mt-1.5 leading-tight">{stat.label}</div>
             </div>
           ))}
         </div>

@@ -1,29 +1,34 @@
 {
-  "ie": {
-    "name": "Ireland",
-    "flagCode": "ie",
-    "slug": "ie",
+  "canada": {
+    "name": "Canada",
+    "flagCode": "ca",
+    "slug": "canada",
     "universities": [
-      "Trinity College Dublin, Dublin",
-      "University College Dublin, Dublin",
-      "(Study Group) - University College Dublin Pathways",
-      "University of Galway, Galway",
-      "University College Cork, Cork",
-      "University of Limerick, Limerick",
-      "Dublin City University, Dublin",
-      "Maynooth University, Maynooth",
-      "Technological University Dublin (Pathway as well as UG & PG Direct Entry)",
-      "South East Technological University (Waterford and Carlow Campus)",
-      "Atlantic Technological University, Galway and Letterkenny Campus",
-      "Technological University of the Shannon: Midlands Midwest, Shannon (Limerick and Athlone Campus)",
-      "National College of Ireland, Dublin",
-      "Galway Business School, Galway",
-      "Dublin Business School, Dublin",
-      "Shannon College of Hotel Management, A college of NUI Galway, Galway",
-      "Dublin International Foundation College, Dublin",
-      "IBAT College Dublin, Dublin",
-      "Independent College, Dublin",
-      "Munster Technological University, Cork and Kerry Campus"
+      "Queen's University, Kingston, Ontario (Only UG)",
+      "University of Ottawa, Ottawa, Ontario",
+      "University of Victoria in Partnership with Kaplan, Victoria, British Columbia",
+      "York University, School of Continuing Education, Toronto, Ontario",
+      "University of Guelph, Guelph and Ridgetown Campus, Ontario",
+      "University of Waterloo, Waterloo, Ontario",
+      "University of Calgary Continuing Education, Calgary, Alberta",
+      "Dalhousie University, Halifax, Nova Scotia",
+      "Memorial University of Newfoundland, St. John's, Newfoundland and Labrador (Only PG)",
+      "Carleton University, Ottawa, Ontario",
+      "University of Manitoba, Winnipeg, Manitoba",
+      "University of Windsor, Windsor, Ontario",
+      "University of Windsor, Windsor, Ontario (PG Programs)",
+      "University of New Brunswick, Fredericton, New Brunswick",
+      "University of New Brunswick, Saint John,New Brunswick (Except students from India)",
+      "University of Regina, Regina, Saskatchewan",
+      "Brock University, St. Catharine’s, Ontario",
+      "Wilfrid Laurier University, Waterloo, Ontario (Only UG)",
+      "University of Lethbridge, Lethbridge, Alberta (Only UG)",
+      "Lakehead University, Thunder Bay, Ontario",
+      "University of Winnipeg, Winnipeg, Manitoba",
+      "University of Prince Edward Island, Charlottetown, Prince Edward Island",
+      "Acadia University, Wolfville, Nova Scotia (Only UG)",
+      "St. Francis Xavier University, Antigonish, Nova Scotia",
+      "University of Northern British Columbia (UNBC), Prince George, British Columbia."
     ]
   },
   "uk": {
@@ -143,95 +148,104 @@
       "University of Cambridge, England (Summer Programs)"
     ]
   },
-  "malta": {
-    "name": "Malta",
-    "flagCode": "mt",
-    "slug": "malta",
+  "usa": {
+    "name": "United States",
+    "flagCode": "us",
+    "slug": "usa",
     "universities": [
-      "Queen Mary University of London (Malta Campus)",
-      "Idea Academy, Malta (Except Students from Punjab and Haryana)",
-      "Ascencia Business School Malta",
-      "London School of Commerce Malta",
-      "Saint Martin’s Institute of Higher Education",
-      "Global Business Studies-GBS Malta Campus",
-      "Learnkey Training Institute",
-      "Yhank Institute, Malta",
-      "European Business School, St. Julian's"
+      "Kaplan-University of Connecticut, Connecticut (Public Ivy)",
+      "Shorelight- Johns Hopkins University, Baltimore, Maryland (PG Programs Only)",
+      "Kaplan- Arizona State University, Phoenix, Arizona",
+      "Kaplan- Arizona State University, Los Angeles, California",
+      "University of California, Riverside, California (Graduate Business Programs & College of Engineering and UCR Extension)",
+      "Virginia Tech Language and Culture Institute, Blacksburg, Virginia (UG and PG Pathways)",
+      "University of South Florida, Tampa, Florida (Only UG)",
+      "University of Oregon, Eugene, Oregon (Only UG)",
+      "Southern Methodist University, Dallas, Texas (Only MS)",
+      "University of Arizona, Tucon, Arizona (Direct)",
+      "Drexel University, Philadelphia, Pennsylvania (College of Engg. UG Gateways and IEP)",
+      "University of Delaware, Newark, Delaware (Only UG)",
+      "Miami University, Oxford, Ohio",
+      "University of Vermont, Burlington, Vermont (Only UG)",
+      "Colorado State University, Fort Collins, Colorado",
+      "Shorelight- University of Illinois at Chicago, Illinois",
+      "The University of Alabama Tuscaloosa, Alabama",
+      "Claremont Graduate University, Claremont, California",
+      "Keck Graduate Institute (KGI), Claremont, California",
+      "Shorelight- University of Utah, Salt Lake City, Utah (Only UG)",
+      "University of Cincinnati, Ohio (Only UG – Pathway and Direct entry)",
+      "Ohio University, Athens, Ohio (Only UG)",
+      "University of the Pacific, Stockton, California (Direct tie-up)",
+      "University of Kansas, Lawrence, Kansas (Only UG)",
+      "University of Tulsa, Tulsa, Okhlohma",
+      "University of Maryland, Baltimore County, Maryland",
+      "University of Albany, The State University of New York, Albany (SUNY Albany)",
+      "Shorelight- University of Dayton, Dayton, Ohio",
+      "University of Colorado Denver, Colorado"
     ]
   },
-  "south-korea": {
-    "name": "South Korea",
-    "flagCode": "kr",
-    "slug": "south-korea",
+  "australia": {
+    "name": "Australia",
+    "flagCode": "au",
+    "slug": "australia",
     "universities": [
-      "George Mason University- (Korea Campus) INTO- George Mason University- (Korea Campus)",
-      "Woosong University, Daejeon"
+      "The University of New South Wales, Sydney (CRICOS Code 00098G)",
+      "University of Queensland, Brisbane (CRICOS Code 00025B)",
+      "(INTO) University of Western Australia College, Perth (CRICOS Code: 00126G)",
+      "The University of Adelaide, Adelaide (CRICOS Code 00123M)",
+      "University of Wollongong, Wollongong (CRICOS Code 00102E )",
+      "Griffith University, Gold Coast & Brisbane (CRICOS Code 00233E)",
+      "University of Tasmania, Hobart & Launceston (CRICOS Code 00586B)",
+      "The University of Newcastle, Newcastle (CRICOS Code 00109J)",
+      "Russo Business School, Brisbane (CRICOS Code – 03441F)",
+      "James Cook University, Townsville, Cairns (CRICOS Code: 00117J)",
+      "James Cook University, Brisbane (CRICOS Code 00117J)",
+      "The University of Notre Dame Australia, Fremantle (CRICOS Code 01032F)",
+      "CQUniversity Australia, Sydney, Melbourne, Brisbane & Perth (CRICOS Code 00219C)",
+      "Charles Darwin University International College (CRICOS Codes  0100739; 0100740)",
+      "Le Cordon Bleu, Adelaide, Sydney, Melbourne & Perth (CRICOS Code 02380M)",
+      "UTS College, Sydney, New South Wales (CRICOS Provider Codes: UTS College  00859D, UTS 00099F)",
+      "S P Jain School of Global Management, Sydney Campus (CRICOS Code 03335G)",
+      "Academy of Interactive Technology, Sydney (CRICOS Code: 02155J) (formerly known as Academy of Information Technology)",
+      "Ironwood Institute Adelaide, Adelaide (CRICOS Code: 03039E)",
+      "University of Adelaide College (CRICOS Code: 00123M)",
+      "UNSW College, Sydney (CRICOS Code 00098G)",
+      "University of Western Australia College, Perth (CRICOS Code: 00126G)",
+      "Engineering Institute oF Technology, Australia (CRICOS Code: 03567C)",
+      "LCI Melbourne (CRICOS Code 02201G)",
+      "Analytics Institute of Australia, Melbourne (CRICOS Code 04059D)",
+      "ELICOS Courses CELUSA (CRICOS Code: 00121B) WESTERN SYDNEY UNIVERSITY ‘THE COLLEGE’ CRICOS Provider Code 02851GK",
+      "Eynesbury (CRICOS Code: 00561M)",
+      "Curtin College",
+      "Deakin College",
+      "SAIBT (CRICOS Code: 01576G)"
     ]
   },
-  "hungary": {
-    "name": "Hungary",
-    "flagCode": "hu",
-    "slug": "hungary",
+  "ireland": {
+    "name": "Ireland",
+    "flagCode": "ie",
+    "slug": "ireland",
     "universities": [
-      "University of Debrecen, Debrecen",
-      "Budapest Metropolitan University of Applied Science, Budapest",
-      "University of Pecs, Pécs",
-      "Wekerle Business School, Budapest",
-      "Hungarian University of Sports Science, Budapest"
-    ]
-  },
-  "finland": {
-    "name": "Finland",
-    "flagCode": "fi",
-    "slug": "finland",
-    "universities": [
-      "University of Vaasa, Vaasa",
-      "Metropolia University of Applied Sciences, Helsinki",
-      "University of Jyväskylä, Jyväskylä",
-      "Tampere University",
-      "Tampere University of Applied Sciences (TAMK), Tampere",
-      "Turku University of Applied Sciences, Turku",
-      "Hanken School of Economics, Helsinki"
-    ]
-  },
-  "denmark": {
-    "name": "Denmark",
-    "flagCode": "dk",
-    "slug": "denmark",
-    "universities": [
-      "University of Southern Denmark, Odense and Sonderborg Campus",
-      "International Business Academy, Kolding"
-    ]
-  },
-  "germany": {
-    "name": "Germany",
-    "flagCode": "de",
-    "slug": "germany",
-    "universities": [
-      "Constructor University, Bremen",
-      "Steinbeis University, Berlin (Only PG)",
-      "SRH University, Berlin, Hamburg, Leipzig, Dresden, Munich and Heidelberg Campuses",
-      "SRH Fernhochschule – The Distance Learning University, Riedlingen",
-      "Northern Institute of Technology Management (NIT), Hamburg",
-      "FOM Hochschule - University of Applied Sciences for Economics and Management, Essen",
-      "EBS University, Wiesbaden",
-      "International School of Management ISM (GmBH), Dortmund,",
-      "International University of Applied Sciences, Berlin and Bad Honnef",
-      "CBS International Business School, Cologne",
-      "Arden University, Berlin",
-      "GISMA University of Applied Sciences GmbH, Berlin",
-      "New European College, Munich",
-      "EU Business School, Munich",
-      "Munich University of Digital Technology & Applied Science, Munich",
-      "Munich Business School, Munich",
-      "Berlin School of Business and Innovation, Berlin",
-      "Hochschule Macromedia University of Applied Sciences, Munich",
-      "ICN Business School, Berlin Campus",
-      "Navitas- Lancaster University, Lipzing (Foundations and UG Programs)",
-      "EIIE Eurasia Institute for International Education GmbH, Berlin",
-      "Media Design University of Applied Sciences, Berlin",
-      "Schiller International University, Heidelberg",
-      "PFH – Private University of Applied Sciences, Göttingen"
+      "Trinity College Dublin, Dublin",
+      "University College Dublin, Dublin",
+      "(Study Group) - University College Dublin Pathways",
+      "University of Galway, Galway",
+      "University College Cork, Cork",
+      "University of Limerick, Limerick",
+      "Dublin City University, Dublin",
+      "Maynooth University, Maynooth",
+      "Technological University Dublin (Pathway as well as UG & PG Direct Entry)",
+      "South East Technological University (Waterford and Carlow Campus)",
+      "Atlantic Technological University, Galway and Letterkenny Campus",
+      "Technological University of the Shannon: Midlands Midwest, Shannon (Limerick and Athlone Campus)",
+      "National College of Ireland, Dublin",
+      "Galway Business School, Galway",
+      "Dublin Business School, Dublin",
+      "Shannon College of Hotel Management, A college of NUI Galway, Galway",
+      "Dublin International Foundation College, Dublin",
+      "IBAT College Dublin, Dublin",
+      "Independent College, Dublin",
+      "Munster Technological University, Cork and Kerry Campus"
     ]
   },
   "new-zealand": {
@@ -302,6 +316,43 @@
       "Esigelec Graduate School of Engineering"
     ]
   },
+  "germany": {
+    "name": "Germany",
+    "flagCode": "de",
+    "slug": "germany",
+    "universities": [
+      "Constructor University, Bremen",
+      "Steinbeis University, Berlin (Only PG)",
+      "SRH University, Berlin, Hamburg, Leipzig, Dresden, Munich and Heidelberg Campuses",
+      "SRH Fernhochschule – The Distance Learning University, Riedlingen",
+      "Northern Institute of Technology Management (NIT), Hamburg",
+      "FOM Hochschule - University of Applied Sciences for Economics and Management, Essen",
+      "EBS University, Wiesbaden",
+      "International School of Management ISM (GmBH), Dortmund,",
+      "International University of Applied Sciences, Berlin and Bad Honnef",
+      "CBS International Business School, Cologne",
+      "Arden University, Berlin",
+      "GISMA University of Applied Sciences GmbH, Berlin",
+      "New European College, Munich",
+      "EU Business School, Munich",
+      "Munich University of Digital Technology & Applied Science, Munich",
+      "Munich Business School, Munich",
+      "Berlin School of Business and Innovation, Berlin",
+      "Hochschule Macromedia University of Applied Sciences, Munich",
+      "ICN Business School, Berlin Campus",
+      "Navitas- Lancaster University, Lipzing (Foundations and UG Programs)",
+      "EIIE Eurasia Institute for International Education GmbH, Berlin",
+      "Media Design University of Applied Sciences, Berlin",
+      "Schiller International University, Heidelberg",
+      "PFH – Private University of Applied Sciences, Göttingen"
+    ]
+  },
+  "netherlands": {
+    "name": "Netherlands",
+    "flagCode": "nl",
+    "slug": "netherlands",
+    "universities": []
+  },
   "sweden": {
     "name": "Sweden",
     "flagCode": "se",
@@ -312,6 +363,76 @@
       "University West",
       "Karlstad University, Karlstad",
       "Kristianstad University"
+    ]
+  },
+  "finland": {
+    "name": "Finland",
+    "flagCode": "fi",
+    "slug": "finland",
+    "universities": [
+      "University of Vaasa, Vaasa",
+      "Metropolia University of Applied Sciences, Helsinki",
+      "University of Jyväskylä, Jyväskylä",
+      "Tampere University",
+      "Tampere University of Applied Sciences (TAMK), Tampere",
+      "Turku University of Applied Sciences, Turku",
+      "Hanken School of Economics, Helsinki"
+    ]
+  },
+  "denmark": {
+    "name": "Denmark",
+    "flagCode": "dk",
+    "slug": "denmark",
+    "universities": [
+      "University of Southern Denmark, Odense and Sonderborg Campus",
+      "International Business Academy, Kolding"
+    ]
+  },
+  "hungary": {
+    "name": "Hungary",
+    "flagCode": "hu",
+    "slug": "hungary",
+    "universities": [
+      "University of Debrecen, Debrecen",
+      "Budapest Metropolitan University of Applied Science, Budapest",
+      "University of Pecs, Pécs",
+      "Wekerle Business School, Budapest",
+      "Hungarian University of Sports Science, Budapest"
+    ]
+  },
+  "malta": {
+    "name": "Malta",
+    "flagCode": "mt",
+    "slug": "malta",
+    "universities": [
+      "Queen Mary University of London (Malta Campus)",
+      "Idea Academy, Malta (Except Students from Punjab and Haryana)",
+      "Ascencia Business School Malta",
+      "London School of Commerce Malta",
+      "Saint Martin’s Institute of Higher Education",
+      "Global Business Studies-GBS Malta Campus",
+      "Learnkey Training Institute",
+      "Yhank Institute, Malta",
+      "European Business School, St. Julian's"
+    ]
+  },
+  "malaysia": {
+    "name": "Malaysia",
+    "flagCode": "my",
+    "slug": "malaysia",
+    "universities": [
+      "University of Nottingham, Malaysia Campus",
+      "University of Wollongong, Malaysia Campus",
+      "Taylor`s University, Malaysia",
+      "Heriot-Watt University, Malaysia Campus",
+      "Sunway University, Petaling Jaya",
+      "Swinburne University of Technology, Sarawak Campus",
+      "UCSI University Kuala Lumpur",
+      "Asia Pacific University of Technology And Innovation, Kuala Lumpur",
+      "Sunway Le Cordon Bleu, Malaysia",
+      "Raffles University, Malaysia Campus",
+      "Raffles College of Higher Education, Malaysia Campus",
+      "Lincoln University College, Kota Bharu"
     ]
   },
   "china": {
@@ -344,139 +465,6 @@
       "Nanjing University of the Arts",
       "Chengdu university of technology",
       "Kunming medical university (Kunming)"
-    ]
-  },
-  "malaysia": {
-    "name": "Malaysia",
-    "flagCode": "my",
-    "slug": "malaysia",
-    "universities": [
-      "University of Nottingham, Malaysia Campus",
-      "University of Wollongong, Malaysia Campus",
-      "Taylor`s University, Malaysia",
-      "Heriot-Watt University, Malaysia Campus",
-      "Sunway University, Petaling Jaya",
-      "Swinburne University of Technology, Sarawak Campus",
-      "UCSI University Kuala Lumpur",
-      "Asia Pacific University of Technology And Innovation, Kuala Lumpur",
-      "Sunway Le Cordon Bleu, Malaysia",
-      "Raffles University, Malaysia Campus",
-      "Raffles College of Higher Education, Malaysia Campus",
-      "Lincoln University College, Kota Bharu"
-    ]
-  },
-  "belgium": {
-    "name": "Belgium",
-    "flagCode": "be",
-    "slug": "belgium",
-    "universities": [
-      "University of Antwerp, Antwerp",
-      "Thomas More, University of Applied Science, Antwerp"
-    ]
-  },
-  "australia": {
-    "name": "Australia",
-    "flagCode": "au",
-    "slug": "australia",
-    "universities": [
-      "The University of New South Wales, Sydney (CRICOS Code 00098G)",
-      "University of Queensland, Brisbane (CRICOS Code 00025B)",
-      "(INTO) University of Western Australia College, Perth (CRICOS Code: 00126G)",
-      "The University of Adelaide, Adelaide (CRICOS Code 00123M)",
-      "University of Wollongong, Wollongong (CRICOS Code 00102E )",
-      "Griffith University, Gold Coast & Brisbane (CRICOS Code 00233E)",
-      "University of Tasmania, Hobart & Launceston (CRICOS Code 00586B)",
-      "The University of Newcastle, Newcastle (CRICOS Code 00109J)",
-      "Russo Business School, Brisbane (CRICOS Code – 03441F)",
-      "James Cook University, Townsville, Cairns (CRICOS Code: 00117J)",
-      "James Cook University, Brisbane (CRICOS Code 00117J)",
-      "The University of Notre Dame Australia, Fremantle (CRICOS Code 01032F)",
-      "CQUniversity Australia, Sydney, Melbourne, Brisbane & Perth (CRICOS Code 00219C)",
-      "Charles Darwin University International College (CRICOS Codes  0100739; 0100740)",
-      "Le Cordon Bleu, Adelaide, Sydney, Melbourne & Perth (CRICOS Code 02380M)",
-      "UTS College, Sydney, New South Wales (CRICOS Provider Codes: UTS College  00859D, UTS 00099F)",
-      "S P Jain School of Global Management, Sydney Campus (CRICOS Code 03335G)",
-      "Academy of Interactive Technology, Sydney (CRICOS Code: 02155J) (formerly known as Academy of Information Technology)",
-      "Ironwood Institute Adelaide, Adelaide (CRICOS Code: 03039E)",
-      "University of Adelaide College (CRICOS Code: 00123M)",
-      "UNSW College, Sydney (CRICOS Code 00098G)",
-      "University of Western Australia College, Perth (CRICOS Code: 00126G)",
-      "Engineering Institute oF Technology, Australia (CRICOS Code: 03567C)",
-      "LCI Melbourne (CRICOS Code 02201G)",
-      "Analytics Institute of Australia, Melbourne (CRICOS Code 04059D)",
-      "ELICOS Courses CELUSA (CRICOS Code: 00121B) WESTERN SYDNEY UNIVERSITY ‘THE COLLEGE’ CRICOS Provider Code 02851GK",
-      "Eynesbury (CRICOS Code: 00561M)",
-      "Curtin College",
-      "Deakin College",
-      "SAIBT (CRICOS Code: 01576G)"
-    ]
-  },
-  "canada": {
-    "name": "Canada",
-    "flagCode": "ca",
-    "slug": "canada",
-    "universities": [
-      "Queen's University, Kingston, Ontario (Only UG)",
-      "University of Ottawa, Ottawa, Ontario",
-      "University of Victoria in Partnership with Kaplan, Victoria, British Columbia",
-      "York University, School of Continuing Education, Toronto, Ontario",
-      "University of Guelph, Guelph and Ridgetown Campus, Ontario",
-      "University of Waterloo, Waterloo, Ontario",
-      "University of Calgary Continuing Education, Calgary, Alberta",
-      "Dalhousie University, Halifax, Nova Scotia",
-      "Memorial University of Newfoundland, St. John's, Newfoundland and Labrador (Only PG)",
-      "Carleton University, Ottawa, Ontario",
-      "University of Manitoba, Winnipeg, Manitoba",
-      "University of Windsor, Windsor, Ontario",
-      "University of Windsor, Windsor, Ontario (PG Programs)",
-      "University of New Brunswick, Fredericton, New Brunswick",
-      "University of New Brunswick, Saint John,New Brunswick (Except students from India)",
-      "University of Regina, Regina, Saskatchewan",
-      "Brock University, St. Catharine’s, Ontario",
-      "Wilfrid Laurier University, Waterloo, Ontario (Only UG)",
-      "University of Lethbridge, Lethbridge, Alberta (Only UG)",
-      "Lakehead University, Thunder Bay, Ontario",
-      "University of Winnipeg, Winnipeg, Manitoba",
-      "University of Prince Edward Island, Charlottetown, Prince Edward Island",
-      "Acadia University, Wolfville, Nova Scotia (Only UG)",
-      "St. Francis Xavier University, Antigonish, Nova Scotia",
-      "University of Northern British Columbia (UNBC), Prince George, British Columbia."
-    ]
-  },
-  "usa": {
-    "name": "United States",
-    "flagCode": "us",
-    "slug": "usa",
-    "universities": [
-      "Kaplan-University of Connecticut, Connecticut (Public Ivy)",
-      "Shorelight- Johns Hopkins University, Baltimore, Maryland (PG Programs Only)",
-      "Kaplan- Arizona State University, Phoenix, Arizona",
-      "Kaplan- Arizona State University, Los Angeles, California",
-      "University of California, Riverside, California (Graduate Business Programs & College of Engineering and UCR Extension)",
-      "Virginia Tech Language and Culture Institute, Blacksburg, Virginia (UG and PG Pathways)",
-      "University of South Florida, Tampa, Florida (Only UG)",
-      "University of Oregon, Eugene, Oregon (Only UG)",
-      "Southern Methodist University, Dallas, Texas (Only MS)",
-      "University of Arizona, Tucon, Arizona (Direct)",
-      "Drexel University, Philadelphia, Pennsylvania (College of Engg. UG Gateways and IEP)",
-      "University of Delaware, Newark, Delaware (Only UG)",
-      "Miami University, Oxford, Ohio",
-      "University of Vermont, Burlington, Vermont (Only UG)",
-      "Colorado State University, Fort Collins, Colorado",
-      "Shorelight- University of Illinois at Chicago, Illinois",
-      "The University of Alabama Tuscaloosa, Alabama",
-      "Claremont Graduate University, Claremont, California",
-      "Keck Graduate Institute (KGI), Claremont, California",
-      "Shorelight- University of Utah, Salt Lake City, Utah (Only UG)",
-      "University of Cincinnati, Ohio (Only UG – Pathway and Direct entry)",
-      "Ohio University, Athens, Ohio (Only UG)",
-      "University of the Pacific, Stockton, California (Direct tie-up)",
-      "University of Kansas, Lawrence, Kansas (Only UG)",
-      "University of Tulsa, Tulsa, Okhlohma",
-      "University of Maryland, Baltimore County, Maryland",
-      "University of Albany, The State University of New York, Albany (SUNY Albany)",
-      "Shorelight- University of Dayton, Dayton, Ohio",
-      "University of Colorado Denver, Colorado"
     ]
   }
 }

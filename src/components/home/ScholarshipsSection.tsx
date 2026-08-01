@@ -47,10 +47,10 @@ const ScholarshipsSection = () => {
   }, []);
 
   return (
-    <section className="py-16 section-muted">
+    <section className="py-10">
       <div className="container">
         <div className="text-center mb-10">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground">{t.scholarships.title}</h2>
+          <h2 className="font-heading font-semibold text-3xl text-foreground">{t.scholarships.title}</h2>
           <p className="text-muted-foreground mt-2">{t.scholarships.subtitle}</p>
         </div>
 

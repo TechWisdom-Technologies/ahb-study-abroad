@@ -9,7 +9,7 @@ export const en = {
     freeConsultation: "Free Consultation",
   },
   hero: {
-    title: "Your Gateway to",
+    title: "Your Trusted Partner in",
     titleHighlight: "Global Education",
     subtitle: "AHB Study Abroad helps Bangladeshi students achieve their dreams of studying abroad in top universities worldwide.",
     cta1: "Book Free Consultation",
@@ -31,12 +31,13 @@ export const en = {
     title: "Why Choose AHB Study Abroad?",
     subtitle: "We provide end-to-end support for your international education journey",
     items: [
-      { title: "Experienced Consultants", desc: "Certified education consultants with years of experience in international admissions." },
-      { title: "Honest & Transparent", desc: "100% honest and transparent guidance at every stage of your application." },
-      { title: "Personalized Support", desc: "Tailored counseling according to your academic background and career goals." },
-      { title: "High Visa Success", desc: "Proven track record with one of the highest visa approval rates in Bangladesh." },
-      { title: "End-to-End Assistance", desc: "From university selection to visa processing and arrival support." },
-      { title: "Fast & Reliable", desc: "Quick application processing and dedicated follow-up with partner universities." },
+      { title: "Experienced Education Consultants", desc: "Certified education consultants with years of experience in international admissions." },
+      { title: "Honest & Transparent Guidance", desc: "100% honest and transparent guidance at every stage of your application." },
+      { title: "Personalized Student Support", desc: "Tailored counseling according to your academic background and career goals." },
+      { title: "High Visa Success Rate", desc: "Proven track record with one of the highest visa approval rates in Bangladesh." },
+      { title: "End-to-End Admission Assistance", desc: "From university selection to visa processing and arrival support." },
+      { title: "Fast & Reliable Service", desc: "Quick application processing and dedicated follow-up with partner universities." },
+      { title: "Support Before and After Arrival", desc: "Comprehensive pre-departure briefing and post-arrival assistance in your destination." },
     ],
   },
   journey: {
@@ -70,6 +71,7 @@ export const en = {
   },
   partners: {
     title: "Our Partner Institutions",
+    subtitle: "Connecting you with top universities and colleges worldwide",
   },
   certifications: {
     title: "Accreditations & Certifications",

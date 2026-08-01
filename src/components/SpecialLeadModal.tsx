@@ -362,7 +362,7 @@ const SpecialLeadModal = ({ open, onOpenChange }: Props) => {
           {/* Header with logo and progress */}
           <div className="bg-[#072a38] px-6 pt-5 pb-4 rounded-t-lg">
             <div className="flex items-center gap-3 mb-3">
-              <img src="/assets/ahb-logo-white.png" alt="AHB Study Abroad" className="h-8 w-auto rounded" />
+              <img src="/assets/ahb-logo.png" alt="AHB Study Abroad" className="h-8 w-auto rounded" />
               <div>
                 <h2 className="font-heading font-bold text-lg text-white">Free Consultation</h2>
                 <p className="text-white/70 text-xs">Start your study abroad journey</p>

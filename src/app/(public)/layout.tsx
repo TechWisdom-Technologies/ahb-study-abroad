@@ -12,7 +12,7 @@ export default function PublicLayout({
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-16">
+      <main className="min-h-screen pt-[80px]">
         {children}
       </main>
       <FloatingButtons />

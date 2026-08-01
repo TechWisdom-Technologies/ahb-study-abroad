@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight } from "lucide-react";
 
-const ahbLogo = "/assets/ahb-logo-white.png";
+const ahbLogo = "/assets/ahb-logo.png";
 const heroImage = "/assets/hero-students.jpg";
 
 export default function AdminLoginPage() {
@@ -61,8 +61,8 @@ export default function AdminLoginPage() {
             alt="Students"
             className="w-full h-full object-cover opacity-40 mix-blend-luminosity"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1233] via-[#1a2266]/80 to-[#283492]/60 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-[#283492] opacity-40 mix-blend-color" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050811] via-[#0A0F21]/80 to-[#141C3A]/60 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-[#141C3A] opacity-40 mix-blend-color" />
         </div>
 
         {/* Content */}
@@ -73,16 +73,16 @@ export default function AdminLoginPage() {
 
           <div className="my-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-sm mb-6">
-              <ShieldCheck className="w-4 h-4 text-[#FFD40E]" />
+              <ShieldCheck className="w-4 h-4 text-[#5CBAE6]" />
               <span className="text-white text-xs font-semibold tracking-wider uppercase">AHB Study Abroad System</span>
             </div>
 
             <h1 className="text-4xl lg:text-5xl font-bold text-white font-heading mb-6 tracking-tight leading-tight">
               Administrative <br />
-              <span className="text-[#FFD40E]">Workspace</span>
+              <span className="text-[#5CBAE6]">Workspace</span>
             </h1>
 
-            <p className="text-blue-100/80 text-lg leading-relaxed max-w-md border-l-2 border-[#FFD40E]/50 pl-4">
+            <p className="text-blue-100/80 text-lg leading-relaxed max-w-md border-l-2 border-[#5CBAE6]/50 pl-4">
               Centralized control for managing student applications, university partnerships, and global pathways.
             </p>
           </div>
@@ -99,9 +99,9 @@ export default function AdminLoginPage() {
           {/* Mobile Logo */}
           <div className="lg:hidden mb-10 text-center">
             <img src={ahbLogo} alt="AHB Study Abroad" className="h-12 w-auto mx-auto object-contain mb-4 rounded" />
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#283492]/5 border border-[#283492]/10 rounded-sm">
-              <ShieldCheck className="w-4 h-4 text-[#283492]" />
-              <span className="text-[#283492] text-xs font-semibold tracking-wider uppercase">Admin Portal</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#141C3A]/5 border border-[#141C3A]/10 rounded-sm">
+              <ShieldCheck className="w-4 h-4 text-[#141C3A]" />
+              <span className="text-[#141C3A] text-xs font-semibold tracking-wider uppercase">Admin Portal</span>
             </div>
           </div>
 
@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
             <div className="space-y-2">
               <Label htmlFor="email" className="text-gray-700 font-semibold text-sm">Email Address</Label>
               <div className="relative flex items-center group">
-                <div className="absolute left-0 pl-3.5 flex items-center pointer-events-none transition-colors group-focus-within:text-[#283492] text-gray-400">
+                <div className="absolute left-0 pl-3.5 flex items-center pointer-events-none transition-colors group-focus-within:text-[#141C3A] text-gray-400">
                   <Mail className="h-5 w-5" />
                 </div>
                 <Input
@@ -138,7 +138,7 @@ export default function AdminLoginPage() {
             <div className="space-y-2">
               <Label htmlFor="password" className="text-gray-700 font-semibold text-sm">Password</Label>
               <div className="relative flex items-center group">
-                <div className="absolute left-0 pl-3.5 flex items-center pointer-events-none transition-colors group-focus-within:text-[#283492] text-gray-400">
+                <div className="absolute left-0 pl-3.5 flex items-center pointer-events-none transition-colors group-focus-within:text-[#141C3A] text-gray-400">
                   <Lock className="h-5 w-5" />
                 </div>
                 <Input
@@ -173,7 +173,7 @@ export default function AdminLoginPage() {
 
             <Button
               type="submit"
-              className="w-full h-12 rounded-sm bg-[#283492] hover:bg-[#1a2266] text-white font-semibold text-base shadow-md transition-all group"
+              className="w-full h-12 rounded-sm bg-[#141C3A] hover:bg-[#0A0F21] text-white font-semibold text-base shadow-md transition-all group"
               disabled={loading}
             >
               {loading ? (
@@ -192,7 +192,7 @@ export default function AdminLoginPage() {
 
           <div className="mt-8 pt-6 border-t border-gray-200">
             <button
-              className="w-full text-sm text-gray-500 hover:text-[#283492] font-medium transition-colors focus:outline-none"
+              className="w-full text-sm text-gray-500 hover:text-[#141C3A] font-medium transition-colors focus:outline-none"
               onClick={() => { setIsSignup(!isSignup); setError(""); }}
             >
               {isSignup ? "Return to sign in" : "Create administrative account"}

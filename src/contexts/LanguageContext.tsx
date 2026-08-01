@@ -22,7 +22,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLang] = useState<Language>("en");
 
   useEffect(() => {
-    const saved = localStorage.getItem("cambry-lang");
+    const saved = localStorage.getItem("ahb-lang");
     if (saved === "bn" || saved === "en") {
       setLang(saved as Language);
     }
@@ -30,7 +30,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const setLanguage = useCallback((lang: Language) => {
     setLang(lang);
-    localStorage.setItem("cambry-lang", lang);
+    localStorage.setItem("ahb-lang", lang);
   }, []);
 
   const toggleLanguage = useCallback(() => {

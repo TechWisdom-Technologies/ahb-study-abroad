@@ -20,7 +20,7 @@ export default function Error({
       <div className="flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10 text-destructive mb-6 animate-pulse">
         <AlertCircle className="h-10 w-10" />
       </div>
-      <h1 className="font-heading font-extrabold text-3xl md:text-4xl text-[#283492] tracking-tight mb-4">
+      <h1 className="font-heading font-extrabold text-3xl md:text-4xl text-[#141C3A] tracking-tight mb-4">
         Something went wrong!
       </h1>
       <p className="text-muted-foreground max-w-md mb-8 text-sm md:text-base leading-relaxed">
@@ -28,7 +28,7 @@ export default function Error({
       </p>
       <Button
         onClick={() => reset()}
-        className="bg-[#283492] hover:bg-[#1a2266] text-white font-semibold gap-2 rounded px-6 py-5"
+        className="bg-[#141C3A] hover:bg-[#0A0F21] text-white font-semibold gap-2 rounded px-6 py-5"
       >
         <RotateCcw className="h-4 w-4" />
         Try Again

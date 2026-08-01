@@ -273,11 +273,11 @@ export default function LeadsAdminPage() {
           {viewLead && (
             <>
               {/* Header with gradient */}
-              <div className="bg-gradient-to-br from-[#283492] via-[#2c3a9e] to-[#1e2873] p-6 rounded-t-lg relative overflow-hidden">
+              <div className="bg-gradient-to-br from-[#141C3A] via-[#172140] to-[#0E142B] p-6 rounded-t-lg relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
                 <div className="relative z-10">
-                  <span className="text-xs uppercase tracking-wider font-semibold text-[#FFD40E] bg-[#FFD40E]/15 px-2 py-0.5 rounded mb-2 inline-block">
+                  <span className="text-xs uppercase tracking-wider font-semibold text-[#5CBAE6] bg-[#5CBAE6]/15 px-2 py-0.5 rounded mb-2 inline-block">
                     {tabLabels[(viewLead.lead_type || "general") as keyof typeof tabLabels] || viewLead.lead_type}
                   </span>
                   <h3 className="font-heading font-bold text-xl text-white flex items-center gap-2">
@@ -324,7 +324,7 @@ export default function LeadsAdminPage() {
                 {viewLead.details && Object.keys(viewLead.details).filter(k => !["preferred_destination", "preferred_uni"].includes(k)).length > 0 && (
                   <div className="bg-muted/30 border border-border rounded p-4">
                     <h4 className="font-heading font-semibold text-sm mb-3 flex items-center gap-2 text-foreground">
-                      <span className="w-1.5 h-1.5 bg-[#283492] rounded-full" /> Additional Information
+                      <span className="w-1.5 h-1.5 bg-[#141C3A] rounded-full" /> Additional Information
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                       {Object.entries(viewLead.details)
@@ -368,7 +368,7 @@ export default function LeadsAdminPage() {
 
               <div className="px-6 pb-5 flex justify-end gap-2">
                 <Button variant="outline" className="rounded" onClick={() => setViewLead(null)}>Close</Button>
-                <Button onClick={saveNotes} className="rounded bg-gradient-to-r from-[#283492] to-[#1e2873] text-white hover:opacity-90">Save Notes</Button>
+                <Button onClick={saveNotes} className="rounded bg-gradient-to-r from-[#141C3A] to-[#0E142B] text-white hover:opacity-90">Save Notes</Button>
               </div>
             </>
           )}

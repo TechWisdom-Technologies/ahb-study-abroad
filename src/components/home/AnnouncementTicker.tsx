@@ -48,12 +48,11 @@ const AnnouncementTicker = () => {
   );
 
   return (
-    <div className="bg-accent text-accent-foreground py-2 overflow-hidden">
+    <div className="bg-gradient-to-r from-[#141C3A] via-[#1d2b5c] to-[#141C3A] text-white py-3.5 overflow-hidden border-b border-white/5">
       <div className="container flex items-center gap-3">
-        <div className="flex-shrink-0 flex items-center gap-1.5 font-heading font-semibold text-sm">
-          <Megaphone className="w-4 h-4" />
-          <span>Updates</span>
-          <span className="mx-1">|</span>
+        <div className="flex-shrink-0 flex items-center gap-1.5 font-heading font-semibold text-sm text-white">
+          <span>Announcements</span>
+          <span className="mx-1 text-white/30">|</span>
         </div>
         <div className="overflow-hidden flex-1">
           <div ref={dragRef} className="flex animate-ticker whitespace-nowrap">

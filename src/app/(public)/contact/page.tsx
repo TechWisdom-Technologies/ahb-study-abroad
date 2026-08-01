@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -102,24 +102,30 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80"
-            alt=""
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#283492]/90" />
-        </div>
-        <div className="container relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-            <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-widest uppercase bg-accent/20 text-accent rounded font-heading">
+      {/* Hero */}
+      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+        {/* Base background colors & image overlay */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
+        <img
+          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-lighten brightness-90 z-[1]"
+        />
+        <div className="absolute inset-0 z-[2] bg-[url('/assets/grid-pattern.svg')] opacity-10" />
+
+        {/* Decorative glows */}
+        <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
+        <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
+
+        <div className="container relative z-10 py-20 lg:py-0">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto text-center">
+            <span className="inline-block text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">
               Contact Us
             </span>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">
+            <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">
               Let's Start Your Journey
             </h1>
-            <p className="text-white/70 text-lg">
+            <p className="text-base md:text-lg text-white leading-relaxed max-w-xl mx-auto">
               Have questions about studying abroad? Our expert counselors are ready to guide you every step of the way.
             </p>
           </motion.div>
@@ -210,10 +216,10 @@ export default function ContactPage() {
                     </Select>
                   </div>
                   <Textarea name="message" placeholder="Tell us about your study abroad plans..." rows={5} required />
-                  <Button type="submit" disabled={loading} className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold px-8">
-                    <Send className="w-4 h-4 mr-2" />
+                  <InteractiveHoverButton type="submit" disabled={loading} className="w-full sm:w-auto bg-primary text-white border-transparent hover:bg-accent hover:border-accent">
+                    <Send className="w-4 h-4 mr-2 inline-block" />
                     {loading ? "Sending..." : "Send Message"}
-                  </Button>
+                  </InteractiveHoverButton>
                 </form>
               </div>
             </div>
@@ -277,7 +283,7 @@ export default function ContactPage() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Cambry Office - Mohakhali DOHS, Dhaka"
+              title="AHB Education Office - Mirpur-11, Dhaka"
             />
           </div>
         </div>

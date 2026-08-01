@@ -1,118 +1,149 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import CountryFlag from "@/components/shared/CountryFlag";
+import { ShineBorder } from "@/components/ui/shine-border";
 
-const heroImage = "/assets/hero-students.jpg";
-
-const cyclingCountries = [
-  { name: "United Kingdom", flagCode: "gb", color: "#FF4444" },
-  { name: "Canada", flagCode: "ca", color: "#FF3131" },
-  { name: "Australia", flagCode: "au", color: "#00BFFF" },
-  { name: "New Zealand", flagCode: "nz", color: "#FFFFFF" },
-  { name: "Malaysia", flagCode: "my", color: "#FFD700" },
-];
+const FlagIcon = ({ code, size = "xl" }: { code: string; size?: "sm" | "md" | "lg" | "xl" }) => (
+  <div className="relative shadow-lg overflow-hidden rounded-md flex items-center justify-center p-0">
+    <ShineBorder shineColor={["#5CBAE6", "#141C3A", "#ffffff"]} borderWidth={1} className="z-30" />
+    <div className="z-20 relative rounded-[2px] overflow-hidden flex items-center justify-center">
+      <CountryFlag code={code} size={size} />
+    </div>
+  </div>
+);
 
 const HeroSection = () => {
   const { t } = useLanguage();
-  const [cycleIndex, setCycleIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCycleIndex((prev) => (prev + 1) % cyclingCountries.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const current = cyclingCountries[cycleIndex];
-
   return (
-    <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden">
-      {/* Base gradient */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#283492] via-[#3B4CAA] to-[#5B6BC0]" />
-
-      {/* Hero image — full bleed background */}
-      <div className="absolute inset-0 z-[1]">
-        <img
-          src={heroImage}
-          alt="Diverse international students celebrating graduation on a university campus"
-          width={1920}
-          height={1280}
-          className="w-full h-full object-cover object-[center_40%]"
-        />
-      </div>
-      {/* Gradient overlays for seamless blending */}
-      <div className="absolute inset-0 z-[2] bg-gradient-to-r from-[#283492] from-5% via-[#3B4CAA]/90 via-35% to-transparent to-75%" />
-      <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#283492]/60 to-transparent" />
+    <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+      {/* Base background colors */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
+      <div className="absolute inset-0 z-[1] bg-[url('/assets/grid-pattern.svg')] opacity-10" />
 
       {/* Decorative shapes */}
-      <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 right-[20%] w-64 h-64 border border-white/5 rounded-full pointer-events-none" />
-      <div className="absolute top-[30%] right-[15%] w-40 h-40 border border-accent/10 rounded-full pointer-events-none" />
+      <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[1]" />
+      <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[1]" />
 
-      <div className="container relative z-10">
-        <div className="max-w-2xl">
+      {/* City background overlay */}
+      <div className="absolute bottom-0 lg:-bottom-24 left-0 right-0 z-[2] pointer-events-none flex justify-center overflow-hidden">
+        <img
+          src="/assets/hero-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          className="w-full max-w-[1920px] h-auto object-cover opacity-20 mix-blend-lighten brightness-90 mask-image-[linear-gradient(to_bottom,transparent,black)]"
+          style={{ WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 100%)' }}
+        />
+      </div>
+
+      <div className="container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-10 lg:py-0">
+        
+        {/* Left Column: Text Content */}
+        <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left pt-0 lg:pt-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
+            className="flex flex-col items-center lg:items-start"
           >
-            <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-widest uppercase bg-accent/20 text-accent rounded font-heading">
-              Trusted Education Consultancy
+            <span className="inline-block text-xs md:text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">
+              Unlock Your Potential Worldwide
             </span>
 
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-2">
+            <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">
               {t.hero.title}{" "}
               <span className="text-accent">{t.hero.titleHighlight}</span>
             </h1>
 
-            {/* Cycling destination */}
-            <div className="h-10 sm:h-12 md:h-14 mb-4 overflow-hidden">
-              <motion.span
-                key={cycleIndex}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                className="flex items-center gap-2 sm:gap-3 font-heading font-bold text-xl sm:text-2xl md:text-3xl whitespace-nowrap"
-                style={{ color: current.color }}
-              >
-                Study in {current.name}
-                <CountryFlag code={current.flagCode} size="lg" className="shadow-lg shrink-0" />
-              </motion.span>
-            </div>
-
-            <p className="text-base md:text-lg text-white/80 mb-6 max-w-xl leading-relaxed">
+            <p className="text-sm md:text-lg text-white mb-8 max-w-xl leading-relaxed mx-auto lg:mx-0">
               {t.hero.subtitle}
             </p>
 
-            <div className="flex flex-wrap gap-3">
+            {/* Mobile Spinning Flags (hidden on desktop) */}
+            <div className="lg:hidden w-full h-[240px] flex items-center justify-center relative mb-6">
+              <div className="absolute w-[180px] h-[180px] bg-accent/15 rounded-full blur-[40px] z-0" />
+              
+              {/* Inner Ring – 5 countries */}
+              <OrbitingCircles radius={45} duration={25} iconSize={26}>
+                <FlagIcon code="gb" size="sm" />
+                <FlagIcon code="ca" size="sm" />
+                <FlagIcon code="us" size="sm" />
+                <FlagIcon code="au" size="sm" />
+                <FlagIcon code="ie" size="sm" />
+              </OrbitingCircles>
+
+              {/* Outer Ring – 11 countries */}
+              <OrbitingCircles radius={95} duration={40} reverse iconSize={26}>
+                <FlagIcon code="nz" size="sm" />
+                <FlagIcon code="fr" size="sm" />
+                <FlagIcon code="de" size="sm" />
+                <FlagIcon code="nl" size="sm" />
+                <FlagIcon code="se" size="sm" />
+                <FlagIcon code="fi" size="sm" />
+                <FlagIcon code="dk" size="sm" />
+                <FlagIcon code="hu" size="sm" />
+                <FlagIcon code="mt" size="sm" />
+                <FlagIcon code="my" size="sm" />
+                <FlagIcon code="cn" size="sm" />
+              </OrbitingCircles>
+            </div>
+
+            <div className="flex flex-row justify-center lg:justify-start gap-3 w-full">
               <Link href="/contact">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold rounded px-6">
+                <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] font-heading font-normal px-4 py-2 sm:px-8 sm:py-2.5 text-[11px] sm:text-xs shadow-none">
                   {t.hero.cta1}
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
+                </InteractiveHoverButton>
               </Link>
               <Link href="/destinations">
-                <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 font-heading font-semibold rounded px-6 bg-white/5">
+                <InteractiveHoverButton className="bg-white/5 text-white border-white/40 hover:bg-white hover:border-white hover:text-[#141C3A] font-heading font-normal px-4 py-2 sm:px-8 sm:py-2.5 text-[11px] sm:text-xs">
                   {t.hero.cta2}
-                </Button>
+                </InteractiveHoverButton>
               </Link>
             </div>
           </motion.div>
         </div>
-      </div>
 
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path d="M0 60L1440 60L1440 20C1200 0 960 40 720 30C480 20 240 0 0 20L0 60Z" fill="hsl(var(--background))" />
-        </svg>
+        {/* Right Column: Orbiting Circles (hidden on mobile) */}
+        <div className="w-full lg:w-1/2 hidden lg:flex justify-center items-center relative">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="relative h-[400px] lg:h-[500px] w-full flex items-center justify-center"
+          >
+            {/* Glow behind orbits */}
+            <div className="absolute w-[300px] h-[300px] bg-accent/15 rounded-full blur-[80px] z-0" />
+
+            {/* Inner Ring – 5 countries */}
+            <OrbitingCircles radius={80} duration={25} iconSize={40}>
+              <FlagIcon code="gb" />
+              <FlagIcon code="ca" />
+              <FlagIcon code="us" />
+              <FlagIcon code="au" />
+              <FlagIcon code="ie" />
+            </OrbitingCircles>
+
+            {/* Outer Ring – 11 countries (reverse) */}
+            <OrbitingCircles radius={170} duration={40} reverse iconSize={40}>
+              <FlagIcon code="nz" />
+              <FlagIcon code="fr" />
+              <FlagIcon code="de" />
+              <FlagIcon code="nl" />
+              <FlagIcon code="se" />
+              <FlagIcon code="fi" />
+              <FlagIcon code="dk" />
+              <FlagIcon code="hu" />
+              <FlagIcon code="mt" />
+              <FlagIcon code="my" />
+              <FlagIcon code="cn" />
+            </OrbitingCircles>
+
+          </motion.div>
+        </div>
       </div>
     </section>
   );

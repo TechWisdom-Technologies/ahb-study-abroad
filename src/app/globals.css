@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
-  --font-sans: var(--font-inter), sans-serif;
+  --font-sans: var(--font-manrope), sans-serif;
   --font-heading: var(--font-poppins), sans-serif;
 
   --color-background: hsl(var(--background));
@@ -41,11 +43,22 @@
   --color-surface-dark-foreground: hsl(var(--surface-dark-foreground));
   --color-highlight: hsl(var(--highlight));
   --color-highlight-foreground: hsl(var(--highlight-foreground));
+
+  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg);
+  }
 }
 
 @layer base {
   :root {
-    /* Brand: Navy #283492 / #3B4CAA / Accent #FFD40E */
+    /* Brand: Deep Navy #141C3A / Sky Blue #5CBAE6 */
     --background: 0 0% 100%;
     --foreground: 0 0% 7%;
 
@@ -55,63 +68,63 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 7%;
 
-    --primary: 231 48% 45%;
+    --primary: 227 49% 15%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 231 30% 95%;
-    --secondary-foreground: 231 48% 35%;
+    --secondary: 227 30% 95%;
+    --secondary-foreground: 227 49% 15%;
 
-    --muted: 231 10% 95%;
+    --muted: 227 10% 95%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 49 100% 53%;
-    --accent-foreground: 0 0% 7%;
+    --accent: 199 73% 63%;
+    --accent-foreground: 227 49% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 231 10% 90%;
-    --input: 231 10% 88%;
-    --ring: 231 48% 45%;
+    --border: 227 20% 90%;
+    --input: 227 20% 88%;
+    --ring: 199 73% 63%;
 
     --radius: 0.25rem;
 
-    --surface-dark: 231 60% 18%;
+    --surface-dark: 227 49% 15%;
     --surface-dark-foreground: 0 0% 100%;
-    --highlight: 49 100% 53%;
-    --highlight-foreground: 0 0% 7%;
+    --highlight: 199 73% 63%;
+    --highlight-foreground: 227 49% 15%;
   }
 
   .dark {
-    --background: 231 60% 6%;
+    --background: 227 49% 6%;
     --foreground: 0 0% 95%;
 
-    --card: 231 50% 10%;
+    --card: 227 40% 10%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 231 50% 10%;
+    --popover: 227 40% 10%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 49 100% 53%;
-    --primary-foreground: 0 0% 7%;
+    --primary: 199 73% 63%;
+    --primary-foreground: 227 49% 15%;
 
-    --secondary: 231 40% 18%;
+    --secondary: 227 30% 18%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 231 30% 15%;
-    --muted-foreground: 231 10% 60%;
+    --muted: 227 30% 15%;
+    --muted-foreground: 227 10% 60%;
 
-    --accent: 49 100% 53%;
-    --accent-foreground: 0 0% 7%;
+    --accent: 199 73% 63%;
+    --accent-foreground: 227 49% 15%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 95%;
 
-    --border: 231 30% 18%;
-    --input: 231 30% 18%;
-    --ring: 49 100% 53%;
+    --border: 227 30% 18%;
+    --input: 227 30% 18%;
+    --ring: 199 73% 63%;
 
-    --surface-dark: 231 60% 4%;
+    --surface-dark: 227 49% 4%;
     --surface-dark-foreground: 0 0% 100%;
   }
 }
@@ -165,7 +178,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -212,11 +225,11 @@
 
 /* ── Visa Approval Ticker ── */
 .visa-ticker-bar {
-  background: linear-gradient(90deg, hsl(231 60% 18%), hsl(231 48% 30%), hsl(231 60% 18%));
+  background: linear-gradient(90deg, hsl(227 49% 15%), hsl(227 49% 25%), hsl(227 49% 15%));
   background-size: 200% 100%;
   animation: visa-bg-shift 8s ease infinite;
   color: white;
-  box-shadow: 0 2px 16px rgba(40, 52, 146, 0.5);
+  box-shadow: 0 2px 16px rgba(20, 28, 58, 0.5);
 }
 
 @keyframes visa-bg-shift {
@@ -228,9 +241,9 @@
   background: linear-gradient(
     110deg,
     transparent 20%,
-    rgba(255, 212, 14, 0.04) 40%,
-    rgba(255, 212, 14, 0.1) 50%,
-    rgba(255, 212, 14, 0.04) 60%,
+    rgba(92, 186, 230, 0.04) 40%,
+    rgba(92, 186, 230, 0.1) 50%,
+    rgba(92, 186, 230, 0.04) 60%,
     transparent 80%
   );
   background-size: 200% 100%;
@@ -243,12 +256,12 @@
 }
 
 .visa-ticker-badge {
-  background: rgba(255, 212, 14, 0.15);
-  border-right: 1px solid rgba(255, 212, 14, 0.3);
+  background: rgba(92, 186, 230, 0.15);
+  border-right: 1px solid rgba(92, 186, 230, 0.3);
 }
 
 .visa-ticker-icon {
-  color: hsl(49 100% 53%);
+  color: hsl(199 73% 63%);
   animation: visa-plane 2s ease-in-out infinite;
 }
 
@@ -270,16 +283,16 @@
 }
 
 .visa-ticker-name {
-  color: hsl(49 100% 65%);
+  color: hsl(199 73% 85%);
 }
 
 .visa-ticker-tag {
   font-size: 10px;
   padding: 1px 6px;
   border-radius: 3px;
-  background: rgba(255, 212, 14, 0.2);
-  border: 1px solid rgba(255, 212, 14, 0.3);
-  color: hsl(49 100% 70%);
+  background: rgba(92, 186, 230, 0.2);
+  border: 1px solid rgba(92, 186, 230, 0.3);
+  color: hsl(199 73% 90%);
   font-weight: 600;
   letter-spacing: 0.03em;
 }
@@ -299,7 +312,7 @@
 
 /* Section alternating pattern */
 .section-dark {
-  background: linear-gradient(135deg, hsl(231 60% 18%), hsl(231 50% 28%));
+  background: linear-gradient(135deg, hsl(227 49% 15%), hsl(227 49% 25%));
   color: white;
 }
 
@@ -310,3 +323,36 @@
 .section-muted {
   background: hsl(var(--muted));
 }
+
+@theme inline {
+  --animate-shine: shine var(--duration) infinite linear;
+  @keyframes shine {
+  0% {
+    background-position: 0% 0%;
+    }
+  50% {
+    background-position: 100% 100%;
+    }
+  to {
+    background-position: 0% 0%;
+    }
+  }
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite
+;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }}

@@ -21,6 +21,5 @@ export const countries: Country[] = [
   { value: "malta", label: "Malta", flagCode: "mt" },
   { value: "malaysia", label: "Malaysia", flagCode: "my" },
   { value: "china", label: "China", flagCode: "cn" },
-  { value: "belgium", label: "Belgium", flagCode: "be" },
-  { value: "south-korea", label: "South Korea", flagCode: "kr" },
+
 ];

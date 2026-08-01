@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send, GraduationCap, User, Phone, Mail, MessageSquare } from "lucide-react";
 
-const ahbLogo = "/assets/ahb-logo-white.png";
+const ahbLogo = "/assets/ahb-logo.png";
 
 interface CourseRegistrationModalProps {
   open: boolean;
@@ -115,14 +115,14 @@ const CourseRegistrationModal = ({ open, onOpenChange, courseName, courseFee, co
             </label>
             <Textarea name="message" rows={2} placeholder="Any questions or requirements..." className="border-border" />
           </div>
-          <Button
+          <InteractiveHoverButton
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#330066] to-[#4a0e8f] hover:from-[#3d0077] hover:to-[#5511a0] text-white font-heading font-semibold"
+            className="w-full bg-primary text-white border-primary font-heading font-semibold py-2.5"
           >
             <Send className="w-4 h-4 mr-2" />
             {loading ? "Submitting..." : "Submit Registration"}
-          </Button>
+          </InteractiveHoverButton>
           <p className="text-muted-foreground text-xs text-center">
             We'll get back to you within 24 hours.
           </p>

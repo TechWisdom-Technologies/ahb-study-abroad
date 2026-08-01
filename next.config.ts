@@ -33,6 +33,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  allowedDevOrigins: ["https://diameter-viable-perplexed.ngrok-free.dev"],
   async headers() {
     return [
       {

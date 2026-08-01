@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 const FloatingButtons = () => {
   const [showTop, setShowTop] = useState(false);
@@ -13,21 +14,22 @@ const FloatingButtons = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-center">
+    <div className="fixed bottom-8 right-6 z-50 flex flex-col gap-3 items-center">
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="w-10 h-10 rounded-full bg-[#330066] text-white shadow-lg flex items-center justify-center hover:bg-[#4a0e8f] transition-colors"
+          className="w-8 h-8 rounded-full bg-white text-black shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors relative overflow-hidden group"
           aria-label="Go to top"
         >
-          <ArrowUp className="w-4 h-4" />
+          <ShineBorder shineColor={["#5CBAE6", "#141C3A", "#ffffff"]} borderWidth={2} className="z-30 rounded-full" />
+          <ArrowUp className="w-3.5 h-3.5 text-black z-40 relative" />
         </button>
       )}
       <a
         href="https://wa.me/8801621999965"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg flex items-center justify-center hover:bg-[#1ebe57] transition-colors"
+        className="lg:hidden w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg flex items-center justify-center hover:bg-[#1ebe57] transition-colors"
         aria-label="Contact on WhatsApp"
       >
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const ahbLogo = "/assets/ahb-logo-white.png";
+const ahbLogo = "/assets/ahb-logo.png";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
@@ -76,11 +76,11 @@ export default function AdminLayoutWrapper({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a2266] via-[#283492] to-[#3B4CAA]">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0A0F21] via-[#141C3A] to-[#1A254D]">
         <div className="flex flex-col items-center gap-4">
           <img src={ahbLogo} alt="AHB Study Abroad" className="h-12 w-auto rounded opacity-80" />
           <div className="flex items-center gap-2 text-white/60">
-            <div className="w-5 h-5 border-2 border-white/20 border-t-[#FFD40E] rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-white/20 border-t-[#5CBAE6] rounded-full animate-spin" />
             <span className="text-sm">Loading...</span>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function AdminLayoutWrapper({
       {/* Sidebar */}
       <aside className={cn(
         "fixed top-0 left-0 z-50 h-screen w-[260px] flex flex-col transition-transform duration-300 ease-out md:translate-x-0",
-        "bg-gradient-to-b from-[#283492] via-[#2c3a9e] to-[#1e2873]",
+        "bg-gradient-to-b from-[#141C3A] via-[#172140] to-[#0E142B]",
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Sidebar header with logo */}
@@ -135,20 +135,20 @@ export default function AdminLayoutWrapper({
                 className={cn(
                   "group flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 relative",
                   isActive
-                    ? "bg-[#FFD40E]/15 text-[#FFD40E] shadow-sm shadow-[#FFD40E]/5"
+                    ? "bg-[#5CBAE6]/15 text-[#5CBAE6] shadow-sm shadow-[#5CBAE6]/5"
                     : "text-white/60 hover:bg-white/[0.06] hover:text-white/90"
                 )}
               >
                 {isActive && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#FFD40E] rounded-r-full" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#5CBAE6] rounded-r-full" />
                 )}
                 <item.icon className={cn(
                   "w-[18px] h-[18px] shrink-0 transition-colors",
-                  isActive ? "text-[#FFD40E]" : "text-white/40 group-hover:text-white/70"
+                  isActive ? "text-[#5CBAE6]" : "text-white/40 group-hover:text-white/70"
                 )} />
                 <span className="truncate">{item.label}</span>
                 {isActive && (
-                  <ChevronRight className="w-3.5 h-3.5 ml-auto text-[#FFD40E]/50" />
+                  <ChevronRight className="w-3.5 h-3.5 ml-auto text-[#5CBAE6]/50" />
                 )}
               </Link>
             );
@@ -174,16 +174,16 @@ export default function AdminLayoutWrapper({
         <header className="sticky top-0 z-30 bg-white/60 backdrop-blur-xl border-b border-white/80 shadow-[0_4px_30px_rgba(0,0,0,0.02)] h-[81px] flex items-center px-4 md:px-5 gap-3 shrink-0">
           {/* Mobile menu button */}
           <button
-            className="md:hidden w-9 h-9 rounded-lg bg-[#283492]/5 flex items-center justify-center hover:bg-[#283492]/10 transition-colors"
+            className="md:hidden w-9 h-9 rounded-lg bg-[#141C3A]/5 flex items-center justify-center hover:bg-[#141C3A]/10 transition-colors"
             onClick={() => setSidebarOpen(true)}
           >
-            <Menu className="w-5 h-5 text-[#283492]" />
+            <Menu className="w-5 h-5 text-[#141C3A]" />
           </button>
 
           {/* Admin Portal Label on Left */}
           <div className="flex items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#283492]/10 to-[#283492]/5 border border-[#283492]/10 rounded-sm">
-              <span className="text-[#283492] text-xs font-semibold tracking-[0.1em] uppercase">Admin Portal</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#141C3A]/10 to-[#141C3A]/5 border border-[#141C3A]/10 rounded-sm">
+              <span className="text-[#141C3A] text-xs font-semibold tracking-[0.1em] uppercase">Admin Portal</span>
             </div>
             {userEmail && (
               <span className="ml-3 text-xs text-muted-foreground hidden sm:inline-block">

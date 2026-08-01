@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -175,11 +175,11 @@ const moduleTipsData = [
 ];
 
 const faqs = [
-  { q: "What is the IELTS test fee in Bangladesh?", a: "The IELTS test fee is approximately BDT 25,500. Cambry can help you register at the best available rate and guide you through the payment process." },
+  { q: "What is the IELTS test fee in Bangladesh?", a: "The IELTS test fee is approximately BDT 25,500. AHB Education can help you register at the best available rate and guide you through the payment process." },
   { q: "How long is the IELTS score valid?", a: "IELTS scores are valid for 2 years from the test date. Plan your test accordingly based on your university application or visa timeline." },
-  { q: "What's the difference between Academic and General Training?", a: "Academic IELTS is for university admissions and professional registration. General Training is for migration and work experience. Cambry will advise which one you need." },
+  { q: "What's the difference between Academic and General Training?", a: "Academic IELTS is for university admissions and professional registration. General Training is for migration and work experience. AHB Education will advise which one you need." },
   { q: "How soon can I retake the IELTS?", a: "You can retake IELTS as soon as you feel ready — there's no waiting period. We recommend at least 2-4 weeks of additional preparation between attempts." },
-  { q: "Does Cambry provide IELTS coaching?", a: "Yes! We offer comprehensive IELTS preparation courses with experienced trainers, mock tests, and personalized feedback to help you achieve your target score." },
+  { q: "Does AHB Education provide IELTS coaching?", a: "Yes! We offer comprehensive IELTS preparation courses with experienced trainers, mock tests, and personalized feedback to help you achieve your target score." },
   { q: "What score do I need for studying abroad?", a: "Most universities require a minimum overall band of 6.0-6.5, with no individual band below 5.5-6.0. Requirements vary by university and program." },
 ];
 
@@ -266,35 +266,42 @@ export default function IeltsRegistrationPage() {
   return (
     <div className="min-h-screen">
       {/* ─── Hero ─── */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={ieltsHero} alt="Students preparing for IELTS" className="w-full h-full object-cover" width={1920} height={1080} />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#283492]/95 via-[#3B4CAA]/85 to-[#3B4CAA]/70" />
-        </div>
-        <div className="container relative z-10 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="inline-block bg-accent/20 text-accent font-semibold text-sm px-4 py-1.5 rounded-full mb-4">IELTS Registration & Preparation</span>
-            <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl text-primary-foreground mb-4">
-              Achieve Your Dream <span className="text-[#E1243B]">IELTS</span> <span className="text-accent">Score</span>
+      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+        {/* Base background colors & image overlay */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
+        <img
+          src={ieltsHero}
+          alt="Students preparing for IELTS"
+          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-lighten brightness-90 z-[1]"
+        />
+        <div className="absolute inset-0 z-[2] bg-[url('/assets/grid-pattern.svg')] opacity-10" />
+
+        {/* Decorative glows */}
+        <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
+        <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
+
+        <div className="container relative z-10 py-20 lg:py-0 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto">
+            <span className="inline-block text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">IELTS Registration & Preparation</span>
+            <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">
+              Achieve Your Dream <span className="text-accent">IELTS Score</span>
             </h1>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg mb-8">
-              Cambry International helps you register for IELTS, prepare effectively, and achieve the score you need for your study abroad journey.
+            <p className="text-base md:text-lg text-white max-w-xl mx-auto leading-relaxed mb-8">
+              AHB Education helps you register for IELTS, prepare effectively, and achieve the score you need for your study abroad journey.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold text-base px-8"
+              <InteractiveHoverButton
+                className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] text-xs font-heading font-normal px-8 py-2.5 shadow-none"
                 onClick={() => scrollToForm()}
               >
-                Register for IELTS <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button
-                size="lg"
-                className="bg-primary-foreground/10 border-2 border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/20 font-heading"
+                Register for IELTS
+              </InteractiveHoverButton>
+              <InteractiveHoverButton
+                className="bg-white/10 text-white border-white/30 hover:bg-white hover:border-white hover:text-[#141C3A] text-xs font-heading font-normal px-8 py-2.5 shadow-none"
                 onClick={() => document.getElementById("about-ielts")?.scrollIntoView({ behavior: "smooth" })}
               >
-                Learn More <ChevronDown className="w-5 h-5 ml-2" />
-              </Button>
+                Learn More
+              </InteractiveHoverButton>
             </div>
           </motion.div>
 
@@ -499,12 +506,12 @@ export default function IeltsRegistrationPage() {
                   </div>
                 </div>
                 <p className="text-primary-foreground/60 text-sm flex-1 mb-4">{exam.desc}</p>
-                <Button
-                  className="w-full bg-accent/20 hover:bg-accent/30 text-accent border border-accent/30 font-heading"
+                <InteractiveHoverButton
+                  className="w-full bg-accent/20 text-accent border-accent/30 font-heading text-sm py-2"
                   onClick={() => scrollToForm(exam.name)}
                 >
-                  Register for {exam.name} <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
+                  Register for {exam.name}
+                </InteractiveHoverButton>
               </motion.div>
             ))}
           </div>
@@ -552,12 +559,12 @@ export default function IeltsRegistrationPage() {
                         </span>
                       )}
                     </div>
-                    <Button
-                      className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground font-heading"
+                    <InteractiveHoverButton
+                      className="w-full mt-2 bg-primary text-white border-primary font-heading text-sm py-2"
                       onClick={() => setCourseModal({ open: true, name: test.name, fee: test.fee, duration: test.duration })}
                     >
-                      Register Now <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
+                      Register Now
+                    </InteractiveHoverButton>
                   </div>
                 </motion.div>
               ))}
@@ -600,7 +607,7 @@ export default function IeltsRegistrationPage() {
 
       {/* ─── Registration Form ─── */}
       <section className="py-16 relative overflow-hidden" id="ielts-form">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#283492] via-[#3B4CAA] to-[#5B6BC0]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
         <div className="container relative z-10">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
@@ -610,13 +617,12 @@ export default function IeltsRegistrationPage() {
 
             {!showForm ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
-                <Button
-                  size="lg"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold text-lg px-10"
+                <InteractiveHoverButton
+                  className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]"
                   onClick={() => setShowForm(true)}
                 >
-                  Start Registration <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+                  Start Registration
+                </InteractiveHoverButton>
               </motion.div>
             ) : (
               <motion.form
@@ -665,14 +671,14 @@ export default function IeltsRegistrationPage() {
                   <label className="text-primary-foreground/80 text-sm font-medium mb-1 block">Additional Message</label>
                   <Textarea name="message" rows={3} className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40" placeholder="Any specific requirements or questions..." />
                 </div>
-                <Button
+                <InteractiveHoverButton
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold text-base"
+                  className="w-full bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]"
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="w-4 h-4 mr-2 inline-block" />
                   {loading ? "Submitting..." : "Submit Registration"}
-                </Button>
+                </InteractiveHoverButton>
                 <p className="text-primary-foreground/50 text-xs text-center">
                   Our team will contact you within 24 hours to assist with your registration and preparation.
                 </p>

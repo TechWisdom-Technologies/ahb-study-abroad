@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, GraduationCap, Globe, Award } from "lucide-react";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import { GraduationCap, Globe, Award } from "lucide-react";
 
 const CtaSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-10 relative overflow-hidden">
       {/* Single full-bleed background image */}
       <img
         src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1920&q=80"
@@ -17,7 +17,7 @@ const CtaSection = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-[#283492]/85" />
+      <div className="absolute inset-0 bg-[#141C3A]/85" />
       {/* Accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/6 rounded-full blur-[150px] pointer-events-none" />
 
@@ -29,7 +29,7 @@ const CtaSection = () => {
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">Your Future Starts Here</span>
           </div>
 
-          <h2 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4 leading-tight">
+          <h2 className="font-heading font-semibold text-3xl text-white mb-4 leading-tight">
             {t.cta.title}
           </h2>
           <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
@@ -43,7 +43,7 @@ const CtaSection = () => {
                 <Globe className="w-5 h-5 text-accent" />
               </div>
               <div className="text-left">
-                <p className="text-white font-heading font-bold text-lg leading-none">11+</p>
+                <p className="text-white font-heading font-bold text-lg leading-none">16+</p>
                 <p className="text-white/50 text-xs">Countries</p>
               </div>
             </div>
@@ -70,15 +70,14 @@ const CtaSection = () => {
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/contact">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold rounded px-8 text-base">
+              <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
                 {t.cta.button}
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </Button>
+              </InteractiveHoverButton>
             </Link>
             <Link href="/destinations">
-              <Button size="lg" className="bg-white/10 border border-white/30 text-white hover:bg-white/20 font-heading font-semibold rounded px-8 text-base backdrop-blur-sm">
+              <InteractiveHoverButton className="bg-white/10 text-white border-white/30 hover:bg-white hover:border-white hover:text-[#141C3A] backdrop-blur-sm">
                 Explore Destinations
-              </Button>
+              </InteractiveHoverButton>
             </Link>
           </div>
         </div>

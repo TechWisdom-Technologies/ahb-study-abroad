@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
@@ -13,12 +13,13 @@ import CountryFlag from "@/components/shared/CountryFlag";
 
 const consultationBg = "/assets/consultation-bg.jpg";
 const consultationStudents = "/assets/consultation-students.jpg";
+const freeConsultationBg = "/assets/free-consultation-bg.jpg";
 
 const highlights = [
   { icon: CheckCircle2, text: "100% Free Consultation" },
   { icon: Clock, text: "Response within 24 hours" },
   { icon: Users, text: "Expert counselors" },
-  { icon: Globe2, text: "11 countries covered" },
+  { icon: Globe2, text: "16 countries covered" },
 ];
 
 const ConsultationForm = () => {
@@ -69,68 +70,35 @@ const ConsultationForm = () => {
   const selectedCountryData = countries.find((country) => country.value === selectedCountry);
 
   return (
-    <section className="py-16 relative overflow-hidden" id="consultation">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#283492] via-[#3B4CAA] to-[#5B6BC0]" />
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block">
-        <img
-          src={consultationBg}
-          alt="Students in consultation"
-          className="w-full h-full object-cover opacity-20"
-          loading="lazy"
-        />
-      </div>
+    <section className="py-10 relative overflow-hidden" id="consultation">
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${freeConsultationBg})` }} />
+      <div className="absolute inset-0 bg-black/70" />
 
       <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="text-center mb-10">
+          <h2 className="font-heading font-semibold text-xl md:text-3xl text-white mb-3">{t.consultation.title}</h2>
+          <p className="text-xs md:text-base text-white/80 max-w-xl mx-auto">{t.consultation.subtitle}</p>
+        </div>
+
+        <div className="max-w-xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-3">{t.consultation.title}</h2>
-            <p className="text-white/70 mb-6">{t.consultation.subtitle}</p>
-
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {highlights.map((h, i) => (
-                <div key={i} className="flex items-center gap-2 bg-white/5 rounded p-3 border border-white/10">
-                  <h.icon className="w-5 h-5 text-accent shrink-0" />
-                  <span className="text-sm text-white/80 font-medium">{h.text}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="relative rounded overflow-hidden hidden lg:block">
-              <img
-                src={consultationStudents}
-                alt="Students in counseling session"
-                className="w-full h-48 object-cover rounded"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#3B4CAA] to-transparent" />
-              <div className="absolute bottom-3 left-3 right-3">
-                <p className="text-white text-sm font-heading font-semibold">Join 2,500+ students who started their journey with us</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="bg-white border border-primary/10 shadow-xl shadow-primary/[0.02] rounded-xl p-6 space-y-4">
               <Input
                 name="name"
                 placeholder={t.consultation.name}
                 required
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                className="bg-white border-primary/10 text-primary placeholder:text-muted-foreground/60"
               />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input name="email" type="email" placeholder={t.consultation.email} required className="bg-white/10 border-white/20 text-white placeholder:text-white/40" />
-                <Input name="phone" type="tel" placeholder={t.consultation.phone} required className="bg-white/10 border-white/20 text-white placeholder:text-white/40" />
+                <Input name="email" type="email" placeholder={t.consultation.email} required className="bg-white border-primary/10 text-primary placeholder:text-muted-foreground/60" />
+                <Input name="phone" type="tel" placeholder={t.consultation.phone} required className="bg-white border-primary/10 text-primary placeholder:text-muted-foreground/60" />
               </div>
               <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                <SelectTrigger className="bg-white border-primary/10 text-primary">
                   <span className="flex min-w-0 items-center gap-2">
                     {selectedCountryData ? <CountryFlag code={selectedCountryData.flagCode} size="sm" /> : null}
                     <SelectValue placeholder={t.consultation.destination} />
@@ -147,11 +115,11 @@ const ConsultationForm = () => {
                   ))}
                 </SelectContent>
               </Select>
-              <Input name="course" placeholder={t.consultation.course} className="bg-white/10 border-white/20 text-white placeholder:text-white/40" />
-              <Button type="submit" disabled={loading} className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold">
-                <Send className="w-4 h-4 mr-2" />
+              <Input name="course" placeholder={t.consultation.course} className="bg-white border-primary/10 text-primary placeholder:text-muted-foreground/60" />
+              <InteractiveHoverButton type="submit" disabled={loading} className="w-full bg-primary text-white border-transparent hover:bg-accent hover:border-accent">
+                <Send className="w-4 h-4 mr-2 inline-block" />
                 {loading ? "..." : t.consultation.submit}
-              </Button>
+              </InteractiveHoverButton>
             </form>
           </motion.div>
         </div>

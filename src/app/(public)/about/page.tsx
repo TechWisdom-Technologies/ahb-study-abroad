@@ -4,7 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import CountryFlag from "@/components/shared/CountryFlag";
 import {
   ArrowRight, Target, Eye, Heart, Users, Building2, Globe2, TrendingUp,
@@ -105,14 +105,32 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#283492] via-[#3B4CAA] to-[#5B6BC0]" />
-        <img src={aboutHero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-15" />
-        <div className="container relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-            <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-widest uppercase bg-accent/20 text-accent rounded font-heading">About Us</span>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">About AHB Study Abroad</h1>
-            <p className="text-white/70 text-lg leading-relaxed">AHB Study Abroad is a trusted international education consultancy based in Dhaka, Bangladesh, dedicated to helping students achieve their dream of studying abroad.</p>
+      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+        {/* Base background colors & image overlay */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
+        <img
+          src={aboutHero}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-lighten brightness-90 z-[1]"
+        />
+        <div className="absolute inset-0 z-[2] bg-[url('/assets/grid-pattern.svg')] opacity-10" />
+
+        {/* Decorative glows */}
+        <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
+        <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
+
+        <div className="container relative z-10 py-20 lg:py-0">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto text-center">
+            <span className="inline-block text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">About Us</span>
+            <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">About AHB Study Abroad</h1>
+            <p className="text-base md:text-lg text-white leading-relaxed max-w-xl mx-auto">AHB Study Abroad is a trusted international education consultancy based in Dhaka, Bangladesh, dedicated to helping students achieve their dream of studying abroad.</p>
+            <div className="mt-8 flex justify-center">
+              <Link href="/contact">
+                <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] font-heading font-normal px-8 py-2.5 text-xs shadow-none">
+                  Contact Us
+                </InteractiveHoverButton>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -227,8 +245,8 @@ export default function AboutPage() {
       {/* Partner Institutions */}
       <section className="py-14 section-muted">
         <div className="container">
-          <h2 className="font-heading font-bold text-3xl text-foreground text-center mb-3">Our Partner Institutions</h2>
-          <p className="text-muted-foreground text-center mb-8 max-w-lg mx-auto">We work with 300+ universities and colleges across 11 countries to bring you the best education options.</p>
+          <h2 className="font-heading font-semibold text-3xl text-foreground text-center mb-3">Our Partner Institutions</h2>
+          <p className="text-muted-foreground text-center mb-8 max-w-lg mx-auto">We work with 300+ universities and colleges across 16 countries to bring you the best education options.</p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {partners.map((p, i) => (
               <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}>
@@ -261,9 +279,9 @@ export default function AboutPage() {
           </div>
           <div className="text-center mt-6">
             <Link href="/destinations">
-              <Button variant="outline" className="font-heading font-semibold text-xs">
-                View All Destinations <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </Button>
+              <InteractiveHoverButton className="bg-card text-foreground border-border font-heading font-semibold text-xs px-5 py-2">
+                View All Destinations
+              </InteractiveHoverButton>
             </Link>
           </div>
         </div>
@@ -315,14 +333,14 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-20 relative overflow-hidden">
         <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[#283492]/85" />
+        <div className="absolute inset-0 bg-[#141C3A]/85" />
         <div className="container relative z-10 text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-3">Ready to Start Your Journey?</h2>
-          <p className="text-white/60 mb-8 max-w-xl mx-auto text-lg">Join thousands of students who have trusted Cambry to guide them to their dream university abroad.</p>
+          <p className="text-white/60 mb-8 max-w-xl mx-auto text-lg">Join thousands of students who have trusted AHB Education to guide them to their dream university abroad.</p>
           <Link href="/contact">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-heading font-semibold px-8 rounded">
-              Get Free Consultation <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
+              Get Free Consultation
+            </InteractiveHoverButton>
           </Link>
         </div>
       </section>

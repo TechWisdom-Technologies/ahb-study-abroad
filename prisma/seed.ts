@@ -42,7 +42,7 @@ async function main() {
 
   // 3. Sync Countries from destinationDetails & universityListData
   let sortOrder = 0;
-  
+
   // First, process all destinations in destinationData
   for (const [slug, info] of Object.entries(destinationData)) {
     await prisma.country.upsert({
