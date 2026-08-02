@@ -190,7 +190,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+      <section className="relative min-h-[400px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
         {/* Base background colors & image overlay */}
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
         {heroImg && (
@@ -206,7 +206,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
         <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
 
-        <div className="container relative z-10 py-20 lg:py-0 text-center">
+        <div className="container relative z-10 py-10 lg:py-0 text-center">
           <Link href="/destinations" className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-xs uppercase tracking-widest font-heading mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to All Destinations
           </Link>
@@ -215,7 +215,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
               <CountryFlag code={info.flagCode} size="xl" className="shadow-md rounded border border-white/20" />
               <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15]">Study in {info.name}</h1>
             </div>
-            <p className="text-base md:text-lg text-white leading-relaxed max-w-xl mx-auto">{info.tagline}</p>
+            <p className="text-sm md:text-lg text-white leading-relaxed max-w-xl mx-auto">{info.tagline}</p>
             <div className="mt-8 flex justify-center">
               <Link href="/contact">
                 <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] font-heading font-normal px-8 py-2.5 text-xs shadow-none">
@@ -576,14 +576,14 @@ export default function DestinationDetailPage({ params }: PageProps) {
       )}
 
       {/* CTA */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-16 md:py-24 relative overflow-hidden">
         <img src={ctaBgMap[country || ""] || heroImg || "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=80"} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#141C3A]/85" />
         <div className="container relative z-10 text-center">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-3">Ready to Study in {info.name}?</h2>
-          <p className="text-white/60 mb-8 max-w-lg mx-auto text-lg">Get expert guidance on applications, scholarships, and visa processing - completely free.</p>
+          <h2 className="font-heading font-semibold text-2xl md:font-bold md:text-4xl text-white mb-3">Ready to Start Your Journey to {info.name}?</h2>
+          <p className="text-white/60 mb-8 max-w-lg mx-auto text-xs md:text-lg">Our expert counselors will guide you through the university selection, application, and visa process for {info.name}.</p>
           <Link href="/contact">
-            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
+            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] text-sm md:text-base px-8 py-3 md:px-10 md:py-4">
               Get Free Consultation
             </InteractiveHoverButton>
           </Link>

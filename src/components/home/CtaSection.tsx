@@ -9,7 +9,7 @@ const CtaSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-10 relative overflow-hidden">
+    <section className="py-10 md:py-24 relative overflow-hidden">
       {/* Single full-bleed background image */}
       <img
         src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1920&q=80"
@@ -29,10 +29,10 @@ const CtaSection = () => {
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">Your Future Starts Here</span>
           </div>
 
-          <h2 className="font-heading font-semibold text-3xl text-white mb-4 leading-tight">
+          <h2 className="font-heading font-semibold text-2xl md:font-bold md:text-3xl text-white mb-4 leading-tight">
             {t.cta.title}
           </h2>
-          <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-white/60 text-xs md:text-lg mb-8 max-w-2xl mx-auto">
             {t.cta.subtitle}
           </p>
 
@@ -70,12 +70,12 @@ const CtaSection = () => {
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/contact">
-              <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
+              <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] text-xs md:text-sm px-6 py-2 md:px-8 md:py-2.5">
                 {t.cta.button}
               </InteractiveHoverButton>
             </Link>
             <Link href="/destinations">
-              <InteractiveHoverButton className="bg-white/10 text-white border-white/30 hover:bg-white hover:border-white hover:text-[#141C3A] backdrop-blur-sm">
+              <InteractiveHoverButton className="bg-white/10 text-white border-white/30 hover:bg-white hover:border-white hover:text-[#141C3A] backdrop-blur-sm text-xs md:text-sm px-6 py-2 md:px-8 md:py-2.5">
                 Explore Destinations
               </InteractiveHoverButton>
             </Link>

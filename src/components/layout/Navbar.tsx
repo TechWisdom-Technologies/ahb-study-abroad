@@ -53,14 +53,14 @@ const Navbar = () => {
   const dark = false;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${dark
-      ? "bg-[#141C3A]/95 border-white/10"
-      : "bg-white bg-gradient-to-r from-primary/[0.02] via-primary/[0.04] to-accent/[0.06] border-primary/10 shadow-sm"
-      }`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${scrolled
+      ? "bg-white border-primary/10 shadow-sm"
+      : "bg-[#141C3A] border-white/10 shadow-md"
+    }`}>
       <div className="container flex items-center justify-between h-[80px]">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <img src={ahbLogoDark} alt="AHB Study Abroad" className="h-[72px] w-auto rounded transition-all duration-300" />
+          <img src={ahbLogoDark} alt="AHB Study Abroad" className={`h-[72px] w-auto rounded transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
         </Link>
  
         {/* Desktop nav */}
@@ -81,8 +81,8 @@ const Navbar = () => {
                     href={link.to}
                     onClick={() => setDesktopDestOpen(false)}
                     className={`group relative flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-normal transition-colors duration-300 ${isActive(link.to)
-                      ? dark ? "text-accent" : "text-black"
-                      : dark ? "text-white/80 hover:text-accent" : "text-black hover:text-primary"
+                      ? scrolled ? "text-primary" : "text-[#5CBAE6]"
+                      : scrolled ? "text-foreground hover:text-primary" : "text-white/85 hover:text-[#5CBAE6]"
                       }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -118,8 +118,8 @@ const Navbar = () => {
                 key={link.to}
                 href={link.to}
                 className={`group relative flex items-center h-full gap-1.5 px-3 py-2 text-sm font-heading font-normal transition-colors duration-300 ${isActive(link.to)
-                  ? dark ? "text-accent" : "text-black"
-                  : dark ? "text-white/80 hover:text-accent" : "text-black hover:text-primary"
+                  ? scrolled ? "text-primary" : "text-[#5CBAE6]"
+                  : scrolled ? "text-foreground hover:text-primary" : "text-white/85 hover:text-[#5CBAE6]"
                   }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -146,7 +146,7 @@ const Navbar = () => {
         </div>
  
         {/* Mobile toggle */}
-        <button onClick={() => { setOpen(!open); setDestOpen(false); }} className={`lg:hidden ml-auto p-2 transition-colors duration-300 text-foreground`}>
+        <button onClick={() => { setOpen(!open); setDestOpen(false); }} className={`lg:hidden ml-auto p-2 transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>

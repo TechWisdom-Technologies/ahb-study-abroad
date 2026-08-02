@@ -124,7 +124,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+      <section className="relative min-h-[400px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
         {/* Base background colors & image overlay */}
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
         <img
@@ -138,11 +138,11 @@ export default function ServicesPage() {
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
         <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
 
-        <div className="container relative z-10 py-20 lg:py-0">
+        <div className="container relative z-10 py-10 lg:py-0">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto text-center">
-            <span className="inline-block text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">Our Services</span>
+            <span className="inline-block text-xs md:text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">Our Services</span>
             <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">Everything You Need to Study Abroad</h1>
-            <p className="text-base md:text-lg text-white leading-relaxed max-w-xl mx-auto">From your first consultation to your arrival at university - we provide complete, free support at every step.</p>
+            <p className="text-sm md:text-lg text-white leading-relaxed max-w-xl mx-auto">From your first consultation to your arrival at university - we provide complete, free support at every step.</p>
             <div className="mt-8 flex justify-center">
               <Link href="/contact">
                 <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] font-heading font-normal px-8 py-2.5 text-xs shadow-none">
@@ -340,14 +340,14 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-10 md:py-20 relative overflow-hidden">
         <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#141C3A]/85" />
         <div className="container relative z-10 text-center">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-3">Ready to Get Started?</h2>
-          <p className="text-white/60 mb-8 max-w-lg mx-auto text-lg">All our services are completely free. Book a consultation today and take the first step.</p>
+          <h2 className="font-heading font-semibold text-2xl md:font-bold md:text-4xl text-white mb-3">Ready to Get Started?</h2>
+          <p className="text-white/60 mb-8 max-w-lg mx-auto text-xs md:text-lg">All our services are completely free. Book a consultation today and take the first step.</p>
           <Link href="/contact">
-            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
+            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] text-xs md:text-sm px-6 py-2 md:px-8 md:py-2.5">
               Book Free Consultation
             </InteractiveHoverButton>
           </Link>

@@ -15,7 +15,7 @@ export function InteractiveHoverButton({
       )}
       {...props}
     >
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 h-full w-full">
         <span className="inline-block whitespace-nowrap transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0">
           {children}
         </span>

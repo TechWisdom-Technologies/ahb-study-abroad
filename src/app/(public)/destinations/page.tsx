@@ -39,7 +39,7 @@ export default function DestinationsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+      <section className="relative min-h-[400px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
         {/* Base background colors & image overlay */}
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
         <img
@@ -53,15 +53,15 @@ export default function DestinationsPage() {
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
         <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
 
-        <div className="container relative z-10 py-20 lg:py-0">
+        <div className="container relative z-10 py-10 lg:py-0">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto text-center">
-            <span className="inline-block text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">
+            <span className="inline-block text-xs md:text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">
               Destinations
             </span>
             <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">
               Study in {displayCountries.length} Countries Worldwide
             </h1>
-            <p className="text-base md:text-lg text-white leading-relaxed max-w-xl mx-auto">
+            <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-xl mx-auto">
               Explore our partner destinations and find the perfect country for your study abroad journey.
             </p>
             <div className="mt-8 flex justify-center">
@@ -91,7 +91,7 @@ export default function DestinationsPage() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.02 }}
                 >
-                  <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/40 transition-all hover:shadow-lg flex flex-col md:flex-row items-stretch h-[400px] sm:h-[360px] md:h-[330px]">
+                  <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/40 transition-all hover:shadow-lg flex flex-col md:flex-row items-stretch h-auto md:h-[330px]">
                     {/* Left Side: Only Image */}
                     <div className="w-full md:w-80 h-44 sm:h-48 md:h-full overflow-hidden relative shrink-0">
                       <img
@@ -113,9 +113,9 @@ export default function DestinationsPage() {
                             src={`/flags/${country.flag_code}.svg`}
                             alt=""
                             aria-hidden="true"
-                            className="h-10 w-16 md:w-18 object-cover rounded shadow-sm border border-border/50 shrink-0"
+                            className="h-6 w-10 md:h-10 md:w-16 lg:w-18 object-cover rounded shadow-sm border border-border/50 shrink-0"
                           />
-                          <h3 className="font-heading font-medium text-black text-2xl md:text-4xl truncate">{country.name}</h3>
+                          <h3 className="font-heading font-medium text-black text-xl md:text-4xl truncate">{country.name}</h3>
                         </div>
 
                         {/* 2. Brief Info */}
@@ -125,21 +125,21 @@ export default function DestinationsPage() {
 
                         {/* 3. Estimated Tuition Fees */}
                         <div className="space-y-1 shrink-0">
-                          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">Estimated Tuition</span>
-                          <div className="px-2.5 py-1 bg-[#5CBAE6]/15 text-[#141C3A] border border-[#5CBAE6]/30 text-xs font-medium rounded-md w-fit">
+                          <span className="text-[10px] md:text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">Estimated Tuition</span>
+                          <div className="px-2 py-0.5 md:px-2.5 md:py-1 bg-[#5CBAE6]/15 text-[#141C3A] border border-[#5CBAE6]/30 text-[11px] md:text-xs font-medium rounded-md w-fit">
                             {info?.tuitionRange || country.expense_range || "Contact for Tuition Fees"}
                           </div>
                         </div>
 
                         {/* 4. Featured Programs */}
                         <div className="space-y-1 shrink-0">
-                          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">Featured Programs</span>
-                          <div className="flex items-center gap-1.5 overflow-hidden whitespace-nowrap">
+                          <span className="text-[10px] md:text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">Featured Programs</span>
+                          <div className="flex flex-wrap md:flex-nowrap items-center gap-1.5 overflow-hidden md:whitespace-nowrap">
                             {(info?.popularCourses && info.popularCourses.length > 0
                               ? info.popularCourses.slice(0, 3)
                               : ["Business & Management", "Computer Science & IT", "Engineering"]
                             ).map((c) => (
-                              <span key={c} className="px-2.5 py-1 bg-[#5CBAE6]/15 text-[#141C3A] border border-[#5CBAE6]/30 text-xs font-medium rounded-md shrink-0">
+                              <span key={c} className="px-2 py-0.5 md:px-2.5 md:py-1 bg-[#5CBAE6]/15 text-[#141C3A] border border-[#5CBAE6]/30 text-[11px] md:text-xs font-medium rounded-md shrink-0">
                                 {c}
                               </span>
                             ))}
@@ -150,12 +150,12 @@ export default function DestinationsPage() {
                       {/* 5. Action Buttons */}
                       <div className="pt-2 flex items-center gap-3 justify-start shrink-0">
                         <Link href={`/destinations/${slug}`}>
-                          <InteractiveHoverButton className="w-36 h-10 bg-primary text-white hover:bg-[#141C3A] text-xs font-heading font-normal shadow-none border-transparent justify-center">
+                          <InteractiveHoverButton className="w-28 h-8 md:w-36 md:h-10 bg-primary text-white hover:bg-[#141C3A] text-[10px] md:text-xs font-heading font-normal shadow-none border-transparent justify-center p-0 md:px-8 md:py-2.5">
                             Explore
                           </InteractiveHoverButton>
                         </Link>
                         <Link href="/contact">
-                          <InteractiveHoverButton className="w-36 h-10 bg-white text-primary border border-primary/20 hover:bg-primary hover:text-white hover:border-primary text-xs font-heading font-normal shadow-none justify-center">
+                          <InteractiveHoverButton className="w-28 h-8 md:w-36 md:h-10 bg-white text-primary border border-primary/20 hover:bg-primary hover:text-white hover:border-primary text-[10px] md:text-xs font-heading font-normal shadow-none justify-center p-0 md:px-8 md:py-2.5">
                             Contact Us
                           </InteractiveHoverButton>
                         </Link>
@@ -170,14 +170,14 @@ export default function DestinationsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-10 md:py-20 relative overflow-hidden">
         <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#141C3A]/85" />
         <div className="container relative z-10 text-center">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-3">Not Sure Which Country Is Right for You?</h2>
-          <p className="text-white/60 mb-8 max-w-lg mx-auto text-lg">Our expert counselors will help you choose the best destination based on your goals, budget, and career aspirations.</p>
+          <h2 className="font-heading font-semibold text-2xl md:font-bold md:text-4xl text-white mb-3">Not Sure Which Country Is Right for You?</h2>
+          <p className="text-white/60 mb-8 max-w-lg mx-auto text-xs md:text-lg">Our expert counselors will help you choose the best destination based on your goals, budget, and career aspirations.</p>
           <Link href="/contact">
-            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A]">
+            <InteractiveHoverButton className="bg-accent text-white border-transparent hover:bg-[#141C3A] hover:border-[#141C3A] text-xs md:text-sm px-6 py-2 md:px-8 md:py-2.5">
               Get Free Guidance
             </InteractiveHoverButton>
           </Link>

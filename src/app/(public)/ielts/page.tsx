@@ -266,7 +266,7 @@ export default function IeltsRegistrationPage() {
   return (
     <div className="min-h-screen">
       {/* ─── Hero ─── */}
-      <section className="relative min-h-[600px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
+      <section className="relative min-h-[400px] lg:min-h-[92vh] flex items-center overflow-hidden bg-[#141C3A]">
         {/* Base background colors & image overlay */}
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#141C3A] via-[#1A254D] to-[#2B3C7A]" />
         <img
@@ -280,13 +280,13 @@ export default function IeltsRegistrationPage() {
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none z-[2]" />
         <div className="absolute bottom-10 left-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none z-[2]" />
 
-        <div className="container relative z-10 py-20 lg:py-0 text-center">
+        <div className="container relative z-10 py-10 lg:py-0 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl mx-auto">
-            <span className="inline-block text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">IELTS Registration & Preparation</span>
+            <span className="inline-block text-xs md:text-md mb-3 font-normal tracking-widest uppercase text-white rounded font-heading">IELTS Registration & Preparation</span>
             <h1 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.15] mb-6">
               Achieve Your Dream <span className="text-accent">IELTS Score</span>
             </h1>
-            <p className="text-base md:text-lg text-white max-w-xl mx-auto leading-relaxed mb-8">
+            <p className="text-sm md:text-lg text-white max-w-xl mx-auto leading-relaxed mb-8">
               AHB Education helps you register for IELTS, prepare effectively, and achieve the score you need for your study abroad journey.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
