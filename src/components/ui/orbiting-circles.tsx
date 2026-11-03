@@ -66,7 +66,7 @@ export function OrbitingCircles({
               animationIterationCount: "infinite",
             }}
             className={cn(
-              "absolute flex items-center justify-center rounded-full z-10 transform-gpu",
+              "absolute flex items-center justify-center rounded-full z-10 transform-gpu [backface-visibility:hidden] will-change-[transform]",
               className
             )}
             {...props}

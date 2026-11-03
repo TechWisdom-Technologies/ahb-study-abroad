@@ -7,10 +7,25 @@ const globalForPrisma = globalThis as unknown as {
   pgPool: Pool | undefined;
 };
 
-const connectionString = process.env.DATABASE_URL;
+// Use DIRECT_URL (port 5432, direct session) over DATABASE_URL (port 6543 pgbouncer) to prevent socket timeouts
+const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL;
 
 if (!globalForPrisma.pgPool) {
-  globalForPrisma.pgPool = new Pool({ connectionString });
+  const pool = new Pool({
+    connectionString,
+    ssl: { rejectUnauthorized: false },
+    max: 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 10000,
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10000,
+  });
+
+  pool.on("error", (err) => {
+    console.warn("Unexpected error on idle pg client, recycling socket:", err.message);
+  });
+
+  globalForPrisma.pgPool = pool;
 }
 
 if (!globalForPrisma.prisma) {

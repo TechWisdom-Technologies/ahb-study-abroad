@@ -9,13 +9,13 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import {
-  Dialog, DialogContent,
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
 } from "@/components/ui/dialog";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Eye, Trash2, Mail, Phone, BookOpen, Clock, CheckCircle, XCircle, Search, Globe2, GraduationCap, Calendar, User } from "lucide-react";
+import { Eye, Trash2, Mail, Phone, BookOpen, Clock, CheckCircle, XCircle, Search, Globe2, GraduationCap, Calendar, User, Plus, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 
@@ -54,6 +54,17 @@ const tabLabels: Record<string, string> = {
   course: "Course Lead",
 };
 
+const formatDateSafe = (val: unknown, pattern: string = "dd MMM yyyy") => {
+  if (!val) return "—";
+  const d = new Date(val as any);
+  if (isNaN(d.getTime())) return "—";
+  try {
+    return format(d, pattern);
+  } catch {
+    return "—";
+  }
+};
+
 export default function LeadsAdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +75,95 @@ export default function LeadsAdminPage() {
   const [activeTab, setActiveTab] = useState("general");
   const [search, setSearch] = useState("");
   const { toast } = useToast();
+
+  // Add Lead states
+  const [addOpen, setAddOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [countries, setCountries] = useState<{ id: string; name: string }[]>([]);
+  const [newLead, setNewLead] = useState({
+    lead_type: "general",
+    name: "",
+    email: "",
+    phone: "",
+    destination: "",
+    course: "",
+    status: "new",
+    study_level: "Bachelor / Undergraduate",
+    notes: "",
+  });
+
+  useEffect(() => {
+    fetch("/api/countries")
+      .then(r => r.ok ? r.json() : [])
+      .then(data => setCountries(data || []))
+      .catch(() => {});
+  }, []);
+
+  const openAddModal = () => {
+    setNewLead({
+      lead_type: activeTab || "general",
+      name: "",
+      email: "",
+      phone: "",
+      destination: "",
+      course: "",
+      status: "new",
+      study_level: "Bachelor / Undergraduate",
+      notes: "",
+    });
+    setAddOpen(true);
+  };
+
+  const handleCreateLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newLead.name.trim()) {
+      toast({ title: "Validation Error", description: "Student name is required.", variant: "destructive" });
+      return;
+    }
+    if (!newLead.phone.trim() && !newLead.email.trim()) {
+      toast({ title: "Validation Error", description: "Please provide a contact phone or email.", variant: "destructive" });
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const payload = {
+        name: newLead.name.trim(),
+        email: newLead.email.trim(),
+        phone: newLead.phone.trim(),
+        destination: newLead.destination.trim() || null,
+        course: newLead.course.trim() || null,
+        status: newLead.status || "new",
+        notes: newLead.notes.trim() || null,
+        lead_type: newLead.lead_type || "general",
+        details: {
+          preferred_destination: newLead.destination.trim() || "",
+          study_level: newLead.study_level || "",
+          source: "Manual Entry (Admin)",
+        },
+      };
+
+      const res = await fetch("/api/admin/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        toast({ title: "Lead Created", description: `Successfully registered ${newLead.name}.` });
+        setAddOpen(false);
+        setActiveTab(newLead.lead_type);
+        fetchLeads();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        toast({ title: "Error", description: err.error || "Failed to create lead.", variant: "destructive" });
+      }
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message || "Failed to submit lead.", variant: "destructive" });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const fetchLeads = useCallback(async () => {
     setLoading(true);
@@ -221,7 +321,7 @@ export default function LeadsAdminPage() {
                     </span>
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">
-                    {format(new Date(lead.created_at), "dd MMM yyyy")}
+                    {formatDateSafe(lead.created_at, "dd MMM yyyy")}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex gap-1 justify-end">
@@ -244,8 +344,19 @@ export default function LeadsAdminPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-heading font-bold text-2xl text-foreground">Leads</h2>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 className="font-heading font-bold text-2xl text-foreground">Leads</h2>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Manage student inquiries, applications, and consultation leads
+          </p>
+        </div>
+        <Button
+          onClick={openAddModal}
+          className="bg-primary hover:bg-primary/95 text-primary-foreground gap-2 h-9 rounded font-medium shadow-sm shrink-0 self-start sm:self-auto cursor-pointer"
+        >
+          <Plus className="w-4 h-4" /> Add Lead
+        </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={v => { setActiveTab(v); setStatusFilter("all"); setSearch(""); }}>
@@ -292,7 +403,7 @@ export default function LeadsAdminPage() {
                     </a>
                   </div>
                   <div className="flex items-center gap-2 mt-2 text-white/50 text-xs">
-                    <Calendar className="w-3 h-3" /> {format(new Date(viewLead.created_at), "dd MMM yyyy, hh:mm a")}
+                    <Calendar className="w-3 h-3" /> {formatDateSafe(viewLead.created_at, "dd MMM yyyy, hh:mm a")}
                   </div>
                 </div>
               </div>
@@ -375,7 +486,189 @@ export default function LeadsAdminPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation */}
+            {/* Add Lead Dialog */}
+      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto p-6 bg-background border-border">
+          <DialogHeader className="mb-4">
+            <DialogTitle className="font-heading font-bold text-xl text-foreground flex items-center gap-2">
+              <User className="w-5 h-5 text-primary" /> Add New Lead
+            </DialogTitle>
+            <DialogDescription className="text-xs text-muted-foreground">
+              Register a new prospective student inquiry or consultation request.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleCreateLead} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Lead Category <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={newLead.lead_type}
+                  onChange={e => setNewLead(p => ({ ...p, lead_type: e.target.value }))}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                >
+                  <option value="general">General Lead</option>
+                  <option value="english_test">English Test Taker</option>
+                  <option value="special">Special Lead</option>
+                  <option value="course">Course Lead</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Status
+                </label>
+                <select
+                  value={newLead.status}
+                  onChange={e => setNewLead(p => ({ ...p, status: e.target.value }))}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring capitalize"
+                >
+                  <option value="new">New</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="converted">Converted</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="sm:col-span-2">
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Student Full Name <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  required
+                  placeholder="e.g. Tanvir Ahmed"
+                  value={newLead.name}
+                  onChange={e => setNewLead(p => ({ ...p, name: e.target.value }))}
+                  className="h-9 text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Email Address
+                </label>
+                <Input
+                  type="email"
+                  placeholder="student@example.com"
+                  value={newLead.email}
+                  onChange={e => setNewLead(p => ({ ...p, email: e.target.value }))}
+                  className="h-9 text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Phone / WhatsApp <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  required
+                  placeholder="+880 1712-345678"
+                  value={newLead.phone}
+                  onChange={e => setNewLead(p => ({ ...p, phone: e.target.value }))}
+                  className="h-9 text-xs"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Target Destination
+                </label>
+                <input
+                  list="countries-list"
+                  placeholder="e.g. Canada, UK, China..."
+                  value={newLead.destination}
+                  onChange={e => setNewLead(p => ({ ...p, destination: e.target.value }))}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                />
+                <datalist id="countries-list">
+                  {countries.map(c => (
+                    <option key={c.id} value={c.name} />
+                  ))}
+                </datalist>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-foreground block mb-1.5">
+                  Study Level
+                </label>
+                <select
+                  value={newLead.study_level}
+                  onChange={e => setNewLead(p => ({ ...p, study_level: e.target.value }))}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                >
+                  <option value="Bachelor / Undergraduate">Bachelor / Undergraduate</option>
+                  <option value="Masters / Postgraduate">Masters / Postgraduate</option>
+                  <option value="PhD / Doctorate">PhD / Doctorate</option>
+                  <option value="Diploma / Foundation">Diploma / Foundation</option>
+                  <option value="Language Course">Language Course</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs font-semibold text-foreground block mb-1.5">
+                Preferred Course / Field of Study
+              </label>
+              <Input
+                placeholder="e.g. Computer Science, MBA, Civil Engineering..."
+                value={newLead.course}
+                onChange={e => setNewLead(p => ({ ...p, course: e.target.value }))}
+                className="h-9 text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-semibold text-foreground block mb-1.5">
+                Counselor Notes / Remarks
+              </label>
+              <Textarea
+                rows={3}
+                placeholder="Initial student inquiry details, budget, background..."
+                value={newLead.notes}
+                onChange={e => setNewLead(p => ({ ...p, notes: e.target.value }))}
+                className="text-xs"
+              />
+            </div>
+
+            <DialogFooter className="gap-2 pt-2 border-t border-border">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setAddOpen(false)}
+                disabled={submitting}
+                className="h-9 text-xs rounded"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                disabled={submitting}
+                className="h-9 text-xs rounded bg-primary hover:bg-primary/95 text-primary-foreground gap-1.5 font-medium"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" /> Saving...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-3.5 h-3.5" /> Save Lead
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+{/* Delete Confirmation */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <AlertDialogContent className="bg-background border border-border">
           <AlertDialogHeader>

@@ -20,6 +20,9 @@ export type PartnerInstitution = {
   scholarship?: string;
   offerTime?: string;
   url?: string;
+  logoUrl?: string;
+  tuition?: string;
+  requirements?: string;
 };
 
 export type DestinationInfo = {
@@ -32,7 +35,7 @@ export type DestinationInfo = {
   whyChoose: string[];
   tuitionRange: string;
   livingCost: string;
-  popularCourses: string[];
+  popularCourses: (string | { category: string; courses: string[] })[];
   workRights: string;
   intakes: string[];
   visaInfo: string;
@@ -624,10 +627,141 @@ export const destinationData: Record<string, DestinationInfo> = {
   "tuitionRange": "Varies by program",
   "livingCost": "Varies by city",
   "popularCourses": [
-    "Business",
-    "Engineering",
-    "IT",
-    "Arts"
+      {
+          "category": "Business",
+          "courses": [
+              "Business Administration",
+              "International Business",
+              "International Trade",
+              "International Economics and Trade",
+              "Finance",
+              "Accounting",
+              "Marketing",
+              "Human Resource Management",
+              "Management Science and Engineering",
+              "Project Management",
+              "Logistics and Supply Chain Management",
+              "E-commerce",
+              "Digital Business",
+              "Entrepreneurship",
+              "Financial Management",
+              "Economics",
+              "Applied Economics",
+              "World Economy",
+              "MBA (Master of Business Administration)",
+              "Tourism Management",
+              "Hotel Management",
+              "Public Administration",
+              "Business Analytics",
+              "Operations Management",
+              "Accounting and Auditing"
+          ]
+      },
+      {
+          "category": "Engineering",
+          "courses": [
+              "Civil Engineering",
+              "Mechanical Engineering",
+              "Electrical Engineering",
+              "Computer Science and Technology",
+              "Software Engineering",
+              "Electronic Information Engineering",
+              "Chemical Engineering",
+              "Environmental Engineering",
+              "Materials Science and Engineering",
+              "Automation Engineering",
+              "Mechatronics Engineering",
+              "Industrial Engineering",
+              "Automotive Engineering",
+              "Transportation Engineering",
+              "Telecommunications Engineering",
+              "Information and Communication Engineering",
+              "Electrical Engineering and Automation",
+              "Mechanical Design, Manufacturing and Automation",
+              "Energy and Power Engineering",
+              "Petroleum Engineering",
+              "Mining Engineering",
+              "Geological Engineering",
+              "Water Resources and Hydropower Engineering",
+              "Architecture",
+              "Food Science and Engineering",
+              "Biomedical Engineering",
+              "Aerospace Engineering",
+              "Robotics Engineering",
+              "Artificial Intelligence",
+              "Resources and Environmental Engineering"
+          ]
+      },
+      {
+          "category": "Arts",
+          "courses": [
+              "Chinese Language and Literature",
+              "English Language and Literature",
+              "Linguistics and Applied Linguistics",
+              "Translation and Interpretation",
+              "Chinese Language Education",
+              "International Chinese Language Education",
+              "History",
+              "World History",
+              "Archaeology",
+              "Philosophy",
+              "Religious Studies",
+              "Fine Arts",
+              "Painting",
+              "Sculpture",
+              "Calligraphy",
+              "Visual Communication Design",
+              "Graphic Design",
+              "Environmental Design",
+              "Product Design",
+              "Fashion and Textile Design",
+              "Industrial Design",
+              "Digital Media Art",
+              "Animation",
+              "Musicology",
+              "Music Performance",
+              "Dance",
+              "Drama, Film and Television Studies",
+              "Film Production",
+              "Journalism",
+              "Communication Studies"
+          ]
+      },
+      {
+          "category": "IT",
+          "courses": [
+              "Computer Science and Technology",
+              "Information Technology",
+              "Software Engineering",
+              "Artificial Intelligence",
+              "Data Science and Big Data Technology",
+              "Cybersecurity",
+              "Information Security",
+              "Network Engineering",
+              "Internet of Things Engineering",
+              "Information and Communication Engineering",
+              "Electronic Information Engineering",
+              "Computer Engineering",
+              "Cloud Computing",
+              "Big Data Technology",
+              "Intelligent Science and Technology",
+              "Machine Learning",
+              "Computer Vision",
+              "Natural Language Processing",
+              "Robotics Engineering",
+              "Blockchain Engineering",
+              "Digital Media Technology",
+              "Multimedia Technology",
+              "Human-Computer Interaction",
+              "Information Systems and Information Management",
+              "Management Information Systems",
+              "E-Commerce",
+              "Digital Business",
+              "Embedded Systems Engineering",
+              "Integrated Circuit Design and Integrated Systems",
+              "Communication Engineering"
+          ]
+      }
   ],
   "workRights": "Subject to visa conditions",
   "intakes": [

@@ -1,62 +1,78 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Megaphone } from "lucide-react";
 import { useDragScroll } from "@/hooks/useDragScroll";
 
-const staticAnnouncements = [
-  { text: "🎓 UK & Canada upcoming intake applications open - Apply early with AHB Study Abroad!", link: "" },
-  { text: "📢 Free IELTS consultation & guidance available - Register now!", link: "" },
-  { text: "🇨🇦 Canada Study Permit processing guidance - Contact AHB Study Abroad", link: "" },
-  { text: "🏆 AHB Study Abroad - Trusted Overseas Education & Visa Consultancy", link: "" },
-  { text: "🇦🇺 Australia, USA, Europe & Malaysia admissions open!", link: "" },
-];
-
-type Announcement = { text: string; link: string };
+type Announcement = {
+  text: string;
+  link?: string | null;
+};
 
 const AnnouncementTicker = () => {
-  const [announcements, setAnnouncements] = useState<Announcement[]>(staticAnnouncements);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
   const dragRef = useDragScroll();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchAnnouncements = async () => {
       try {
         const res = await fetch("/api/announcements");
         if (res.ok) {
           const data = await res.json();
-          if (data && data.length > 0) {
-            const dbItems = data.map((a: any) => ({ text: a.text, link: a.linkUrl || "" }));
-            setAnnouncements([...dbItems, ...staticAnnouncements]);
+          if (isMounted && Array.isArray(data)) {
+            const dbItems = data.map((a: any) => ({
+              text: a.text,
+              link: a.linkUrl || a.link || null,
+            }));
+            setAnnouncements(dbItems);
           }
         }
       } catch (err) {
         console.error("Error loading announcements:", err);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
     fetchAnnouncements();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const renderItem = (a: Announcement, i: number) => (
-    <span key={i} className="mx-8 text-sm font-medium inline-flex items-center gap-1.5 font-sans">
-      <span className="shrink-0">📢</span>
-      {a.link ? (
-        <a href={a.link} target="_blank" rel="noopener noreferrer" className="hover:underline">{a.text}</a>
-      ) : (
-        <span>{a.text}</span>
-      )}
-    </span>
-  );
+  if (loading || announcements.length === 0) {
+    return null;
+  }
+
+  // Multiply items if few, to ensure marquee continuously fills the screen width
+  const repeatCount = announcements.length < 3 ? 6 : announcements.length < 6 ? 4 : 2;
+  const displayItems = Array(repeatCount).fill(announcements).flat();
 
   return (
-    <div className="bg-gradient-to-r from-[#141C3A] via-[#1d2b5c] to-[#141C3A] text-white py-3.5 overflow-hidden border-b border-white/5">
+    <div className="bg-gradient-to-r from-[#141C3A] via-[#1d2b5c] to-[#141C3A] text-white py-3 overflow-hidden border-b border-white/5 shadow-sm">
       <div className="container flex items-center gap-3">
-        <div className="flex-shrink-0 flex items-center gap-1.5 font-heading font-semibold text-sm text-white">
+        <div className="flex-shrink-0 flex items-center gap-2 font-heading font-semibold text-xs sm:text-sm text-white">
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
           <span>Announcements</span>
           <span className="mx-1 text-white/30">|</span>
         </div>
         <div className="overflow-hidden flex-1">
-          <div ref={dragRef} className="flex animate-ticker whitespace-nowrap">
-            {[...announcements, ...announcements].map((a, i) => renderItem(a, i))}
+          <div ref={dragRef} className="flex animate-ticker whitespace-nowrap cursor-grab active:cursor-grabbing hover:[animation-play-state:paused]">
+            {displayItems.map((a, i) => (
+              <span key={i} className="mx-8 text-xs sm:text-sm font-medium inline-flex items-center gap-1.5 font-sans">
+                <span className="shrink-0">📢</span>
+                {a.link ? (
+                  <a href={a.link} target="_blank" rel="noopener noreferrer" className="hover:underline text-blue-200 hover:text-white transition-colors">
+                    {a.text}
+                  </a>
+                ) : (
+                  <span>{a.text}</span>
+                )}
+              </span>
+            ))}
           </div>
         </div>
       </div>

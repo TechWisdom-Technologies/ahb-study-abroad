@@ -36,7 +36,7 @@ const ScholarshipsSection = () => {
               deadline: s.deadline || "TBA",
               image: s.amount || "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80",
             }));
-            setScholarships([...dbItems, ...staticScholarships]);
+            setScholarships(dbItems);
           }
         }
       } catch (err) {

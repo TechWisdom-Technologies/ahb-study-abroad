@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Plus, X, Save, ChevronDown, ChevronRight } from "lucide-react";
+import { ArrowLeft, Plus, X, Save, ChevronDown, ChevronRight, Trash2 } from "lucide-react";
+import { DocumentCategory, normalizeDocumentChecklist, serializeDocumentChecklist } from "@/lib/documentChecklist";
+import { CourseCategory, normalizePopularCourses, serializePopularCourses } from "@/lib/popularCourses";
 
-type ArrayKey = "highlights" | "why_choose" | "popular_courses" | "intakes" | "special_notes";
+type ArrayKey = "highlights" | "why_choose" | "intakes" | "special_notes";
 
 const StringArrayEditor = ({ label, items, onAdd, onUpdate, onRemove }: {
   label: string;
@@ -112,11 +114,11 @@ const DestinationEditor = ({ countryId, countryName, onBack }: Props) => {
     visa_info: "",
     highlights: [] as string[],
     why_choose: [] as string[],
-    popular_courses: [] as string[],
+    popular_courses: [] as CourseCategory[],
     intakes: [] as string[],
     english_requirements: [] as { level: string; ielts: string; pte?: string; toefl?: string; duolingo?: string; oietc?: string }[],
     tuition_details: [] as { program: string; fee: string }[],
-    document_checklist: { undergraduate: [] as string[], postgraduate: [] as string[] } as { undergraduate: string[]; postgraduate: string[] },
+    document_checklist: [] as DocumentCategory[],
     special_notes: [] as string[],
   });
 
@@ -135,17 +137,11 @@ const DestinationEditor = ({ countryId, countryName, onBack }: Props) => {
             visa_info: data.visa_info || "",
             highlights: Array.isArray(data.highlights) ? data.highlights : [],
             why_choose: Array.isArray(data.why_choose) ? data.why_choose : [],
-            popular_courses: Array.isArray(data.popular_courses) ? data.popular_courses : [],
+            popular_courses: normalizePopularCourses(data.popular_courses),
             intakes: Array.isArray(data.intakes) ? data.intakes : [],
             english_requirements: Array.isArray(data.english_requirements) ? data.english_requirements : [],
             tuition_details: Array.isArray(data.tuition_details) ? data.tuition_details : [],
-            document_checklist: (() => {
-              const dc = data.document_checklist;
-              if (dc && typeof dc === "object" && !Array.isArray(dc)) {
-                return { undergraduate: Array.isArray(dc.undergraduate) ? dc.undergraduate : [], postgraduate: Array.isArray(dc.postgraduate) ? dc.postgraduate : [] };
-              }
-              return { undergraduate: [], postgraduate: [] };
-            })(),
+            document_checklist: normalizeDocumentChecklist(data.document_checklist),
             special_notes: Array.isArray(data.special_notes) ? data.special_notes : [],
           });
         }
@@ -175,11 +171,11 @@ const DestinationEditor = ({ countryId, countryName, onBack }: Props) => {
       visa_info: form.visa_info || null,
       highlights: form.highlights.filter(Boolean),
       why_choose: form.why_choose.filter(Boolean),
-      popular_courses: form.popular_courses.filter(Boolean),
+      popular_courses: serializePopularCourses(normalizePopularCourses(form.popular_courses)),
       intakes: form.intakes.filter(Boolean),
       english_requirements: form.english_requirements,
       tuition_details: form.tuition_details,
-      document_checklist: form.document_checklist,
+      document_checklist: serializeDocumentChecklist(normalizeDocumentChecklist(form.document_checklist)),
       special_notes: form.special_notes.filter(Boolean),
     };
 
@@ -213,24 +209,56 @@ const DestinationEditor = ({ countryId, countryName, onBack }: Props) => {
     setForm(f => ({ ...f, [key]: f[key].filter((_, i) => i !== idx) }));
   };
 
+  // Popular courses helpers
+  const courseCategories = normalizePopularCourses(form.popular_courses);
+  const updateCourseCategories = (fn: (cats: CourseCategory[]) => CourseCategory[]) => {
+    setForm(f => ({ ...f, popular_courses: fn(normalizePopularCourses(f.popular_courses)) }));
+  };
+  const addCourseCategory = () => {
+    updateCourseCategories(cats => [...cats, { category: "", courses: [""] }]);
+  };
+  const renameCourseCategory = (catIdx: number, category: string) => {
+    updateCourseCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, category } : c));
+  };
+  const removeCourseCategory = (catIdx: number) => {
+    const cat = courseCategories[catIdx];
+    if (cat && (cat.category || cat.courses.some(Boolean)) && !confirm(`Delete "${cat.category || "Untitled"}" and all its courses?`)) return;
+    updateCourseCategories(cats => cats.filter((_, i) => i !== catIdx));
+  };
+  const addSubCourse = (catIdx: number) => {
+    updateCourseCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, courses: [...c.courses, ""] } : c));
+  };
+  const updateSubCourse = (catIdx: number, idx: number, val: string) => {
+    updateCourseCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, courses: c.courses.map((v, j) => j === idx ? val : v) } : c));
+  };
+  const removeSubCourse = (catIdx: number, idx: number) => {
+    updateCourseCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, courses: c.courses.filter((_, j) => j !== idx) } : c));
+  };
+
   // Doc checklist helpers
-  const addDoc = (level: "undergraduate" | "postgraduate") => {
-    setForm(f => ({
-      ...f,
-      document_checklist: { ...f.document_checklist, [level]: [...(f.document_checklist[level] || []), ""] },
-    }));
+  const docCategories = normalizeDocumentChecklist(form.document_checklist);
+  const updateCategories = (fn: (cats: DocumentCategory[]) => DocumentCategory[]) => {
+    setForm(f => ({ ...f, document_checklist: fn(normalizeDocumentChecklist(f.document_checklist)) }));
   };
-  const updateDoc = (level: "undergraduate" | "postgraduate", idx: number, val: string) => {
-    setForm(f => ({
-      ...f,
-      document_checklist: { ...f.document_checklist, [level]: f.document_checklist[level].map((v, i) => i === idx ? val : v) },
-    }));
+  const addCategory = () => {
+    updateCategories(cats => [...cats, { title: "", items: [""] }]);
   };
-  const removeDoc = (level: "undergraduate" | "postgraduate", idx: number) => {
-    setForm(f => ({
-      ...f,
-      document_checklist: { ...f.document_checklist, [level]: f.document_checklist[level].filter((_, i) => i !== idx) },
-    }));
+  const renameCategory = (catIdx: number, title: string) => {
+    updateCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, title } : c));
+  };
+  const removeCategory = (catIdx: number) => {
+    const cat = docCategories[catIdx];
+    if (cat && cat.items.some(Boolean) && !confirm(`Delete "${cat.title || "Untitled"}" and all its documents?`)) return;
+    updateCategories(cats => cats.filter((_, i) => i !== catIdx));
+  };
+  const addDoc = (catIdx: number) => {
+    updateCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, items: [...c.items, ""] } : c));
+  };
+  const updateDoc = (catIdx: number, idx: number, val: string) => {
+    updateCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, items: c.items.map((v, j) => j === idx ? val : v) } : c));
+  };
+  const removeDoc = (catIdx: number, idx: number) => {
+    updateCategories(cats => cats.map((c, i) => i === catIdx ? { ...c, items: c.items.filter((_, j) => j !== idx) } : c));
   };
 
   const renderSectionHeader = (id: Section, label: string) => (
@@ -311,8 +339,36 @@ const DestinationEditor = ({ countryId, countryName, onBack }: Props) => {
         {/* Courses */}
         {renderSectionHeader("courses", "🎓 Popular Courses")}
         {expanded.has("courses") && (
-          <div className="p-4 border rounded bg-card border-border">
-            {renderArrayEditor("Popular Courses", "popular_courses")}
+          <div className="p-4 border rounded space-y-4 bg-card border-border">
+            {courseCategories.length === 0 && (
+              <p className="text-xs text-muted-foreground">No course categories yet. Add one below (e.g. IT, Engineering, Business, Medical, Arts).</p>
+            )}
+            {courseCategories.map((cat, catIdx) => (
+              <div key={catIdx} className="border border-border rounded p-3 space-y-2">
+                <div className="flex items-center gap-2">
+                  <Input
+                    value={cat.category}
+                    onChange={e => renameCourseCategory(catIdx, e.target.value)}
+                    className="text-xs font-semibold border-border"
+                    placeholder="Category name (e.g. IT, Business, Engineering)..."
+                  />
+                  <Button size="sm" variant="ghost" className="rounded shrink-0" onClick={() => addSubCourse(catIdx)}><Plus className="w-3 h-3 mr-1" /> Add Course</Button>
+                  <Button size="icon" variant="ghost" className="shrink-0" title="Delete category" onClick={() => removeCourseCategory(catIdx)}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
+                </div>
+                {cat.courses.length === 0 && (
+                  <p className="text-[11px] text-muted-foreground pl-3">No courses added in this category yet. Click &quot;+ Add Course&quot; to add sub-courses (e.g. CSE, CS, Data Science).</p>
+                )}
+                {cat.courses.map((course, i) => (
+                  <div key={i} className="flex gap-2 pl-3">
+                    <Input value={course} onChange={e => updateSubCourse(catIdx, i, e.target.value)} className="text-xs border-border" placeholder="Course name (e.g. CSE, Data Science, MBA)..." />
+                    <Button size="icon" variant="ghost" onClick={() => removeSubCourse(catIdx, i)}><X className="w-3 h-3 text-destructive" /></Button>
+                  </div>
+                ))}
+              </div>
+            ))}
+            <Button size="sm" variant="outline" className="rounded w-full border-dashed" onClick={addCourseCategory}>
+              <Plus className="w-3 h-3 mr-1" /> Add Course Category
+            </Button>
           </div>
         )}
 
@@ -364,30 +420,32 @@ const DestinationEditor = ({ countryId, countryName, onBack }: Props) => {
         {renderSectionHeader("documents", "📄 Document Checklist")}
         {expanded.has("documents") && (
           <div className="p-4 border rounded space-y-4 bg-card border-border">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <Label className="text-xs font-semibold">Undergraduate Documents</Label>
-                <Button size="sm" variant="ghost" className="rounded" onClick={() => addDoc("undergraduate")}><Plus className="w-3 h-3 mr-1" /> Add</Button>
-              </div>
-              {(form.document_checklist?.undergraduate || []).map((doc, i) => (
-                <div key={i} className="flex gap-2 mb-1">
-                  <Input value={doc} onChange={e => updateDoc("undergraduate", i, e.target.value)} className="text-xs border-border" placeholder="Document name..." />
-                  <Button size="icon" variant="ghost" onClick={() => removeDoc("undergraduate", i)}><X className="w-3 h-3 text-destructive" /></Button>
+            {docCategories.length === 0 && (
+              <p className="text-xs text-muted-foreground">No document categories yet. Add one below (e.g. Undergraduate, Postgraduate, Foundation, PhD, Visa).</p>
+            )}
+            {docCategories.map((cat, catIdx) => (
+              <div key={catIdx} className="border border-border rounded p-3 space-y-2">
+                <div className="flex items-center gap-2">
+                  <Input
+                    value={cat.title}
+                    onChange={e => renameCategory(catIdx, e.target.value)}
+                    className="text-xs font-semibold border-border"
+                    placeholder="Category name (e.g. Undergraduate, PhD, Visa)..."
+                  />
+                  <Button size="sm" variant="ghost" className="rounded shrink-0" onClick={() => addDoc(catIdx)}><Plus className="w-3 h-3 mr-1" /> Add Document</Button>
+                  <Button size="icon" variant="ghost" className="shrink-0" title="Delete category" onClick={() => removeCategory(catIdx)}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
                 </div>
-              ))}
-            </div>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <Label className="text-xs font-semibold">Postgraduate Documents</Label>
-                <Button size="sm" variant="ghost" className="rounded" onClick={() => addDoc("postgraduate")}><Plus className="w-3 h-3 mr-1" /> Add</Button>
+                {cat.items.map((doc, i) => (
+                  <div key={i} className="flex gap-2 pl-3">
+                    <Input value={doc} onChange={e => updateDoc(catIdx, i, e.target.value)} className="text-xs border-border" placeholder="Document name..." />
+                    <Button size="icon" variant="ghost" onClick={() => removeDoc(catIdx, i)}><X className="w-3 h-3 text-destructive" /></Button>
+                  </div>
+                ))}
               </div>
-              {(form.document_checklist?.postgraduate || []).map((doc, i) => (
-                <div key={i} className="flex gap-2 mb-1">
-                  <Input value={doc} onChange={e => updateDoc("postgraduate", i, e.target.value)} className="text-xs border-border" placeholder="Document name..." />
-                  <Button size="icon" variant="ghost" onClick={() => removeDoc("postgraduate", i)}><X className="w-3 h-3 text-destructive" /></Button>
-                </div>
-              ))}
-            </div>
+            ))}
+            <Button size="sm" variant="outline" className="rounded w-full border-dashed" onClick={addCategory}>
+              <Plus className="w-3 h-3 mr-1" /> Add Document Category
+            </Button>
           </div>
         )}
 

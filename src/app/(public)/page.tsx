@@ -1,8 +1,10 @@
 "use client";
 
 import HeroSection from "@/components/home/HeroSection";
+import AnnouncementTicker from "@/components/home/AnnouncementTicker";
 import StatsSection from "@/components/home/StatsSection";
 import DestinationsGrid from "@/components/home/DestinationsGrid";
+import VisaApprovalsSection from "@/components/home/VisaApprovalsSection";
 import WhyChoose from "@/components/home/WhyChoose";
 import ServicesSection from "@/components/home/ServicesSection";
 import ConsultationForm from "@/components/home/ConsultationForm";
@@ -14,8 +16,10 @@ export default function HomePage() {
   return (
     <div className="bg-white bg-gradient-to-br from-primary/[0.03] via-white to-accent/[0.05] min-h-screen">
       <HeroSection />
+      <AnnouncementTicker />
       <StatsSection />
       <DestinationsGrid />
+      <VisaApprovalsSection />
       <ServicesSection />
       <WhyChoose />
       <TestimonialsSection />

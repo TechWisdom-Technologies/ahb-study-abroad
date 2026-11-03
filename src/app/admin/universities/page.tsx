@@ -1,5 +1,7 @@
 "use client";
 
+import UniversityLogo from "@/components/shared/UniversityLogo";
+
 import { useEffect, useState } from "react";
 import CrudPage, { FieldDef, ExcelColumnMap } from "../CrudPage";
 
@@ -34,7 +36,16 @@ export default function UniversitiesAdminPage() {
   ];
 
   const columns = [
-    { key: "name", label: "Name" },
+    {
+      key: "name",
+      label: "Name",
+      render: (_: string, row: any) => (
+        <div className="flex items-center gap-2.5 min-w-[200px]">
+          <UniversityLogo name={row.name} logoUrl={row.logo_url} className="w-8 h-8 text-[9px]" />
+          <span className="font-medium text-foreground">{row.name}</span>
+        </div>
+      ),
+    },
     { key: "country_id", label: "Country", render: (_: string, row: any) => {
       const c = countryOptions.find(o => o.value === row.country_id);
       return c?.label || row.country_id;

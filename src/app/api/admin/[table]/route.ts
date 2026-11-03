@@ -39,6 +39,7 @@ function toSnakeCase(str: string): string {
 
 function snakeToCamelObject(obj: any): any {
   if (obj === null || typeof obj !== "object") return obj;
+  if (obj instanceof Date) return obj.toISOString();
   if (Array.isArray(obj)) return obj.map(snakeToCamelObject);
 
   const newObj: any = {};
@@ -52,6 +53,7 @@ function snakeToCamelObject(obj: any): any {
 
 function camelToSnakeObject(obj: any): any {
   if (obj === null || typeof obj !== "object") return obj;
+  if (obj instanceof Date) return obj.toISOString();
   if (Array.isArray(obj)) return obj.map(camelToSnakeObject);
 
   const newObj: any = {};
@@ -163,7 +165,14 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ t
     const idsString = searchParams.get("ids");
 
     if (id) {
-      await model.delete({ where: { id } });
+      try {
+        await model.delete({ where: { id } });
+      } catch (delErr: any) {
+        if (delErr?.code === "P2025") {
+          return NextResponse.json({ success: true, message: "Record already deleted" });
+        }
+        throw delErr;
+      }
       return NextResponse.json({ success: true });
     } else if (idsString) {
       const ids = idsString.split(",");

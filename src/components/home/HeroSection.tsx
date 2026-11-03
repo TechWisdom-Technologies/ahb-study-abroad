@@ -9,10 +9,16 @@ import CountryFlag from "@/components/shared/CountryFlag";
 import { ShineBorder } from "@/components/ui/shine-border";
 
 const FlagIcon = ({ code, size = "xl" }: { code: string; size?: "sm" | "md" | "lg" | "xl" }) => (
-  <div className="relative shadow-lg overflow-hidden rounded-md flex items-center justify-center p-0">
-    <ShineBorder shineColor={["#5CBAE6", "#141C3A", "#ffffff"]} borderWidth={1} className="z-30" />
-    <div className="z-20 relative rounded-[2px] overflow-hidden flex items-center justify-center">
-      <CountryFlag code={code} size={size} />
+  <div
+    className="group relative rounded-[5px] bg-[#141C3A] p-[2px] shadow-[0_6px_20px_rgba(0,0,0,0.5)] ring-1 ring-white/40 hover:ring-[#5CBAE6] hover:scale-115 transition-all duration-300 flex items-center justify-center"
+    style={{
+      backfaceVisibility: "hidden",
+      WebkitBackfaceVisibility: "hidden",
+      transform: "translateZ(0)",
+    }}
+  >
+    <div className="relative rounded-[3.5px] overflow-hidden flex items-center justify-center">
+      <CountryFlag code={code} size={size} className="brightness-[1.03] contrast-[1.05]" />
     </div>
   </div>
 );
@@ -119,7 +125,7 @@ const HeroSection = () => {
             <div className="absolute w-[300px] h-[300px] bg-accent/15 rounded-full blur-[80px] z-0" />
 
             {/* Inner Ring – 5 countries */}
-            <OrbitingCircles radius={80} duration={25} iconSize={40}>
+            <OrbitingCircles radius={80} duration={25} iconSize={44}>
               <FlagIcon code="gb" />
               <FlagIcon code="ca" />
               <FlagIcon code="us" />
@@ -128,7 +134,7 @@ const HeroSection = () => {
             </OrbitingCircles>
 
             {/* Outer Ring – 11 countries (reverse) */}
-            <OrbitingCircles radius={170} duration={40} reverse iconSize={40}>
+            <OrbitingCircles radius={175} duration={40} reverse iconSize={44}>
               <FlagIcon code="nz" />
               <FlagIcon code="fr" />
               <FlagIcon code="de" />

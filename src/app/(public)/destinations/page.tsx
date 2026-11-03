@@ -7,6 +7,7 @@ import { ArrowRight, GraduationCap } from "lucide-react";
 import CountryFlag from "@/components/shared/CountryFlag";
 import { useCountries } from "@/hooks/useCountries";
 import { destinationData } from "@/data/destinationDetails";
+import { normalizePopularCourses } from "@/lib/popularCourses";
 
 const destinationsHero = "/assets/std-des-bg.jpg";
 
@@ -135,14 +136,19 @@ export default function DestinationsPage() {
                         <div className="space-y-1 shrink-0">
                           <span className="text-[10px] md:text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">Featured Programs</span>
                           <div className="flex flex-wrap md:flex-nowrap items-center gap-1.5 overflow-hidden md:whitespace-nowrap">
-                            {(info?.popularCourses && info.popularCourses.length > 0
-                              ? info.popularCourses.slice(0, 3)
-                              : ["Business & Management", "Computer Science & IT", "Engineering"]
-                            ).map((c) => (
-                              <span key={c} className="px-2 py-0.5 md:px-2.5 md:py-1 bg-[#5CBAE6]/15 text-[#141C3A] border border-[#5CBAE6]/30 text-[11px] md:text-xs font-medium rounded-md shrink-0">
-                                {c}
-                              </span>
-                            ))}
+                            {(() => {
+                              const dbCourses = normalizePopularCourses(country.popular_courses).map(c => c.category).filter(Boolean);
+                              const list: string[] = dbCourses.length > 0
+                                ? dbCourses.slice(0, 3)
+                                : (info?.popularCourses && info.popularCourses.length > 0
+                                  ? normalizePopularCourses(info.popularCourses).map(c => c.category).filter(Boolean).slice(0, 3)
+                                  : ["Business & Management", "Computer Science & IT", "Engineering"]);
+                              return list.map((c) => (
+                                <span key={c} className="px-2 py-0.5 md:px-2.5 md:py-1 bg-[#5CBAE6]/15 text-[#141C3A] border border-[#5CBAE6]/30 text-[11px] md:text-xs font-medium rounded-md shrink-0">
+                                  {c}
+                                </span>
+                              ));
+                            })()}
                           </div>
                         </div>
                       </div>

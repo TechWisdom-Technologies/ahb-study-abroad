@@ -14,6 +14,7 @@ export type DBCountry = {
   special_feature?: string | null;
   card_image_url?: string | null;
   hero_image_url?: string | null;
+  popular_courses?: unknown;
 };
 
 const knownSlugs: Record<string, string> = {
@@ -83,6 +84,7 @@ export const useCountries = () => {
               special_feature: c.specialFeature ?? null,
               card_image_url: c.cardImageUrl ?? null,
               hero_image_url: c.heroImageUrl ?? null,
+              popular_courses: c.popularCourses ?? null,
             }));
             const dbSlugs = new Set(dbCountries.map(c => c.slug));
             const remaining = staticCountries.filter(c => !dbSlugs.has(c.slug));

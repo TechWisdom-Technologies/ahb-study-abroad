@@ -8,6 +8,17 @@ import { format } from "date-fns";
 
 type Lead = { id: string; name: string; email: string; status: string; destination: string | null; created_at: string };
 
+const formatDateSafe = (val: unknown, pattern: string = "dd MMM") => {
+  if (!val) return "—";
+  const d = new Date(val as any);
+  if (isNaN(d.getTime())) return "—";
+  try {
+    return format(d, pattern);
+  } catch {
+    return "—";
+  }
+};
+
 export default function AdminDashboardPage() {
   const [counts, setCounts] = useState({
     countries: 0, universities: 0, english_tests: 0,
@@ -147,7 +158,7 @@ export default function AdminDashboardPage() {
                       <span className={`px-2 py-0.5 rounded text-xs capitalize ${statusColors[lead.status] || ""}`}>
                         {lead.status}
                       </span>
-                      <span className="text-xs text-muted-foreground">{format(new Date(lead.created_at), "dd MMM")}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateSafe(lead.created_at, "dd MMM")}</span>
                     </div>
                   </div>
                 ))}

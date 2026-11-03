@@ -16,7 +16,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Upload } from "lucide-react";
+import { Plus, Pencil, Trash2, Upload, Download } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import * as XLSX from "xlsx";
@@ -273,6 +273,55 @@ const CrudPage = ({ title, table, fields, columns, excelImport, extraActions, fi
     setDeleteId(null);
   };
 
+  const handleExcelExport = () => {
+    const sourceRows = selectedIds.size > 0
+      ? filteredData.filter((r) => selectedIds.has(r.id))
+      : filteredData;
+
+    if (sourceRows.length === 0) {
+      toast({ title: "Nothing to export", description: "No matching records to export.", variant: "destructive" });
+      return;
+    }
+
+    const exportRows = sourceRows.map((row) => {
+      const mapped: Record<string, any> = {};
+      if (excelImport && excelImport.columnMap.length > 0) {
+        excelImport.columnMap.forEach((col) => {
+          const rawVal = row[col.dbKey];
+          const fieldDef = fields.find((f) => f.key === col.dbKey);
+          if (fieldDef?.type === "select" && fieldDef.options) {
+            const opt = fieldDef.options.find((o) => o.value === rawVal);
+            mapped[col.excelColumn] = opt ? opt.label : (rawVal ?? "");
+          } else if (fieldDef?.type === "boolean" || typeof rawVal === "boolean") {
+            mapped[col.excelColumn] = rawVal ? "Yes" : "No";
+          } else {
+            mapped[col.excelColumn] = rawVal ?? "";
+          }
+        });
+      } else {
+        fields.forEach((f) => {
+          const rawVal = row[f.key];
+          if (f.type === "select" && f.options) {
+            const opt = f.options.find((o) => o.value === rawVal);
+            mapped[f.label] = opt ? opt.label : (rawVal ?? "");
+          } else if (f.type === "boolean") {
+            mapped[f.label] = rawVal ? "Yes" : "No";
+          } else {
+            mapped[f.label] = rawVal ?? "";
+          }
+        });
+      }
+      return mapped;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(exportRows);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, `${title}s`);
+    const dateStr = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(workbook, `${table}_export_${dateStr}.xlsx`);
+    toast({ title: "Exported", description: `${exportRows.length} record(s) exported to Excel.` });
+  };
+
   const handleExcelImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !excelImport) return;
@@ -331,6 +380,9 @@ const CrudPage = ({ title, table, fields, columns, excelImport, extraActions, fi
           <p className="text-sm text-muted-foreground">Manage and update {title.toLowerCase()}s in the system</p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="gap-2 h-9 rounded" onClick={handleExcelExport} disabled={loading || filteredData.length === 0}>
+            <Download className="w-4 h-4" /> {selectedIds.size > 0 ? `Export Selected (${selectedIds.size})` : "Export Excel"}
+          </Button>
           {excelImport && (
             <>
               <input type="file" ref={fileInputRef} onChange={handleExcelImport} className="hidden" accept=".xlsx, .xls" />

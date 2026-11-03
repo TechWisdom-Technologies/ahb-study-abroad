@@ -86,7 +86,7 @@ const TestimonialsSection = () => {
               mediaType: t.mediaType,
               mediaUrl: t.mediaUrl || undefined,
             }));
-            setTestimonials([...dbItems, ...staticTestimonials]);
+            setTestimonials(dbItems);
           }
         }
       } catch (err) {
@@ -130,7 +130,7 @@ const TestimonialsSection = () => {
       ) : (
         <div className="relative">
           <div ref={dragRef} className="flex animate-ticker-slow gap-4 px-4">
-            {[...testimonials, ...testimonials].map((item, i) => (
+            {(testimonials.length < 3 ? Array(6).fill(testimonials).flat() : testimonials.length < 6 ? Array(3).fill(testimonials).flat() : [...testimonials, ...testimonials]).map((item, i) => (
               <div key={i} className="flex-shrink-0 w-[300px]">
                 <TestimonialCard item={item} />
               </div>

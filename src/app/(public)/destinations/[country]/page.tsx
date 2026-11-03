@@ -7,13 +7,17 @@ import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button
 import CountryFlag from "@/components/shared/CountryFlag";
 import { destinationData, DestinationInfo } from "@/data/destinationDetails";
 import { countrySlug } from "@/hooks/useCountries";
+import { DocumentCategory, hasDocuments, normalizeDocumentChecklist } from "@/lib/documentChecklist";
+import { CourseCategory, normalizePopularCourses } from "@/lib/popularCourses";
+import { lookupUniversityMeta } from "@/lib/universityLookup";
+import UniversityLogo from "@/components/shared/UniversityLogo";
 import {
   ArrowRight, GraduationCap, Wallet, Briefcase, CalendarDays,
   FileText, CheckCircle2, Building2, ArrowLeft, Languages, BookOpen,
   Star, Clock, ClipboardList, Lightbulb,
   Monitor, Stethoscope, Scale, FlaskConical, BarChart3,
   Cpu, Landmark, Globe2, Wrench, Palette, HeartPulse, Pill, BrainCircuit,
-  TrendingUp, Award, BookMarked, Users
+  TrendingUp, Award, BookMarked, Users, ChevronDown, ChevronUp, ExternalLink
 } from "lucide-react";
 
 const destUk = "/assets/dest-uk.jpg";
@@ -41,6 +45,9 @@ const ctaBgMap: Record<string, string> = {
   malta: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=1920&q=80",
   finland: "https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?w=1920&q=80",
 };
+
+const UNIS_PER_PAGE = 10;
+const COURSES_PER_BATCH = 10;
 
 const getCourseIcon = (course: string) => {
   const lower = course.toLowerCase();
@@ -87,7 +94,28 @@ const courseColors = [
   { bg: "bg-pink-50", text: "text-pink-600", border: "border-pink-100" },
 ];
 
-const buildInfoFromDB = (dbCountry: any, slug: string): DestinationInfo | null => {
+const getDocCategoryIcon = (title: string) => {
+  const lower = title.toLowerCase();
+  if (lower.includes("post") || lower.includes("master")) return BookOpen;
+  if (lower.includes("phd") || lower.includes("doctor") || lower.includes("research")) return FlaskConical;
+  if (lower.includes("visa")) return FileText;
+  if (lower.includes("foundation") || lower.includes("diploma") || lower.includes("pathway")) return BookMarked;
+  if (lower.includes("financ") || lower.includes("bank") || lower.includes("sponsor")) return Wallet;
+  return GraduationCap;
+};
+
+type DestinationPageInfo = Omit<DestinationInfo, "documentChecklist" | "popularCourses"> & {
+  documentChecklist: DocumentCategory[];
+  popularCourses: CourseCategory[];
+};
+
+const fromStaticInfo = (info: DestinationInfo): DestinationPageInfo => ({
+  ...info,
+  popularCourses: normalizePopularCourses(info.popularCourses),
+  documentChecklist: normalizeDocumentChecklist(info.documentChecklist),
+});
+
+const buildInfoFromDB = (dbCountry: any, slug: string): DestinationPageInfo | null => {
   const hardcoded = destinationData[slug];
 
   const hasDBContent = dbCountry.tagline || (Array.isArray(dbCountry.highlights) && dbCountry.highlights.length > 0);
@@ -106,7 +134,10 @@ const buildInfoFromDB = (dbCountry: any, slug: string): DestinationInfo | null =
     whyChoose: (Array.isArray(dbCountry.whyChoose) && dbCountry.whyChoose.length > 0) ? dbCountry.whyChoose : (h.whyChoose || []),
     tuitionRange: dbCountry.expenseRange || h.tuitionRange || "",
     livingCost: dbCountry.livingCost || h.livingCost || "",
-    popularCourses: (Array.isArray(dbCountry.popularCourses) && dbCountry.popularCourses.length > 0) ? dbCountry.popularCourses : (h.popularCourses || []),
+    popularCourses: (() => {
+      const fromDB = normalizePopularCourses(dbCountry.popularCourses);
+      return fromDB.length > 0 ? fromDB : normalizePopularCourses(h.popularCourses);
+    })(),
     workRights: dbCountry.workRights || h.workRights || "",
     intakes: (Array.isArray(dbCountry.intakes) && dbCountry.intakes.length > 0) ? dbCountry.intakes : (h.intakes || []),
     visaInfo: dbCountry.visaInfo || h.visaInfo || "",
@@ -114,9 +145,10 @@ const buildInfoFromDB = (dbCountry: any, slug: string): DestinationInfo | null =
     englishRequirements: (Array.isArray(dbCountry.englishRequirements) && dbCountry.englishRequirements.length > 0) ? dbCountry.englishRequirements : (h.englishRequirements || []),
     tuitionDetails: (Array.isArray(dbCountry.tuitionDetails) && dbCountry.tuitionDetails.length > 0) ? dbCountry.tuitionDetails : (h.tuitionDetails || []),
     partnerInstitutions: h.partnerInstitutions,
-    documentChecklist: (dbCountry.documentChecklist && typeof dbCountry.documentChecklist === "object" && !Array.isArray(dbCountry.documentChecklist) && (dbCountry.documentChecklist.undergraduate?.length > 0 || dbCountry.documentChecklist.postgraduate?.length > 0))
-      ? dbCountry.documentChecklist
-      : h.documentChecklist,
+    documentChecklist: (() => {
+      const fromDB = normalizeDocumentChecklist(dbCountry.documentChecklist);
+      return hasDocuments(fromDB) ? fromDB : normalizeDocumentChecklist(h.documentChecklist);
+    })(),
     specialNotes: (Array.isArray(dbCountry.specialNotes) && dbCountry.specialNotes.length > 0) ? dbCountry.specialNotes : (h.specialNotes || []),
   };
 };
@@ -127,12 +159,16 @@ interface PageProps {
 
 export default function DestinationDetailPage({ params }: PageProps) {
   const { country } = use(params);
-  const [info, setInfo] = useState<DestinationInfo | null>(null);
+  const [info, setInfo] = useState<DestinationPageInfo | null>(null);
   const [heroImg, setHeroImg] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dbUniversities, setDbUniversities] = useState<any[]>([]);
+  const [visibleUniCount, setVisibleUniCount] = useState(UNIS_PER_PAGE);
+  const [visibleSubCourseCounts, setVisibleSubCourseCounts] = useState<Record<number, number>>({});
 
   useEffect(() => {
+    setVisibleUniCount(UNIS_PER_PAGE);
+    setVisibleSubCourseCounts({});
     if (!country) { setLoading(false); return; }
 
     const fetchAll = async () => {
@@ -148,7 +184,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
           if (matchedCountry) {
             const builtInfo = buildInfoFromDB(matchedCountry, country);
             if (builtInfo) setInfo(builtInfo);
-            else if (hardcoded) setInfo(hardcoded);
+            else if (hardcoded) setInfo(fromStaticInfo(hardcoded));
 
             setHeroImg(matchedCountry.heroImageUrl || staticImg);
 
@@ -158,7 +194,7 @@ export default function DestinationDetailPage({ params }: PageProps) {
               setDbUniversities(unis || []);
             }
           } else if (hardcoded) {
-            setInfo(hardcoded);
+            setInfo(fromStaticInfo(hardcoded));
             setHeroImg(staticImg);
           }
         }
@@ -289,28 +325,96 @@ export default function DestinationDetailPage({ params }: PageProps) {
       )}
 
       {/* Popular Courses */}
-      {info.popularCourses.length > 0 && (
-        <section className="py-12">
-          <div className="container">
-            <h2 className="font-heading font-bold text-2xl text-foreground text-center mb-8">Popular Courses</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {info.popularCourses.map((course, i) => {
-                const CourseIcon = getCourseIcon(course);
-                const palette = courseColors[i % courseColors.length];
-                return (
-                  <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
-                    className={`bg-card border ${palette.border} rounded p-4 text-center hover:border-primary/30 hover:shadow-md transition-all group`}>
-                    <div className={`w-10 h-10 rounded-full ${palette.bg} flex items-center justify-center mx-auto mb-2`}>
-                      <CourseIcon className={`w-5 h-5 ${palette.text}`} />
-                    </div>
-                    <span className="text-xs font-medium text-foreground">{course}</span>
-                  </motion.div>
-                );
-              })}
+      {info.popularCourses.length > 0 && (() => {
+        const hasSubCourses = info.popularCourses.some(cat => cat.courses && cat.courses.length > 0);
+        return (
+          <section className="py-12">
+            <div className="container">
+              <h2 className="font-heading font-bold text-2xl text-foreground text-center mb-8">Popular Courses</h2>
+              <div className={hasSubCourses ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start" : "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"}>
+                {info.popularCourses.map((cat, i) => {
+                  const title = cat.category || "General";
+                  const CourseIcon = getCourseIcon(title);
+                  const palette = courseColors[i % courseColors.length];
+                  const subCourses = cat.courses || [];
+                  const visibleLimit = visibleSubCourseCounts[i] ?? COURSES_PER_BATCH;
+                  const shownSubCourses = subCourses.slice(0, visibleLimit);
+                  const remainingSub = subCourses.length - shownSubCourses.length;
+
+                  if (!hasSubCourses) {
+                    return (
+                      <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
+                        className={`bg-card border ${palette.border} rounded p-4 text-center hover:border-primary/30 hover:shadow-md transition-all group`}>
+                        <div className={`w-10 h-10 rounded-full ${palette.bg} flex items-center justify-center mx-auto mb-2`}>
+                          <CourseIcon className={`w-5 h-5 ${palette.text}`} />
+                        </div>
+                        <span className="text-xs font-medium text-foreground">{title}</span>
+                      </motion.div>
+                    );
+                  }
+
+                  return (
+                    <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
+                      className={`bg-card border ${palette.border} rounded-lg p-5 hover:border-primary/30 hover:shadow-md transition-all flex flex-col`}>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className={`w-10 h-10 rounded-full ${palette.bg} flex items-center justify-center shrink-0`}>
+                          <CourseIcon className={`w-5 h-5 ${palette.text}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-heading font-semibold text-sm text-foreground truncate">{title}</h3>
+                          {subCourses.length > 0 && (
+                            <span className="text-[11px] text-muted-foreground">{subCourses.length} {subCourses.length === 1 ? "course" : "courses"}</span>
+                          )}
+                        </div>
+                      </div>
+                      {subCourses.length > 0 && (
+                        <>
+                          <ol className="space-y-1.5 pt-3 border-t border-border/60">
+                            {shownSubCourses.map((sub, j) => (
+                              <li
+                                key={j}
+                                className="flex items-start gap-2.5 text-xs text-foreground py-1 px-2 rounded hover:bg-muted/50 transition-colors"
+                              >
+                                <span className={`w-5 h-5 rounded-full ${palette.bg} ${palette.text} text-[10px] font-semibold flex items-center justify-center shrink-0 mt-0.5`}>
+                                  {j + 1}
+                                </span>
+                                <span className="leading-relaxed">{sub}</span>
+                              </li>
+                            ))}
+                          </ol>
+                          {subCourses.length > COURSES_PER_BATCH && (
+                            <div className="pt-3 mt-2 border-t border-border/40">
+                              {remainingSub > 0 ? (
+                                <button
+                                  type="button"
+                                  onClick={() => setVisibleSubCourseCounts(prev => ({ ...prev, [i]: visibleLimit + COURSES_PER_BATCH }))}
+                                  className="w-full inline-flex items-center justify-center gap-1.5 text-xs font-heading font-semibold text-primary hover:underline py-1"
+                                >
+                                  Show More ({Math.min(COURSES_PER_BATCH, remainingSub)} more)
+                                  <ChevronDown className="w-3.5 h-3.5" />
+                                </button>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={() => setVisibleSubCourseCounts(prev => ({ ...prev, [i]: COURSES_PER_BATCH }))}
+                                  className="w-full inline-flex items-center justify-center gap-1.5 text-xs font-heading font-semibold text-muted-foreground hover:text-primary py-1"
+                                >
+                                  Show Less
+                                  <ChevronUp className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
 
       {/* English Language Requirements */}
       {info.englishRequirements && info.englishRequirements.length > 0 && (
@@ -397,31 +501,94 @@ export default function DestinationDetailPage({ params }: PageProps) {
 
       {/* Partner Institutions */}
       {(() => {
-        const dbUnis = dbUniversities
-          .filter(u => {
-            const hardcodedNames = [
-              ...(info.partnerInstitutions || []).map(p => p.name.toLowerCase()),
-              ...info.universities.map(u => u.name.toLowerCase()),
-            ];
-            return !hardcodedNames.includes(u.name.toLowerCase());
-          })
-          .map(u => ({
+        // Collect and unify all universities (hardcoded partners + static unis + DB unis)
+        const seenNames = new Set<string>();
+        type UnifiedUni = {
+          name: string;
+          url?: string;
+          logoUrl?: string;
+          tuition?: string;
+          requirements?: string;
+          category?: string;
+          rank?: string;
+          scholarship?: string;
+          campus?: string;
+          offerTime?: string;
+        };
+
+        const allInstitutions: UnifiedUni[] = [];
+
+        // 1. Static partner institutions (e.g. from destinationDetails.ts)
+        (info.partnerInstitutions || []).forEach(inst => {
+          const clean = inst.name.toLowerCase().trim();
+          seenNames.add(clean);
+          // Look up enriched meta from DB or lookup dictionary
+          const dbMatch = dbUniversities.find(d => d.name.toLowerCase().trim() === clean || d.name.toLowerCase().includes(clean) || clean.includes(d.name.toLowerCase()));
+          const meta = lookupUniversityMeta(inst.name, inst.url, info.tuitionRange);
+
+          allInstitutions.push({
+            name: inst.name,
+            url: inst.url || dbMatch?.websiteUrl || meta.websiteUrl,
+            logoUrl: dbMatch?.logoUrl || meta.logoUrl || (inst.url ? `https://www.google.com/s2/favicons?domain=${new URL(inst.url).hostname}&sz=128` : undefined),
+            tuition: dbMatch?.tuitionFeeRange || inst.tuition || meta.tuitionFeeRange,
+            requirements: dbMatch?.requirements || inst.requirements || meta.requirements,
+            category: inst.category || (dbMatch?.isPartner ? "Partner" : undefined),
+            rank: inst.rank,
+            scholarship: inst.scholarship || (dbMatch?.scholarshipAvailable ? "Scholarship Available" : undefined),
+            campus: inst.campus,
+            offerTime: inst.offerTime,
+          });
+        });
+
+        // 2. Simple static universities if any
+        (info.universities || []).forEach(uni => {
+          const clean = uni.name.toLowerCase().trim();
+          if (seenNames.has(clean)) return;
+          seenNames.add(clean);
+          const dbMatch = dbUniversities.find(d => d.name.toLowerCase().trim() === clean || d.name.toLowerCase().includes(clean) || clean.includes(d.name.toLowerCase()));
+          const meta = lookupUniversityMeta(uni.name, uni.url, info.tuitionRange);
+
+          allInstitutions.push({
+            name: uni.name,
+            url: uni.url || dbMatch?.websiteUrl || meta.websiteUrl,
+            logoUrl: dbMatch?.logoUrl || meta.logoUrl || (uni.url ? `https://www.google.com/s2/favicons?domain=${new URL(uni.url).hostname}&sz=128` : undefined),
+            tuition: dbMatch?.tuitionFeeRange || meta.tuitionFeeRange,
+            requirements: dbMatch?.requirements || meta.requirements,
+            rank: uni.rank,
+            scholarship: dbMatch?.scholarshipAvailable ? "Scholarship Available" : undefined,
+          });
+        });
+
+        // 3. Database universities for this country
+        dbUniversities.forEach(u => {
+          const clean = u.name.toLowerCase().trim();
+          if (seenNames.has(clean)) return;
+          seenNames.add(clean);
+          const meta = lookupUniversityMeta(u.name, u.websiteUrl, info.tuitionRange);
+
+          allInstitutions.push({
             name: u.name,
-            url: u.websiteUrl || undefined,
+            url: u.websiteUrl || meta.websiteUrl,
+            logoUrl: u.logoUrl || meta.logoUrl,
+            tuition: u.tuitionFeeRange || meta.tuitionFeeRange,
+            requirements: u.requirements || meta.requirements,
             category: u.isPartner ? "Partner" : undefined,
             scholarship: u.scholarshipAvailable ? "Scholarship Available" : undefined,
-            tuition: u.tuitionFeeRange || undefined,
-          }));
+          });
+        });
 
-        const hasPartners = info.partnerInstitutions && info.partnerInstitutions.length > 0;
-        const allPartners = hasPartners ? info.partnerInstitutions! : [];
-        const allSimpleUnis = info.universities || [];
-        const totalUnis = allPartners.length + allSimpleUnis.length + dbUnis.length;
-
+        const totalUnis = allInstitutions.length;
         if (totalUnis === 0) return null;
 
+        const shownUnis = allInstitutions.slice(0, visibleUniCount);
+        const shownCount = shownUnis.length;
+        const remaining = totalUnis - shownCount;
+        const delayFor = (index: number, step: number) => (index % UNIS_PER_PAGE) * step;
+
+        const hasPartners = info.partnerInstitutions && info.partnerInstitutions.length > 0;
+
         return (
-          <section className="py-12 relative">
+          <section id="partner-universities" className="py-12 relative scroll-mt-20">
             <div className="container">
               <div className="relative rounded overflow-hidden mb-8">
                 <img src={campusPartners} alt="University campus" className="w-full h-40 object-cover" loading="lazy" width={1280} height={512} />
@@ -431,119 +598,128 @@ export default function DestinationDetailPage({ params }: PageProps) {
                     <h2 className="font-heading font-bold text-2xl text-white">
                       {hasPartners ? `Our Partner Institutions in ${info.name}` : `Partner Universities in ${info.name}`}
                     </h2>
-                    {hasPartners && <p className="text-white/70 text-sm mt-1">Click on any institution to visit their official website</p>}
+                    <p className="text-white/70 text-sm mt-1">Showing verified tuition fees, admission requirements, and official portals</p>
                   </div>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {allPartners.map((inst, i) => (
-                  <motion.div key={`partner-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}
-                    className="bg-card border border-border rounded p-4 hover:border-primary/20 hover:shadow-md transition-all">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center shrink-0 mt-0.5">
-                        <Building2 className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        {inst.url ? (
-                          <a href={inst.url} target="_blank" rel="noopener noreferrer" className="font-heading font-semibold text-sm text-foreground hover:text-primary transition-colors">{inst.name}</a>
-                        ) : (
-                          <div className="font-heading font-semibold text-sm text-foreground">{inst.name}</div>
-                        )}
-                        <div className="flex flex-wrap gap-1.5 mt-1.5">
-                          {inst.category && <span className="text-[10px] px-1.5 py-0.5 bg-primary/10 text-primary rounded">{inst.category}</span>}
-                          {inst.rank && <span className="text-[10px] px-1.5 py-0.5 bg-accent/20 text-accent-foreground rounded">{inst.rank}</span>}
-                          {inst.scholarship && <span className="text-[10px] px-1.5 py-0.5 bg-accent/10 text-accent-foreground rounded">🎓 {inst.scholarship}</span>}
-                        </div>
-                        {inst.campus && <div className="text-xs text-muted-foreground mt-1">📍 {inst.campus}</div>}
-                        {inst.offerTime && (
-                          <div className="flex items-center gap-1 mt-1">
-                            <Clock className="w-3.5 h-3.5 text-muted-foreground" />
-                            <span className="text-xs text-muted-foreground">Offer: {inst.offerTime}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-                {!hasPartners && allSimpleUnis.map((uni, i) => (
-                  <motion.div key={`uni-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-                    className="bg-card border border-border rounded p-4 flex items-center gap-3 hover:border-primary/20 hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center shrink-0">
-                      <Building2 className="w-5 h-5 text-primary" />
-                    </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {shownUnis.map((inst, i) => (
+                  <motion.div key={`uni-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: delayFor(i, 0.03) }}
+                    className="bg-card border border-border rounded-xl p-5 hover:border-primary/40 hover:shadow-lg transition-all flex flex-col justify-between">
                     <div>
-                      {uni.url ? (
-                        <a href={uni.url} target="_blank" rel="noopener noreferrer" className="font-heading font-semibold text-sm text-foreground hover:text-primary transition-colors">{uni.name}</a>
-                      ) : (
-                        <div className="font-heading font-semibold text-sm text-foreground">{uni.name}</div>
-                      )}
-                      {uni.rank && <div className="text-xs text-accent font-medium">{uni.rank}</div>}
-                    </div>
-                  </motion.div>
-                ))}
-                {dbUnis.map((uni, i) => (
-                  <motion.div key={`db-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (allPartners.length + allSimpleUnis.length + i) * 0.03 }}
-                    className="bg-card border border-border rounded p-4 hover:border-primary/20 hover:shadow-md transition-all">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center shrink-0 mt-0.5">
-                        <Building2 className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        {uni.url ? (
-                          <a href={uni.url} target="_blank" rel="noopener noreferrer" className="font-heading font-semibold text-sm text-foreground hover:text-primary transition-colors">{uni.name}</a>
-                        ) : (
-                          <div className="font-heading font-semibold text-sm text-foreground">{uni.name}</div>
-                        )}
-                        <div className="flex flex-wrap gap-1.5 mt-1.5">
-                          {uni.category && <span className="text-[10px] px-1.5 py-0.5 bg-primary/10 text-primary rounded">{uni.category}</span>}
-                          {uni.scholarship && <span className="text-[10px] px-1.5 py-0.5 bg-accent/10 text-accent-foreground rounded">🎓 {uni.scholarship}</span>}
-                          {uni.tuition && <span className="text-[10px] px-1.5 py-0.5 bg-muted text-muted-foreground rounded">💰 {uni.tuition}</span>}
+                      <div className="flex items-start gap-3.5 mb-2.5">
+                        <UniversityLogo name={inst.name} logoUrl={inst.logoUrl} className="w-12 h-12" />
+                        <div className="flex-1 min-w-0">
+                          {inst.url ? (
+                            <a
+                              href={inst.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-heading font-bold text-sm text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
+                            >
+                              <span className="line-clamp-2">{inst.name}</span>
+                              <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary shrink-0 opacity-70" />
+                            </a>
+                          ) : (
+                            <div className="font-heading font-bold text-sm text-foreground line-clamp-2">{inst.name}</div>
+                          )}
+
+                          <div className="flex flex-wrap gap-1.5 mt-2">
+                            {inst.category && <span className="text-[10px] font-semibold px-2 py-0.5 bg-primary/10 text-primary rounded-full">{inst.category}</span>}
+                            {inst.rank && <span className="text-[10px] font-semibold px-2 py-0.5 bg-accent/20 text-accent-foreground rounded-full">{inst.rank}</span>}
+                            {inst.scholarship && <span className="text-[10px] font-semibold px-2 py-0.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 rounded-full">🎓 {inst.scholarship}</span>}
+                          </div>
                         </div>
                       </div>
+
+                      {/* Location or Offer */}
+                      {(inst.campus || inst.offerTime) && (
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2 px-1">
+                          {inst.campus && <span>📍 {inst.campus}</span>}
+                          {inst.offerTime && <span>⏱️ Offer: {inst.offerTime}</span>}
+                        </div>
+                      )}
+
+                      {/* Tuition Fee Range */}
+                      {inst.tuition && (
+                        <div className="mt-3 p-2 rounded-md bg-primary/5 border border-primary/10 text-xs">
+                          <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-0.5">Estimated Tuition</div>
+                          <div className="font-semibold text-primary">{inst.tuition}</div>
+                        </div>
+                      )}
+
+                      {/* Requirements */}
+                      {inst.requirements && (
+                        <div className="mt-2 p-2 rounded-md bg-muted/40 border border-border/60 text-xs leading-relaxed text-muted-foreground">
+                          <span className="font-semibold text-foreground text-[11px] block mb-0.5">Admission Requirements:</span>
+                          <span className="text-[11px] line-clamp-3">{inst.requirements}</span>
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 ))}
               </div>
+              {totalUnis > UNIS_PER_PAGE && (
+                <div className="flex flex-col items-center gap-2 mt-8">
+                  <p className="text-xs text-muted-foreground">
+                    Showing {shownCount} of {totalUnis} universities
+                  </p>
+                  {remaining > 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => setVisibleUniCount(c => c + UNIS_PER_PAGE)}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded border border-primary text-primary font-heading font-semibold text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                    >
+                      Show More ({Math.min(UNIS_PER_PAGE, remaining)} more)
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setVisibleUniCount(UNIS_PER_PAGE);
+                        document.getElementById("partner-universities")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded border border-border text-muted-foreground font-heading font-semibold text-sm hover:border-primary hover:text-primary transition-colors"
+                    >
+                      Show Less
+                      <ChevronUp className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </section>
         );
       })()}
 
       {/* Document Checklist */}
-      {info.documentChecklist && (
+      {hasDocuments(info.documentChecklist) && (
         <section className="py-12 section-muted">
           <div className="container">
             <h2 className="font-heading font-bold text-2xl text-foreground text-center mb-8">
               <ClipboardList className="w-6 h-6 inline-block mr-2 text-primary" />
               Application Document Checklist
             </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-card border border-border rounded p-5">
-                <h3 className="font-heading font-bold text-foreground mb-3 flex items-center gap-2">
-                  <GraduationCap className="w-4 h-4 text-primary" /> Undergraduate
-                </h3>
-                <ul className="space-y-2">
-                  {info.documentChecklist.undergraduate.map((doc, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
-                      {doc}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="bg-card border border-border rounded p-5">
-                <h3 className="font-heading font-bold text-foreground mb-3 flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-primary" /> Postgraduate
-                </h3>
-                <ul className="space-y-2">
-                  {info.documentChecklist.postgraduate.map((doc, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
-                      {doc}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className={`grid gap-6 ${info.documentChecklist.length === 1 ? "max-w-xl mx-auto" : info.documentChecklist.length === 2 || info.documentChecklist.length === 4 ? "md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"}`}>
+              {info.documentChecklist.filter(cat => cat.items.length > 0).map((cat, ci) => {
+                const Icon = getDocCategoryIcon(cat.title);
+                return (
+                  <div key={ci} className="bg-card border border-border rounded p-5">
+                    <h3 className="font-heading font-bold text-foreground mb-3 flex items-center gap-2">
+                      <Icon className="w-4 h-4 text-primary" /> {cat.title || "Documents"}
+                    </h3>
+                    <ul className="space-y-2">
+                      {cat.items.map((doc, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
+                          {doc}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
