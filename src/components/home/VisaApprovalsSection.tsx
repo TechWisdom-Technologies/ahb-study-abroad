@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import {
-  CheckCircle2,
   ShieldCheck,
   Plane,
   ChevronLeft,
@@ -142,7 +141,7 @@ export default function VisaApprovalsSection() {
 
   return (
     <section
-      className="py-10 md:py-12 relative bg-gradient-to-b from-[#F8FAFC] via-white to-[#F8FAFC] border-y border-slate-200/80 overflow-hidden"
+      className="py-10 md:py-12 relative bg-gradient-to-b from-[#141C3A]/[0.02] via-white to-[#5CBAE6]/[0.04] border-y border-[#141C3A]/10 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -150,20 +149,20 @@ export default function VisaApprovalsSection() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-xs font-semibold mb-2">
-              <Sparkles className="w-3 h-3 text-emerald-600" />
-              <span>Real Students • Visa Grants</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#141C3A]/5 border border-[#5CBAE6]/40 text-[#141C3A] text-xs font-semibold mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#0284c7]" />
+              <span>Real Students • Official Visa Grants</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-[#141C3A] tracking-tight">
-              Recent Visa Approvals
+              Recent <span className="text-[#0284c7]">Visa Approvals</span>
             </h2>
           </div>
 
-          {/* Controls */}
+          {/* Controls with Brand Palette */}
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <div className="hidden md:flex items-center gap-2 text-xs font-semibold text-[#141C3A] bg-white border border-[#5CBAE6]/30 px-3.5 py-1.5 rounded-lg shadow-sm">
+              <ShieldCheck className="w-4 h-4 text-[#0284c7]" />
               <span>98.5% Visa Success Rate</span>
             </div>
 
@@ -171,14 +170,14 @@ export default function VisaApprovalsSection() {
               <button
                 onClick={scrollPrev}
                 aria-label="Previous slide"
-                className="w-8 h-8 rounded-lg bg-white border border-slate-200 shadow-sm hover:bg-slate-50 text-slate-700 flex items-center justify-center transition-all active:scale-95"
+                className="w-8 h-8 rounded-lg bg-white border border-[#141C3A]/15 shadow-sm hover:bg-[#141C3A]/5 hover:border-[#141C3A]/30 text-[#141C3A] flex items-center justify-center transition-all active:scale-95"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={scrollNext}
                 aria-label="Next slide"
-                className="w-8 h-8 rounded-lg bg-primary text-white shadow-sm hover:bg-primary/90 flex items-center justify-center transition-all active:scale-95"
+                className="w-8 h-8 rounded-lg bg-gradient-to-r from-[#141C3A] to-[#1e2a56] text-[#5CBAE6] hover:text-white shadow-sm hover:shadow flex items-center justify-center transition-all active:scale-95"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -220,15 +219,15 @@ export default function VisaApprovalsSection() {
                   key={item.id || idx}
                   className="pl-3 sm:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="h-full bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between overflow-hidden select-none">
+                  <div className="h-full bg-white rounded-xl border border-[#141C3A]/10 shadow-sm hover:shadow-lg hover:shadow-[#141C3A]/5 hover:border-[#5CBAE6] transition-all flex flex-col justify-between overflow-hidden select-none group">
                     {/* Header */}
-                    <div className="px-3.5 py-2.5 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between">
+                    <div className="px-3.5 py-2.5 bg-gradient-to-r from-[#141C3A]/[0.03] to-[#5CBAE6]/[0.08] border-b border-[#141C3A]/10 flex items-center justify-between">
                       <div className="flex items-center gap-2 min-w-0">
                         {flag ? (
                           <img
                             src={flag}
                             alt={item.country}
-                            className="w-5 h-3.5 object-cover rounded-[2px] border border-slate-200 shrink-0"
+                            className="w-5 h-3.5 object-cover rounded-[2px] border border-slate-200 shrink-0 shadow-xs"
                             loading="lazy"
                           />
                         ) : (
@@ -238,43 +237,35 @@ export default function VisaApprovalsSection() {
                           {item.country}
                         </span>
                       </div>
-
-                      <span className="shrink-0 flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[10px] font-bold">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                        <span>Approved</span>
-                      </span>
                     </div>
 
                     {/* Body */}
                     <div className="p-3.5 flex flex-col gap-2.5 flex-1 justify-between">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-[#141C3A] text-white flex items-center justify-center font-heading font-bold text-xs shrink-0 shadow-sm">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#141C3A] via-[#1b254b] to-[#0284c7] text-white flex items-center justify-center font-heading font-extrabold text-xs shrink-0 shadow-sm ring-2 ring-[#5CBAE6]/25">
                           {initials}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h4 className="font-heading font-bold text-slate-900 text-sm leading-tight truncate">
+                          <h4 className="font-heading font-bold text-[#141C3A] text-sm leading-tight truncate group-hover:text-[#0284c7] transition-colors">
                             {item.studentName}
                           </h4>
-                          <div className="flex items-center gap-1 text-[10px] text-emerald-600 font-medium">
+                          <div className="flex items-center gap-1 text-[10px] text-[#0284c7] font-semibold mt-0.5">
                             <ShieldCheck className="w-2.5 h-2.5" />
                             <span>Verified Student</span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Visa Category Pill */}
-                      <div className="text-[11px] text-slate-700 bg-slate-50 border border-slate-200/70 px-2.5 py-1.5 rounded-md font-medium truncate flex items-center gap-1.5">
-                        <Plane className="w-3 h-3 text-primary shrink-0 rotate-45" />
+                      {/* Visa Category Pill with Brand Tint */}
+                      <div className="text-[11px] text-[#141C3A] bg-gradient-to-r from-[#141C3A]/[0.03] to-[#5CBAE6]/[0.07] border border-[#5CBAE6]/25 px-2.5 py-1.5 rounded-lg font-medium truncate flex items-center gap-1.5">
+                        <Plane className="w-3 h-3 text-[#0284c7] shrink-0 rotate-45" />
                         <span className="truncate">{item.visaType || "Student Visa"}</span>
                       </div>
                     </div>
 
                     {/* Footer */}
-                    <div className="px-3.5 py-2 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500">
+                    <div className="px-3.5 py-2 bg-gradient-to-r from-[#141C3A]/[0.02] to-transparent border-t border-[#141C3A]/5 flex items-center text-[10px] text-slate-500">
                       <span>Intake: {formattedDate}</span>
-                      <span className="font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded text-[9px] uppercase tracking-wider">
-                        AHB Verified
-                      </span>
                     </div>
                   </div>
                 </CarouselItem>
@@ -293,8 +284,8 @@ export default function VisaApprovalsSection() {
                 aria-label={`Go to slide ${index + 1}`}
                 className={`transition-all rounded-full ${
                   current === index
-                    ? "w-6 h-1.5 bg-primary"
-                    : "w-1.5 h-1.5 bg-slate-300 hover:bg-slate-400"
+                    ? "w-6 h-1.5 bg-gradient-to-r from-[#141C3A] to-[#0284c7]"
+                    : "w-1.5 h-1.5 bg-[#141C3A]/20 hover:bg-[#141C3A]/40"
                 }`}
               />
             ))}
