@@ -19,7 +19,7 @@ Welcome to the Next.js edition of the AHB Study Abroad platform. This document o
 ## 2. Directory Structure & File Map
 
 ```text
-cambry-nextjs/
+ahb-study-abroad/
 ├── prisma/
 │   ├── schema.prisma          # Database schema models and relationships
 │   └── seed.ts                # Database seeder (inserts default admin & country data)
@@ -123,7 +123,7 @@ Instead of duplicating route code, a single dynamic controller handles all datab
 ### Environment Prerequisites
 Create a `.env` file in the root directory:
 ```env
-DATABASE_URL="postgresql://postgres:root@localhost:5432/cambry?schema=public"
+DATABASE_URL="postgresql://postgres:root@localhost:5432/ahb_study_abroad?schema=public"
 NEXTAUTH_SECRET="your-32-character-secret-key-goes-here"
 ```
 

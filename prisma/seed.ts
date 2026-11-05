@@ -17,7 +17,7 @@ async function main() {
   // 1. Create Default Admin Users
   const hashedPassword = await bcrypt.hash("AdminPassword123!", 10);
 
-  const adminEmails = ["admin@ahbstudy.com", "admin@cambry.com"];
+  const adminEmails = ["admin@ahbstudy.com"];
   for (const adminEmail of adminEmails) {
     const adminUser = await prisma.user.upsert({
       where: { email: adminEmail },
